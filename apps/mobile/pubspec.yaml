@@ -1,7 +1,7 @@
 name: yapigo
 description: "yapigo - App sociale d'activites sportives a Montreal"
 publish_to: 'none'
-version: 2.2.1+56  # 2026-03-25 16:10
+version: 2.2.2+57  # 2026-03-25 17:14
 
 environment:
   sdk: ^3.11.3
@@ -33,6 +33,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/logo/
+    - assets/images/carousel/
     - assets/video/
     - assets/icons/
     - assets/pace/

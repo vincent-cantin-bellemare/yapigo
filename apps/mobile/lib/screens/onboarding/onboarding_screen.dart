@@ -68,13 +68,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 8),
+              padding: const EdgeInsets.only(top: 12, bottom: 4),
               child: Row(
                 children: [
                   const SizedBox(width: 56),
                   const Expanded(
                     child: Center(
-                      child: AppLogo(size: 40, showText: false),
+                      child: AppLogo(size: 120, fullLogo: true),
                     ),
                   ),
                   SizedBox(
