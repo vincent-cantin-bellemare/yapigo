@@ -1,4 +1,4 @@
-import 'package:kaiiak/models/kai_event.dart';
+import 'package:yapigo/models/kai_event.dart';
 
 class UserActivity {
   final EventCategory category;

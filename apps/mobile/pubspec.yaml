@@ -1,7 +1,7 @@
-name: kaiiak
-description: "kaiiak - App sociale d'activites sportives a Montreal"
+name: yapigo
+description: "yapigo - App sociale d'activites sportives a Montreal"
 publish_to: 'none'
-version: 2.1.0+53  # 2026-03-25 12:26
+version: 2.2.0+55  # 2026-03-25 14:42
 
 environment:
   sdk: ^3.11.3

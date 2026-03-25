@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/data/mock_users.dart';
-import 'package:kaiiak/theme/app_theme.dart';
+import 'package:yapigo/data/mock_users.dart';
+import 'package:yapigo/theme/app_theme.dart';
 
 class BuddyCodeScreen extends StatelessWidget {
   const BuddyCodeScreen({super.key});
@@ -82,7 +82,7 @@ class BuddyCodeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Partage ce code avec un ami pour participer ensemble lors d\'un événement kaiiak!',
+                    'Partage ce code avec un ami pour participer ensemble lors d\'un événement yapigo!',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.dmSans(
                       fontSize: 15,

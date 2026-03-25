@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/screens/messages/conversations_screen.dart';
-import 'package:kaiiak/screens/notifications/notifications_screen.dart';
-import 'package:kaiiak/theme/app_theme.dart';
+import 'package:yapigo/screens/messages/conversations_screen.dart';
+import 'package:yapigo/screens/notifications/notifications_screen.dart';
+import 'package:yapigo/theme/app_theme.dart';
 
 class ActivityScreen extends StatefulWidget {
   const ActivityScreen({super.key});

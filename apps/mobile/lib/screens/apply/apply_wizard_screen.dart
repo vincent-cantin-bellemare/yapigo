@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:kaiiak/data/mock_users.dart';
-import 'package:kaiiak/models/kai_event.dart';
-import 'package:kaiiak/models/user.dart';
-import 'package:kaiiak/screens/profile/user_profile_sheet.dart';
-import 'package:kaiiak/screens/home/main_shell.dart';
-import 'package:kaiiak/theme/app_theme.dart';
-import 'package:kaiiak/widgets/pace_label_icon.dart';
+import 'package:yapigo/data/mock_users.dart';
+import 'package:yapigo/models/kai_event.dart';
+import 'package:yapigo/models/user.dart';
+import 'package:yapigo/screens/profile/user_profile_sheet.dart';
+import 'package:yapigo/screens/home/main_shell.dart';
+import 'package:yapigo/theme/app_theme.dart';
+import 'package:yapigo/widgets/pace_label_icon.dart';
 
 class ApplyWizardScreen extends StatefulWidget {
   const ApplyWizardScreen({super.key, this.event});

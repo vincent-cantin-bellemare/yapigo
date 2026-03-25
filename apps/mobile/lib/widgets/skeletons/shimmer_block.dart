@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:kaiiak/theme/app_theme.dart';
+import 'package:yapigo/theme/app_theme.dart';
 
 /// Base shimmer wrapper that applies the app's shimmer animation.
 class ShimmerBlock extends StatelessWidget {

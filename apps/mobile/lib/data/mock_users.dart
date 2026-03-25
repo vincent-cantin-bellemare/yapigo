@@ -1,5 +1,5 @@
-import 'package:kaiiak/models/kai_event.dart';
-import 'package:kaiiak/models/user.dart';
+import 'package:yapigo/models/kai_event.dart';
+import 'package:yapigo/models/user.dart';
 
 /// Logged-in user for demos and local state.
 final User currentUser = User(
@@ -15,7 +15,7 @@ final User currentUser = User(
   photoUrl: 'https://picsum.photos/seed/SophieTremblay/200/200',
   bio:
       'Dimanche matin : rando sur le Mont-Royal, puis yoga léger pour dénouer. '
-      'La semaine, j\'aime un 5-8 km tranquille pour jaser. Fan de brunch post-effort — kaiiak, c\'est mon excuse pour rencontrer du monde actif sans me prendre au sérieux.',
+      'La semaine, j\'aime un 5-8 km tranquille pour jaser. Fan de brunch post-effort — yapigo, c\'est mon excuse pour rencontrer du monde actif sans me prendre au sérieux.',
   isVerified: true,
   xp: 420,
   badge: BadgeLevel.habitue,
@@ -70,7 +70,7 @@ final User _u1 = User(
       'En semaine, course à tempo dans Rosemont ou spin si la météo chie. J\'aime quand ça file, mais je ralentis si la conversation est bonne.\n\n'
       'J\'ai bouclé deux demi-marathons (Montréal 2022, Ottawa 2023) et je vise un troisième en dessous de 1h45. '
       'Côté vélo, je monte des sorties plus longues l\'été. Gestion de projets IT au boulot — bouger, c\'est ma soupape.\n\n'
-      'Sur kaiiak je cherche une gang régulière : course, vélo, rando, peu importe tant qu\'on se retrouve après pour un smoothie ou un café. '
+      'Sur yapigo je cherche une gang régulière : course, vélo, rando, peu importe tant qu\'on se retrouve après pour un smoothie ou un café. '
       'Pas besoin que tout le monde soit rapide.\n\n'
       'Fun facts : bière sans alcool depuis 2021, playlists maison depuis 7 ans, et ma Garmin me connaît mieux que ma mère.',
   isVerified: true,
@@ -144,7 +144,7 @@ final User _u2 = User(
     UserActivity(category: EventCategory.hiking, level: IntensityLevel.chill),
   ],
   activityGoals: [
-    'Rencontrer du monde sur kaiiak',
+    'Rencontrer du monde sur yapigo',
     'Ne pas me perdre au parc la première fois',
     'Essayer le patin au bassin bon Dieu',
   ],
@@ -165,7 +165,7 @@ final User _u3 = User(
   neighborhood: 'Mile-End',
   photoUrl: 'https://picsum.photos/seed/AlexBelanger/200/200',
   bio:
-      'J\'anime des sorties course et vélo sur kaiiak : rythme soutenu, mais j\'recule si tu sens que t\'as besoin d\'air. '
+      'J\'anime des sorties course et vélo sur yapigo : rythme soutenu, mais j\'recule si tu sens que t\'as besoin d\'air. '
       'J\'aime aussi les séances HIIT en gang — le fun, c\'est que tout le monde finisse avec le sourire.',
   isVerified: true,
   xp: 380,
@@ -290,7 +290,7 @@ final User _u5 = User(
   ],
   activityGoals: [
     'Garder l\'énergie pour la famille',
-    'Rencontrer d\'autres parents actifs sur kaiiak',
+    'Rencontrer d\'autres parents actifs sur yapigo',
     'Faire une rando famille au Mont-Saint-Bruno',
   ],
   buddyCode: 'LOUTRE-BINGO',
@@ -322,7 +322,7 @@ final User _u6 = User(
       'Rapidement c\'est devenu ma thérapie gratuite — le canal à 6h en été, meilleur psy de Montréal. '
       'Depuis, j\'ajoute du vélo, des randos légers et des sorties kayak quand l\'eau est clémente.\n\n'
       'Aujourd\'hui je bouge 3 à 4 fois par semaine. J\'aime varier : tempo un jour, chill le lendemain, podcast dans les oreilles.\n\n'
-      'Ce que je cherche avec kaiiak : du monde normal qui aime suer un peu. '
+      'Ce que je cherche avec yapigo : du monde normal qui aime suer un peu. '
       'Pas besoin d\'être un athlète, juste quelqu\'un qui se pointe avec le sourire. '
       'J\'ai fait mes meilleurs chums dans des groupes d\'activités, j\'veux continuer comme ça.\n\n'
       'Fun facts : meilleur pad thaï de Griffintown (source : moi-même), Habs depuis tout petit, '
@@ -398,7 +398,7 @@ final User _u7 = User(
     UserActivity(category: EventCategory.socialGathering, level: IntensityLevel.chill),
   ],
   activityGoals: [
-    'Accueillir les nouveaux sur kaiiak',
+    'Accueillir les nouveaux sur yapigo',
     'Rester régulière sans me mettre la pression',
     'Monter des sorties où tout le monde se sent à sa place',
   ],

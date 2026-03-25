@@ -1,4 +1,4 @@
-import 'package:kaiiak/models/weather_forecast.dart';
+import 'package:yapigo/models/weather_forecast.dart';
 
 final Map<String, WeatherForecast> mockWeatherByEventId = {
   'e1': const WeatherForecast(

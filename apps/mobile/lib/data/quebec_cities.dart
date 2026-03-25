@@ -13,7 +13,7 @@ class QuebecCity {
   });
 }
 
-// Hub cities where kaiiak events are currently organized.
+// Hub cities where yapigo events are currently organized.
 const activeCityHubs = <QuebecCity>[
   QuebecCity(name: 'Montréal', region: 'Montréal', lat: 45.5017, lng: -73.5673),
 ];

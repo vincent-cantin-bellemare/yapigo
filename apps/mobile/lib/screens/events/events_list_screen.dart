@@ -3,25 +3,25 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/data/mock_event_photos.dart';
-import 'package:kaiiak/data/mock_events.dart';
-import 'package:kaiiak/data/mock_weather.dart';
-import 'package:kaiiak/models/event_photo.dart';
-import 'package:kaiiak/models/kai_event.dart';
-import 'package:kaiiak/screens/events/event_detail_screen.dart';
-import 'package:kaiiak/screens/profile/contact_form_screen.dart';
-import 'package:kaiiak/data/mock_messages.dart';
-import 'package:kaiiak/data/mock_users.dart';
-import 'package:kaiiak/screens/events/rate_event_screen.dart';
-import 'package:kaiiak/screens/messages/chat_screen.dart';
-import 'package:kaiiak/screens/profile/user_profile_sheet.dart';
-import 'package:kaiiak/theme/app_theme.dart';
-import 'package:kaiiak/utils/neighborhood_assets.dart';
-import 'package:kaiiak/widgets/add_photo_sheet.dart';
-import 'package:kaiiak/widgets/photo_gallery_viewer.dart';
-import 'package:kaiiak/widgets/user_avatar.dart';
-import 'package:kaiiak/widgets/pace_label_icon.dart' show intensityLevelIcon;
-import 'package:kaiiak/widgets/weather_badge.dart';
+import 'package:yapigo/data/mock_event_photos.dart';
+import 'package:yapigo/data/mock_events.dart';
+import 'package:yapigo/data/mock_weather.dart';
+import 'package:yapigo/models/event_photo.dart';
+import 'package:yapigo/models/kai_event.dart';
+import 'package:yapigo/screens/events/event_detail_screen.dart';
+import 'package:yapigo/screens/profile/contact_form_screen.dart';
+import 'package:yapigo/data/mock_messages.dart';
+import 'package:yapigo/data/mock_users.dart';
+import 'package:yapigo/screens/events/rate_event_screen.dart';
+import 'package:yapigo/screens/messages/chat_screen.dart';
+import 'package:yapigo/screens/profile/user_profile_sheet.dart';
+import 'package:yapigo/theme/app_theme.dart';
+import 'package:yapigo/utils/neighborhood_assets.dart';
+import 'package:yapigo/widgets/add_photo_sheet.dart';
+import 'package:yapigo/widgets/photo_gallery_viewer.dart';
+import 'package:yapigo/widgets/user_avatar.dart';
+import 'package:yapigo/widgets/pace_label_icon.dart' show intensityLevelIcon;
+import 'package:yapigo/widgets/weather_badge.dart';
 import 'package:share_plus/share_plus.dart';
 
 String _frenchDate(DateTime dt) {
@@ -1294,7 +1294,7 @@ class _PastEventList extends StatelessWidget {
                   color: AppTheme.slateGrey.withValues(alpha: 0.5)),
               const SizedBox(height: 16),
               Text(
-                'Aucune activité passée.\nInscris-toi à un événement kaiiak pour commencer!',
+                'Aucune activité passée.\nInscris-toi à un événement yapigo pour commencer!',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.dmSans(
                   fontSize: 15,
@@ -1823,7 +1823,7 @@ class _EventCard extends StatelessWidget {
                       'Viens bouger avec moi! 💪\n\n'
                       '${event.neighborhood} — ${_frenchDate(event.date)} à $time\n'
                       '${event.distanceLabel.label}\n\n'
-                      'Inscris-toi sur kaiiak.com',
+                      'Inscris-toi sur yapigo.com',
                     );
                   },
                   icon: Icon(Icons.share_outlined,

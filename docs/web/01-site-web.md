@@ -51,7 +51,7 @@ Repris de l'app Flutter (`apps/mobile/lib/theme/app_theme.dart`).
 
 ### Couleurs
 
-Palette bleue dérivée du gradient du logo kaiiak (teal → navy).
+Palette bleue dérivée du gradient du logo yapigo (teal → navy).
 
 #### Couleurs de marque (gradient du logo)
 

@@ -1,11 +1,11 @@
-# kaiiak
+# yapigo
 
 Multi-sport social app for active people in Quebec. Sign up for outdoor activities together, meet at the point de chute, and gather for Apéro Smoothie after.
 
 ## Monorepo Structure
 
 ```
-kaiiak/
+yapigo/
   apps/
     mobile/       Flutter (Dart) — iOS/Android mobile app
     web/          Next.js (TypeScript) — Web app (coming soon)
@@ -46,4 +46,3 @@ python generate_icons.py
 
 - Active people in Quebec who enjoy outdoor sports and group activities
 - Tone: casual "tu" (tutoiement), natural Québécois French, fun and encouraging
-# yapigo

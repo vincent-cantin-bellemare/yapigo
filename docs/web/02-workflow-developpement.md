@@ -34,7 +34,7 @@ npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir
 
 ### 1.2 Configurer le thème Tailwind
 
-- Couleurs kaiiak dans `tailwind.config.ts` :
+- Couleurs yapigo dans `tailwind.config.ts` :
 
 ```typescript
 const config = {

@@ -1,11 +1,11 @@
-import 'package:kaiiak/models/app_notification.dart';
+import 'package:yapigo/models/app_notification.dart';
 
 final mockNotifications = <AppNotification>[
   AppNotification(
     id: 'n1',
     type: NotificationType.matchFound,
     title: 'Ton groupe d\'activité est formé! 🎯',
-    body: 'Bonne nouvelle! Ton groupe est formé pour le kaiiak de ce samedi sur le Plateau. '
+    body: 'Bonne nouvelle! Ton groupe est formé pour le yapigo de ce samedi sur le Plateau. '
         'Tu recevras le point de rendez-vous et le niveau bientôt. Pense à ta gourde!',
     timestamp: DateTime.now().subtract(const Duration(hours: 1)),
   ),
@@ -13,7 +13,7 @@ final mockNotifications = <AppNotification>[
     id: 'n_threshold',
     type: NotificationType.thresholdReached,
     title: 'C\'est confirmé! Ton activité a lieu!',
-    body: 'Assez de monde s\'est inscrit — ton kaiiak est officiel. '
+    body: 'Assez de monde s\'est inscrit — ton yapigo est officiel. '
         'Check les détails du parcours ou du studio et du rendez-vous dans l\'app.',
     timestamp: DateTime.now().subtract(const Duration(hours: 1, minutes: 20)),
   ),
@@ -32,7 +32,7 @@ final mockNotifications = <AppNotification>[
     id: 'n_contact1',
     type: NotificationType.contactRequest,
     title: 'Sophie aimerait te connaître! 💌',
-    body: 'Sophie du kaiiak Vélo Laurier de samedi dernier souhaite '
+    body: 'Sophie du yapigo Vélo Laurier de samedi dernier souhaite '
         'échanger en privé. Accepte sa demande pour continuer la conversation!',
     timestamp: DateTime.now().subtract(const Duration(hours: 2, minutes: 30)),
     fromUserId: 'u1',
@@ -43,10 +43,10 @@ final mockNotifications = <AppNotification>[
     id: 'n2',
     type: NotificationType.runConfirmed,
     title: 'Ton activité est confirmée! ✅',
-    body: 'Ton kaiiak de samedi est officiel.\n'
+    body: 'Ton yapigo de samedi est officiel.\n'
         '• Rendez-vous au parc Laurier à 9h00\n'
         '• Sortie vélo d\'environ 20 km, niveau « renard rusé »\n'
-        '• Cherche le groupe avec le drapeau kaiiak\n'
+        '• Cherche le groupe avec le drapeau yapigo\n'
         '• Bonne sortie!',
     timestamp: DateTime.now().subtract(const Duration(hours: 3)),
   ),
@@ -62,7 +62,7 @@ final mockNotifications = <AppNotification>[
     id: 'n3',
     type: NotificationType.runToday,
     title: 'C\'est aujourd\'hui! 🧘',
-    body: 'Ton kaiiak commence bientôt! RDV à 9h00 au parc Laurier, 2975 rue Brébeuf. '
+    body: 'Ton yapigo commence bientôt! RDV à 9h00 au parc Laurier, 2975 rue Brébeuf. '
         'N\'oublie pas ta gourde, ton sourire et une couche si ça refroidit.',
     timestamp: DateTime.now().subtract(const Duration(hours: 5)),
   ),
@@ -78,7 +78,7 @@ final mockNotifications = <AppNotification>[
     id: 'n_no_quorum',
     type: NotificationType.eventCancelledNoQuorum,
     title: 'Activité annulée — pas assez de monde',
-    body: 'Malheureusement, le kaiiak de jeudi n\'a pas atteint le minimum de participants. '
+    body: 'Malheureusement, le yapigo de jeudi n\'a pas atteint le minimum de participants. '
         'Tu peux te réinscrire à un autre créneau sans frais.',
     timestamp: DateTime.now().subtract(const Duration(days: 1)),
     isRead: true,
@@ -87,7 +87,7 @@ final mockNotifications = <AppNotification>[
     id: 'n5',
     type: NotificationType.rateReminder,
     title: 'Comment c\'était samedi? ⭐',
-    body: 'Note ton dernier kaiiak au Mile-End — ça nous aide à former de meilleurs groupes. '
+    body: 'Note ton dernier yapigo au Mile-End — ça nous aide à former de meilleurs groupes. '
         'Bonus: 15 XP pour toi.',
     timestamp: DateTime.now().subtract(const Duration(days: 2)),
     isRead: true,

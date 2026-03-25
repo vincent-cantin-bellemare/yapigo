@@ -3,8 +3,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:video_player/video_player.dart';
-import 'package:kaiiak/theme/app_theme.dart';
-import 'package:kaiiak/main.dart';
+import 'package:yapigo/theme/app_theme.dart';
+import 'package:yapigo/main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -38,8 +38,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
     _isDark = Theme.of(context).brightness == Brightness.dark;
     final videoAsset = _isDark
-        ? 'assets/video/kaiiak_dark.mp4'
-        : 'assets/video/kaiiak_light.mp4';
+        ? 'assets/video/yapigo_dark.mp4'
+        : 'assets/video/yapigo_light.mp4';
 
     _videoController = VideoPlayerController.asset(videoAsset)
       ..initialize().then((_) {
@@ -111,8 +111,8 @@ class _SplashScreenState extends State<SplashScreen> {
                     )
                   : Image.asset(
                       _isDark
-                          ? 'assets/images/logo_kaiiak_white.png'
-                          : 'assets/images/logo_kaiiak.png',
+                          ? 'assets/images/logo_yapigo_white.png'
+                          : 'assets/images/logo_yapigo.png',
                       width: 220,
                       height: 220,
                     ),

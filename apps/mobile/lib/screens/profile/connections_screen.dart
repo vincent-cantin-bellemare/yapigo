@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/data/mock_users.dart';
-import 'package:kaiiak/models/user.dart';
-import 'package:kaiiak/screens/profile/contact_form_screen.dart';
-import 'package:kaiiak/theme/app_theme.dart';
+import 'package:yapigo/data/mock_users.dart';
+import 'package:yapigo/models/user.dart';
+import 'package:yapigo/screens/profile/contact_form_screen.dart';
+import 'package:yapigo/theme/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ConnectionsScreen extends StatelessWidget {
@@ -87,7 +87,7 @@ class _StravaConnectionCardState extends State<StravaConnectionCard> {
         title: Text('Déconnecter Strava ?',
             style: GoogleFonts.nunito(fontWeight: FontWeight.w700)),
         content: Text(
-          'Tes données Strava seront supprimées de kaiiak. Tu pourras reconnecter en tout temps.',
+          'Tes données Strava seront supprimées de yapigo. Tu pourras reconnecter en tout temps.',
           style: GoogleFonts.dmSans(fontSize: 14, height: 1.5),
         ),
         actions: [
@@ -497,7 +497,7 @@ class OrganizerCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Les Organisateurs sont les personnes ressources de kaiiak. '
+            'Les Organisateurs sont les personnes ressources de yapigo. '
             'Tu guides le groupe, tu donnes le rythme et tu '
             't\'assures que personne ne reste seul à l\'arrière. '
             'C\'est un rôle clé pour la communauté!',

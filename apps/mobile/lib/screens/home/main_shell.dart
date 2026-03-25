@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:kaiiak/data/mock_messages.dart';
-import 'package:kaiiak/data/mock_notifications.dart';
-import 'package:kaiiak/screens/home/home_screen.dart';
-import 'package:kaiiak/screens/events/events_list_screen.dart';
-import 'package:kaiiak/screens/members/members_screen.dart';
-import 'package:kaiiak/screens/activity/activity_screen.dart';
-import 'package:kaiiak/screens/profile/profile_screen.dart';
-import 'package:kaiiak/theme/app_theme.dart';
-import 'package:kaiiak/widgets/frosted_container.dart';
+import 'package:yapigo/data/mock_messages.dart';
+import 'package:yapigo/data/mock_notifications.dart';
+import 'package:yapigo/screens/home/home_screen.dart';
+import 'package:yapigo/screens/events/events_list_screen.dart';
+import 'package:yapigo/screens/members/members_screen.dart';
+import 'package:yapigo/screens/activity/activity_screen.dart';
+import 'package:yapigo/screens/profile/profile_screen.dart';
+import 'package:yapigo/theme/app_theme.dart';
+import 'package:yapigo/widgets/frosted_container.dart';
 
 const double _kNavBarHeight = 64;
 

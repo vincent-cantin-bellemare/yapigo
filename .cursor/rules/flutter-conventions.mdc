@@ -1,5 +1,5 @@
 ---
-description: Flutter/Dart coding conventions for kaiiak
+description: Flutter/Dart coding conventions for yapigo
 globs: apps/mobile/**/*.dart
 alwaysApply: false
 ---

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/data/mock_events.dart';
-import 'package:kaiiak/models/kai_event.dart';
-import 'package:kaiiak/screens/auth/signup_wizard_screen.dart';
-import 'package:kaiiak/theme/app_theme.dart';
-import 'package:kaiiak/widgets/app_logo.dart';
-import 'package:kaiiak/widgets/demo_banner.dart';
-import 'package:kaiiak/widgets/pace_label_icon.dart';
+import 'package:yapigo/data/mock_events.dart';
+import 'package:yapigo/models/kai_event.dart';
+import 'package:yapigo/screens/auth/signup_wizard_screen.dart';
+import 'package:yapigo/theme/app_theme.dart';
+import 'package:yapigo/widgets/app_logo.dart';
+import 'package:yapigo/widgets/demo_banner.dart';
+import 'package:yapigo/widgets/pace_label_icon.dart';
 
 String _formatGuestEventDate(DateTime dt) {
   const days = [

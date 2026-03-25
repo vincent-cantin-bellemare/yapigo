@@ -67,7 +67,7 @@ flutter build ios --release --dart-define=BUILD_DATE="$BUILD_DATE"
 xcrun devicectl device install app --device 00008150-001E51840202401C build/ios/iphoneos/Runner.app
 
 # Step C: Launch
-xcrun devicectl device process launch --device 00008150-001E51840202401C com.codeshop.kaiiak
+xcrun devicectl device process launch --device 00008150-001E51840202401C com.codeshop.yapigo
 ```
 
 The `BUILD_DATE` value must be in French format: `"DD mois YYYY HHhMM"` (e.g. `"24 mars 2026 11h45"`), toujours en **heure de Montréal**.
@@ -83,5 +83,5 @@ The `BUILD_DATE` value must be in French format: `"DD mois YYYY HHhMM"` (e.g. `"
 - **ALWAYS clean zombie processes before deploying**
 - **Do NOT use `flutter run`** — it frequently hangs or aborts. Use the 3-step build/install/launch method instead
 - **ALWAYS pass `--dart-define=BUILD_DATE`** — this is how the user verifies the correct version is deployed
-- The iPhone device ID is `00008150-001E51840202401C` (test device for kaiiak)
-- The bundle ID is `com.codeshop.kaiiak` (app display name: kaiiak)
+- The iPhone device ID is `00008150-001E51840202401C` (test device for yapigo)
+- The bundle ID is `com.codeshop.yapigo` (app display name: yapigo)

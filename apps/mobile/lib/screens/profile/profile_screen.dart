@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:kaiiak/data/mock_users.dart';
-import 'package:kaiiak/models/user.dart';
-import 'package:kaiiak/screens/profile/buddy_code_screen.dart';
-import 'package:kaiiak/screens/profile/connection_requests_screen.dart';
-import 'package:kaiiak/screens/profile/connections_screen.dart';
-import 'package:kaiiak/screens/profile/edit_profile_screen.dart';
-import 'package:kaiiak/screens/profile/help_legal_screen.dart';
-import 'package:kaiiak/screens/profile/invite_friend_screen.dart';
-import 'package:kaiiak/screens/profile/user_profile_sheet.dart';
-import 'package:kaiiak/screens/profile/verify_account_screen.dart';
-import 'package:kaiiak/theme/app_theme.dart';
-import 'package:kaiiak/utils/app_locale.dart';
-import 'package:kaiiak/widgets/demo_banner.dart';
-import 'package:kaiiak/widgets/user_photo_viewer.dart';
+import 'package:yapigo/data/mock_users.dart';
+import 'package:yapigo/models/user.dart';
+import 'package:yapigo/screens/profile/buddy_code_screen.dart';
+import 'package:yapigo/screens/profile/connection_requests_screen.dart';
+import 'package:yapigo/screens/profile/connections_screen.dart';
+import 'package:yapigo/screens/profile/edit_profile_screen.dart';
+import 'package:yapigo/screens/profile/help_legal_screen.dart';
+import 'package:yapigo/screens/profile/invite_friend_screen.dart';
+import 'package:yapigo/screens/profile/user_profile_sheet.dart';
+import 'package:yapigo/screens/profile/verify_account_screen.dart';
+import 'package:yapigo/theme/app_theme.dart';
+import 'package:yapigo/utils/app_locale.dart';
+import 'package:yapigo/widgets/demo_banner.dart';
+import 'package:yapigo/widgets/user_photo_viewer.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -170,8 +170,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const buildDate = String.fromEnvironment('BUILD_DATE',
                       defaultValue: '');
                   final label = buildDate.isNotEmpty
-                      ? 'kaiiak v$version ($build) · $buildDate'
-                      : 'kaiiak v$version ($build)';
+                      ? 'yapigo v$version ($build) · $buildDate'
+                      : 'yapigo v$version ($build)';
                   return Center(
                     child: Text(
                       label,

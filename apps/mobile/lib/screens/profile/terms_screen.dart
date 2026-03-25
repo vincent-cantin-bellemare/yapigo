@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/theme/app_theme.dart';
+import 'package:yapigo/theme/app_theme.dart';
 
 class TermsScreen extends StatelessWidget {
   const TermsScreen({super.key});
@@ -22,9 +22,9 @@ class TermsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _section(context, '1. Acceptation des conditions',
-                'En utilisant l\'application kaiiak, vous acceptez les présentes conditions d\'utilisation. Si vous n\'acceptez pas ces conditions, veuillez ne pas utiliser l\'application.'),
+                'En utilisant l\'application yapigo, vous acceptez les présentes conditions d\'utilisation. Si vous n\'acceptez pas ces conditions, veuillez ne pas utiliser l\'application.'),
             _section(context, '2. Description du service',
-                'kaiiak est une plateforme d\'activités sportives sociales qui organise des sorties en groupe dans les quartiers de Montréal. L\'application forme des sous-groupes de 6 à 8 personnes selon les préférences et le niveau d\'intensité des utilisateurs.'),
+                'yapigo est une plateforme d\'activités sportives sociales qui organise des sorties en groupe dans les quartiers de Montréal. L\'application forme des sous-groupes de 6 à 8 personnes selon les préférences et le niveau d\'intensité des utilisateurs.'),
             _section(context, '3. Inscription et compte',
                 'Vous devez avoir au moins 18 ans pour utiliser le service. Vous êtes responsable de maintenir la confidentialité de votre compte et de toutes les activités qui s\'y déroulent. Les informations fournies doivent être exactes et à jour.'),
             _section(context, '4. Comportement des utilisateurs',
@@ -34,13 +34,13 @@ class TermsScreen extends StatelessWidget {
             _section(context, '6. Annulations et désinscriptions',
                 'Vous pouvez vous désinscrire d\'une activité avant la date limite d\'inscription. Les annulations répétées peuvent affecter votre score et votre priorité de placement.'),
             _section(context, '7. Propriété intellectuelle',
-                'Tout le contenu de l\'application, y compris les textes, graphiques, logos et logiciels, est la propriété de kaiiak et est protégé par les lois sur la propriété intellectuelle.'),
+                'Tout le contenu de l\'application, y compris les textes, graphiques, logos et logiciels, est la propriété de yapigo et est protégé par les lois sur la propriété intellectuelle.'),
             _section(context, '8. Limitation de responsabilité',
-                'kaiiak ne peut être tenu responsable des interactions entre utilisateurs en dehors de la plateforme. Nous recommandons de toujours vous rencontrer dans des lieux publics et éclairés.'),
+                'yapigo ne peut être tenu responsable des interactions entre utilisateurs en dehors de la plateforme. Nous recommandons de toujours vous rencontrer dans des lieux publics et éclairés.'),
             _section(context, '9. Modifications',
                 'Nous nous réservons le droit de modifier ces conditions à tout moment. Les utilisateurs seront informés des changements importants par notification.'),
             _section(context, '10. Contact',
-                'Pour toute question concernant ces conditions, contactez-nous à contact@kaiiak.com.'),
+                'Pour toute question concernant ces conditions, contactez-nous à contact@yapigo.com.'),
             const SizedBox(height: 16),
             Text(
               'Dernière mise à jour: Mars 2026',

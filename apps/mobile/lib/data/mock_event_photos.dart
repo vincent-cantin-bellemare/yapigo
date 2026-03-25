@@ -1,4 +1,4 @@
-import 'package:kaiiak/models/event_photo.dart';
+import 'package:yapigo/models/event_photo.dart';
 
 final mockEventPhotos = <EventPhoto>[
   // Past event e7 — Hochelaga

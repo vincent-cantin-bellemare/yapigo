@@ -1,4 +1,4 @@
-import 'package:kaiiak/models/user.dart';
+import 'package:yapigo/models/user.dart';
 
 class Message {
   final String id;

@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/data/mock_questions.dart';
-import 'package:kaiiak/models/kai_event.dart';
-import 'package:kaiiak/models/waiting_question.dart';
-import 'package:kaiiak/screens/waiting/match_reveal_screen.dart';
-import 'package:kaiiak/theme/app_theme.dart';
+import 'package:yapigo/data/mock_questions.dart';
+import 'package:yapigo/models/kai_event.dart';
+import 'package:yapigo/models/waiting_question.dart';
+import 'package:yapigo/screens/waiting/match_reveal_screen.dart';
+import 'package:yapigo/theme/app_theme.dart';
 
 class WaitingScreen extends StatefulWidget {
   const WaitingScreen({super.key, this.event, this.buddyUserId});
@@ -28,7 +28,7 @@ class _WaitingScreenState extends State<WaitingScreen>
     'N\'oublie pas ta gourde!',
     'Arrive 5 min avant au point de départ 📍',
     'Le rythme du groupe, c\'est le rythme de jasette 💬',
-    '85% des participants kaiiak reviennent la semaine suivante 🔁',
+    '85% des participants yapigo reviennent la semaine suivante 🔁',
     'Les 15 premières minutes sont les meilleures pour briser la glace ❄️',
     '67% des connexions se font pendant le Ravito Smoothie 🥤',
   ];

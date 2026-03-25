@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/data/mock_users.dart';
-import 'package:kaiiak/data/quebec_cities.dart';
-import 'package:kaiiak/screens/profile/bio_quiz_screen.dart';
-import 'package:kaiiak/theme/app_theme.dart';
-import 'package:kaiiak/widgets/demo_banner.dart';
-import 'package:kaiiak/widgets/user_photo_viewer.dart';
+import 'package:yapigo/data/mock_users.dart';
+import 'package:yapigo/data/quebec_cities.dart';
+import 'package:yapigo/screens/profile/bio_quiz_screen.dart';
+import 'package:yapigo/theme/app_theme.dart';
+import 'package:yapigo/widgets/demo_banner.dart';
+import 'package:yapigo/widgets/user_photo_viewer.dart';
 
 enum ProfileVisibility { public, internal, private_ }
 
@@ -616,7 +616,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       (ProfileVisibility.public, '🌐', 'Public',
           'Visible sur le site web, tout le monde peut consulter ton profil.'),
       (ProfileVisibility.internal, '👥', 'Interne',
-          'Seulement les membres de la communauté kaiiak peuvent te voir.'),
+          'Seulement les membres de la communauté yapigo peuvent te voir.'),
       (ProfileVisibility.private_, '🔒', 'Privé',
           'Seuls les membres de tes événements peuvent voir ton profil.'),
     ];
@@ -726,7 +726,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
           const SizedBox(height: 10),
           Text(
-            'En activant cette option, tu acceptes que ton profil (photo, prénom et bio) puisse être sélectionné pour apparaître sur les réseaux sociaux de kaiiak afin d\'inspirer de nouveaux membres à rejoindre la communauté.',
+            'En activant cette option, tu acceptes que ton profil (photo, prénom et bio) puisse être sélectionné pour apparaître sur les réseaux sociaux de yapigo afin d\'inspirer de nouveaux membres à rejoindre la communauté.',
             style: GoogleFonts.dmSans(
                 fontSize: 14,
                 color: AppTheme.secondaryText(context),

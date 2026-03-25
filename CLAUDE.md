@@ -1,4 +1,4 @@
-# kaiiak — Instructions Claude Code
+# yapigo — Instructions Claude Code
 
 ## Langue
 

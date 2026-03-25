@@ -1,4 +1,4 @@
-import 'package:kaiiak/models/waiting_question.dart';
+import 'package:yapigo/models/waiting_question.dart';
 
 final mockWaitingQuestions = <WaitingQuestion>[
   const WaitingQuestion(
@@ -95,7 +95,7 @@ final mockWaitingQuestions = <WaitingQuestion>[
   ),
   const WaitingQuestion(
     id: 'q12',
-    question: 'Objectif sur un kaiiak?',
+    question: 'Objectif sur un yapigo?',
     options: [
       'Finir en souriant',
       'Me faire un ami sportif',
@@ -153,7 +153,7 @@ final mockWaitingQuestions = <WaitingQuestion>[
   ),
   const WaitingQuestion(
     id: 'q20',
-    question: 'Premier kaiiak, tu espères surtout...',
+    question: 'Premier yapigo, tu espères surtout...',
     options: [
       'Ne pas finir à la traîne (lol)',
       'Rire au moins une fois',

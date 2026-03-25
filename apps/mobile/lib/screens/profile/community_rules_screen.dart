@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/theme/app_theme.dart';
+import 'package:yapigo/theme/app_theme.dart';
 
 class CommunityRulesScreen extends StatelessWidget {
   const CommunityRulesScreen({super.key});

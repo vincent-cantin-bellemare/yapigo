@@ -6,25 +6,25 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:kaiiak/data/mock_event_photos.dart';
-import 'package:kaiiak/data/mock_events.dart';
-import 'package:kaiiak/data/mock_users.dart';
-import 'package:kaiiak/screens/community/community_feed_screen.dart';
-import 'package:kaiiak/models/kai_event.dart';
-import 'package:kaiiak/models/user.dart';
-import 'package:kaiiak/screens/events/event_detail_screen.dart';
-import 'package:kaiiak/screens/events/events_list_screen.dart';
-import 'package:kaiiak/screens/events/rate_event_screen.dart';
-import 'package:kaiiak/screens/home/main_shell.dart';
-import 'package:kaiiak/screens/profile/contact_form_screen.dart';
-import 'package:kaiiak/screens/profile/user_profile_sheet.dart';
-import 'package:kaiiak/theme/app_theme.dart';
+import 'package:yapigo/data/mock_event_photos.dart';
+import 'package:yapigo/data/mock_events.dart';
+import 'package:yapigo/data/mock_users.dart';
+import 'package:yapigo/screens/community/community_feed_screen.dart';
+import 'package:yapigo/models/kai_event.dart';
+import 'package:yapigo/models/user.dart';
+import 'package:yapigo/screens/events/event_detail_screen.dart';
+import 'package:yapigo/screens/events/events_list_screen.dart';
+import 'package:yapigo/screens/events/rate_event_screen.dart';
+import 'package:yapigo/screens/home/main_shell.dart';
+import 'package:yapigo/screens/profile/contact_form_screen.dart';
+import 'package:yapigo/screens/profile/user_profile_sheet.dart';
+import 'package:yapigo/theme/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:kaiiak/widgets/app_logo.dart';
-import 'package:kaiiak/widgets/photo_gallery_viewer.dart';
-import 'package:kaiiak/widgets/pace_label_icon.dart';
-import 'package:kaiiak/widgets/user_avatar.dart';
-import 'package:kaiiak/widgets/skeletons/shimmer_block.dart';
+import 'package:yapigo/widgets/app_logo.dart';
+import 'package:yapigo/widgets/photo_gallery_viewer.dart';
+import 'package:yapigo/widgets/pace_label_icon.dart';
+import 'package:yapigo/widgets/user_avatar.dart';
+import 'package:yapigo/widgets/skeletons/shimmer_block.dart';
 
 // ---------------------------------------------------------------------------
 // Testimonial data
@@ -32,7 +32,7 @@ import 'package:kaiiak/widgets/skeletons/shimmer_block.dart';
 
 final _testimonials = [
   (
-    'On s\'est rencontrés lors d\'une activité kaiiak. Maintenant on bouge ensemble tous les matins!',
+    'On s\'est rencontrés lors d\'une activité yapigo. Maintenant on bouge ensemble tous les matins!',
     'Sophie',
     31,
     'https://i.pravatar.cc/100?img=1',
@@ -1947,7 +1947,7 @@ class _CompatibleProfilesSection extends StatelessWidget {
             .slideY(begin: 0.1, end: 0, duration: 400.ms, delay: 900.ms),
         const SizedBox(height: 6),
         Text(
-          'kaiiak favorise les rencontres actives, en vrai. '
+          'yapigo favorise les rencontres actives, en vrai. '
           'Découvre ces profils à ta prochaine activité!',
           style: GoogleFonts.dmSans(
             fontSize: 14,

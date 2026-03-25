@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:kaiiak/models/user.dart';
-import 'package:kaiiak/theme/app_theme.dart';
-import 'package:kaiiak/widgets/like_message_sheet.dart';
-import 'package:kaiiak/widgets/pace_label_icon.dart';
-import 'package:kaiiak/widgets/user_avatar.dart';
-import 'package:kaiiak/widgets/user_photo_viewer.dart';
-import 'package:kaiiak/data/mock_events.dart';
-import 'package:kaiiak/data/mock_meeting_points.dart';
-import 'package:kaiiak/models/kai_event.dart';
-import 'package:kaiiak/screens/events/event_detail_screen.dart';
+import 'package:yapigo/models/user.dart';
+import 'package:yapigo/theme/app_theme.dart';
+import 'package:yapigo/widgets/like_message_sheet.dart';
+import 'package:yapigo/widgets/pace_label_icon.dart';
+import 'package:yapigo/widgets/user_avatar.dart';
+import 'package:yapigo/widgets/user_photo_viewer.dart';
+import 'package:yapigo/data/mock_events.dart';
+import 'package:yapigo/data/mock_meeting_points.dart';
+import 'package:yapigo/models/kai_event.dart';
+import 'package:yapigo/screens/events/event_detail_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UserProfileSheet extends StatefulWidget {

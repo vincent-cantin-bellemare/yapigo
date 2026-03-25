@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kaiiak/theme/app_theme.dart';
+import 'package:yapigo/theme/app_theme.dart';
 
 class DemoModeNotifier extends ValueNotifier<bool> {
   DemoModeNotifier() : super(true);

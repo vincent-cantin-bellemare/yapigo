@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/theme/app_theme.dart';
+import 'package:yapigo/theme/app_theme.dart';
 
 /// App icon ("k" with wave on gradient) with optional app name text.
 class AppLogo extends StatelessWidget {
@@ -25,7 +25,7 @@ class AppLogo extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(size * 0.22),
           child: Image.asset(
-            'assets/images/kaiiak_icon.png',
+            'assets/images/yapigo_icon.png',
             width: size,
             height: size,
             fit: BoxFit.cover,
@@ -34,7 +34,7 @@ class AppLogo extends StatelessWidget {
         if (showText) ...[
           SizedBox(height: size * 0.18),
           Text(
-            'kaiiak',
+            'yapigo',
             style: GoogleFonts.dmSans(
               fontSize: size * 0.22,
               fontWeight: FontWeight.w300,

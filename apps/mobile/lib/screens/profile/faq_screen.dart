@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/theme/app_theme.dart';
+import 'package:yapigo/theme/app_theme.dart';
 
 class FaqScreen extends StatelessWidget {
   const FaqScreen({super.key});
 
   static const _faqs = <_FaqItem>[
     _FaqItem(
-      question: 'C\'est quoi kaiiak?',
-      answer: 'kaiiak c\'est une app sociale sportive pour bouger en groupe '
+      question: 'C\'est quoi yapigo?',
+      answer: 'yapigo c\'est une app sociale sportive pour bouger en groupe '
           'à Montréal. On te place dans un sous-groupe '
           'compatible selon ton niveau d\'intensité, tes intérêts et ta vibe. Après '
           'l\'activité, on se retrouve pour le Ravito Smoothie!',
@@ -47,7 +47,7 @@ class FaqScreen extends StatelessWidget {
       answer: 'L\'Organisateur c\'est la personne ressource de ton sous-groupe. Il '
           'donne le rythme, s\'assure que personne reste seul à l\'arrière '
           'et met de l\'ambiance. Les Organisateurs sont des participants '
-          'expérimentés et bénévoles sélectionnés par l\'équipe kaiiak.',
+          'expérimentés et bénévoles sélectionnés par l\'équipe yapigo.',
     ),
     _FaqItem(
       question: 'C\'est quoi un Buddy Code?',
@@ -68,7 +68,7 @@ class FaqScreen extends StatelessWidget {
     ),
     _FaqItem(
       question: 'Est-ce que je peux choisir les membres de mon groupe?',
-      answer: 'Non, la magie de kaiiak c\'est de rencontrer des '
+      answer: 'Non, la magie de yapigo c\'est de rencontrer des '
           'nouvelles personnes! L\'IA se charge de former un groupe avec '
           'lequel tu devrais bien t\'entendre. Par contre, tu peux '
           'utiliser un Buddy Code pour être jumelé avec un ami.',
@@ -92,7 +92,7 @@ class FaqScreen extends StatelessWidget {
       question: 'Comment signaler un comportement inapproprié?',
       answer: 'Dans le chat de groupe, appuie sur le menu (⋯) en haut à '
           'droite et sélectionne "Signaler". Tu peux aussi nous écrire '
-          'à contact@kaiiak.com. On prend chaque signalement au sérieux.',
+          'à contact@yapigo.com. On prend chaque signalement au sérieux.',
     ),
   ];
 

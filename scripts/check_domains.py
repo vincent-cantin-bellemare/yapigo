@@ -110,7 +110,7 @@ def status_plain(available: Optional[bool]) -> str:
 
 
 def main():
-    print(f"\n{BOLD}🔍 Domain Availability Checker — kaiiak brand candidates{RESET}")
+    print(f"\n{BOLD}🔍 Domain Availability Checker — yapigo brand candidates{RESET}")
     print(f"   Checking {len(NAMES)} names × {len(EXTENSIONS)} extensions = {len(NAMES) * len(EXTENSIONS)} lookups")
     print(f"   This will take a few minutes...\n")
 

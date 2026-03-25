@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/data/mock_users.dart';
-import 'package:kaiiak/theme/app_theme.dart';
+import 'package:yapigo/data/mock_users.dart';
+import 'package:yapigo/theme/app_theme.dart';
 
 enum ContactSubject {
   newCity('Proposer une nouvelle ville', Icons.location_city_outlined),
@@ -256,7 +256,7 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
             const SizedBox(height: 16),
             Center(
               child: Text(
-                'Tu peux aussi nous écrire à contact@kaiiak.com',
+                'Tu peux aussi nous écrire à contact@yapigo.com',
                 style: GoogleFonts.dmSans(
                   fontSize: 14,
                   color: AppTheme.secondaryText(context),

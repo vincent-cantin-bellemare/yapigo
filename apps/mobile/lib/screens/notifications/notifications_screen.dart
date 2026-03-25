@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:kaiiak/data/mock_events.dart';
-import 'package:kaiiak/data/mock_notifications.dart';
-import 'package:kaiiak/models/app_notification.dart';
-import 'package:kaiiak/models/kai_event.dart';
-import 'package:kaiiak/screens/events/event_detail_screen.dart';
-import 'package:kaiiak/theme/app_theme.dart';
-import 'package:kaiiak/widgets/user_avatar.dart';
+import 'package:yapigo/data/mock_events.dart';
+import 'package:yapigo/data/mock_notifications.dart';
+import 'package:yapigo/models/app_notification.dart';
+import 'package:yapigo/models/kai_event.dart';
+import 'package:yapigo/screens/events/event_detail_screen.dart';
+import 'package:yapigo/theme/app_theme.dart';
+import 'package:yapigo/widgets/user_avatar.dart';
 
 String _formatRelativeTime(DateTime dateTime) {
   final now = DateTime.now();

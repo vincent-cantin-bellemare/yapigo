@@ -1,16 +1,16 @@
 ---
-description: Project context for kaiiak
+description: Project context for yapigo
 alwaysApply: true
 ---
 
-# kaiiak — Project Context
+# yapigo — Project Context
 
-Multi-sport social app for all active people in Quebec. Domain: kaiiak.com
+Multi-sport social app for all active people in Quebec. Domain: yapigo.com
 
 - **Scope**: not running-only — all outdoor sports (running, road cycling, mountain biking, kayak, yoga, hiking, swimming, cross-country skiing, snowshoeing, skating). Not a dating app — for everyone who wants to move outside together.
 - **Concept**: people sign up for outdoor activities together. They meet at a "point de chute" (park, café, landmark), the group does the activity together. Afterward, "Apéro Smoothie" at a nearby café.
 - **Features**: buddy codes (ANIMAL-MOT format) for pairing with friends; sub-groups for large events; threshold system (min 6 to confirm); multiple Organisateurs per event; paid activities (on-site payment); recurring events (weekly, biweekly, monthly, custom days).
-- **Models (domain)**: `KaiEvent` (not RunDateEvent), `IntensityLevel` (not PaceLabel), `UserActivity` (sport + level per user), `ActivityMatch`.
+- **Models (domain)**: `YapiEvent` (not RunDateEvent), `IntensityLevel` (not PaceLabel), `UserActivity` (sport + level per user), `ActivityMatch`.
 - **Tone**: casual "tu" (tutoiement), natural Québécois French, encouraging, light and fun
 - **Stack**: Monorepo — Flutter mobile app (`apps/mobile/`), Next.js web app (`apps/web/`, planned), Django backend (`backend/`, planned)
 - **Data**: all data is currently mocked (no backend connected)

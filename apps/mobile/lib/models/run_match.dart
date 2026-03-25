@@ -1,5 +1,5 @@
-import 'package:kaiiak/models/user.dart';
-import 'package:kaiiak/models/meeting_point.dart';
+import 'package:yapigo/models/user.dart';
+import 'package:yapigo/models/meeting_point.dart';
 
 class ActivityMatch {
   final String id;

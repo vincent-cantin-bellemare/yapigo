@@ -5,26 +5,26 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:kaiiak/data/mock_event_photos.dart';
-import 'package:kaiiak/data/mock_meeting_points.dart';
-import 'package:kaiiak/data/mock_users.dart';
-import 'package:kaiiak/data/mock_weather.dart';
-import 'package:kaiiak/models/meeting_point.dart';
-import 'package:kaiiak/models/kai_event.dart';
-import 'package:kaiiak/data/mock_messages.dart';
-import 'package:kaiiak/screens/apply/apply_wizard_screen.dart';
-import 'package:kaiiak/screens/messages/chat_screen.dart';
-import 'package:kaiiak/screens/profile/contact_form_screen.dart';
-import 'package:kaiiak/screens/profile/user_profile_sheet.dart';
-import 'package:kaiiak/theme/app_theme.dart';
-import 'package:kaiiak/utils/neighborhood_assets.dart';
-import 'package:kaiiak/widgets/add_photo_sheet.dart';
-import 'package:kaiiak/widgets/meeting_point_card.dart';
-import 'package:kaiiak/widgets/photo_gallery_viewer.dart';
-import 'package:kaiiak/widgets/pace_label_icon.dart' show intensityLevelIcon;
-import 'package:kaiiak/widgets/distance_label_icon.dart';
-import 'package:kaiiak/widgets/user_avatar.dart';
-import 'package:kaiiak/widgets/weather_badge.dart';
+import 'package:yapigo/data/mock_event_photos.dart';
+import 'package:yapigo/data/mock_meeting_points.dart';
+import 'package:yapigo/data/mock_users.dart';
+import 'package:yapigo/data/mock_weather.dart';
+import 'package:yapigo/models/meeting_point.dart';
+import 'package:yapigo/models/kai_event.dart';
+import 'package:yapigo/data/mock_messages.dart';
+import 'package:yapigo/screens/apply/apply_wizard_screen.dart';
+import 'package:yapigo/screens/messages/chat_screen.dart';
+import 'package:yapigo/screens/profile/contact_form_screen.dart';
+import 'package:yapigo/screens/profile/user_profile_sheet.dart';
+import 'package:yapigo/theme/app_theme.dart';
+import 'package:yapigo/utils/neighborhood_assets.dart';
+import 'package:yapigo/widgets/add_photo_sheet.dart';
+import 'package:yapigo/widgets/meeting_point_card.dart';
+import 'package:yapigo/widgets/photo_gallery_viewer.dart';
+import 'package:yapigo/widgets/pace_label_icon.dart' show intensityLevelIcon;
+import 'package:yapigo/widgets/distance_label_icon.dart';
+import 'package:yapigo/widgets/user_avatar.dart';
+import 'package:yapigo/widgets/weather_badge.dart';
 
 String _frenchWeekday(int weekday) {
   const days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
@@ -109,7 +109,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                 'Viens bouger avec moi! 💪\n\n'
                 '${e.neighborhood} — $day $time\n'
                 '${e.distanceLabel.label}\n\n'
-                'Inscris-toi sur kaiiak.com',
+                'Inscris-toi sur yapigo.com',
               );
             },
           ),
