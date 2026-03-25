@@ -873,24 +873,24 @@ class _WaitingCardState extends State<_WaitingCard> {
 
   static const _slides = [
     (
-      'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80',
+      'assets/images/carousel/carousel_01_activity.png',
       'Trouve ton activité',
-      'Choisis une activité près de chez toi — course, vélo, rando, kayak… il y en a pour tous les goûts.',
+      'Course, vélo, kayak, rando, yoga… choisis ce qui te fait tripper près de chez toi.',
     ),
     (
-      'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80',
+      'assets/images/carousel/carousel_02_meetup.png',
       'Rejoins le groupe',
-      'Rendez-vous au point de départ. L\'organisateur t\'accueille et forme les groupes par niveau.',
+      'On se retrouve au point de chute. L\'organisateur t\'accueille et forme les groupes.',
     ),
     (
-      'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80',
+      'assets/images/carousel/carousel_03_activity.png',
       'On bouge ensemble!',
-      'Bouge avec le groupe, à ton rythme. C\'est le fun, pas la compétition.',
+      'On bouge en gang, à ton rythme. C\'est le fun, pas la compétition.',
     ),
     (
-      'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800&q=80',
+      'assets/images/carousel/carousel_04_ravito.png',
       'Le Ravito',
-      'Après l\'effort, le réconfort! On jase autour d\'un smoothie et on apprend à se connaître.',
+      'Après l\'effort, le réconfort! On jase autour d\'un smoothie entre nouveaux amis.',
     ),
   ];
 
@@ -936,15 +936,9 @@ class _WaitingCardState extends State<_WaitingCard> {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.network(
+                      Image.asset(
                         imageUrl,
                         fit: BoxFit.cover,
-                        errorBuilder: (_, _, _) => Container(
-                          color: AppTheme.navy,
-                          child: const Center(
-                            child: Icon(Icons.image_outlined, color: Colors.white38, size: 48),
-                          ),
-                        ),
                       ),
                       Container(
                         decoration: BoxDecoration(
