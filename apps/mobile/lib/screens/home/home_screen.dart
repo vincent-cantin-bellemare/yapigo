@@ -866,145 +866,172 @@ class _WaitingCard extends StatefulWidget {
   State<_WaitingCard> createState() => _WaitingCardState();
 }
 
-class _WaitingCardState extends State<_WaitingCard>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _pulse;
-  late final Timer _textTimer;
-  int _stepIndex = 0;
+class _WaitingCardState extends State<_WaitingCard> {
+  late final PageController _pageController;
+  late final Timer _autoScroll;
+  int _currentPage = 0;
 
-  static const _steps = [
-    ('assets/icons/step_inscription.png', 'Inscription', 'Inscris-toi à une activité\ndans ton quartier!'),
-    ('assets/icons/step_rencontre.png', 'Départ', 'Rejoins le groupe\nau point de départ.'),
-    ('assets/icons/step_activite.png', 'On bouge!', 'Bouge avec les autres,\nà ton rythme!'),
-    ('assets/icons/step_ravito.png', 'Ravito', 'On apprend à se connaître\naprès l\'activité! ☕'),
+  static const _slides = [
+    (
+      'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80',
+      'Trouve ton activité',
+      'Choisis une activité près de chez toi — course, vélo, rando, kayak… il y en a pour tous les goûts.',
+    ),
+    (
+      'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80',
+      'Rejoins le groupe',
+      'Rendez-vous au point de départ. L\'organisateur t\'accueille et forme les groupes par niveau.',
+    ),
+    (
+      'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=800&q=80',
+      'On bouge ensemble!',
+      'Bouge avec le groupe, à ton rythme. C\'est le fun, pas la compétition.',
+    ),
+    (
+      'https://images.unsplash.com/photo-1543269865-cbf427effbad?w=800&q=80',
+      'Le Ravito',
+      'Après l\'effort, le réconfort! On jase autour d\'un smoothie et on apprend à se connaître.',
+    ),
   ];
 
   @override
   void initState() {
     super.initState();
-    _pulse = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 900),
-    )..repeat(reverse: true);
-    _textTimer = Timer.periodic(const Duration(seconds: 4), (_) {
-      if (mounted) setState(() => _stepIndex = (_stepIndex + 1) % _steps.length);
+    _pageController = PageController(viewportFraction: 1.0);
+    _autoScroll = Timer.periodic(const Duration(seconds: 5), (_) {
+      if (!mounted) return;
+      final next = (_currentPage + 1) % _slides.length;
+      _pageController.animateToPage(
+        next,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOut,
+      );
     });
   }
 
   @override
   void dispose() {
-    _textTimer.cancel();
-    _pulse.dispose();
+    _autoScroll.cancel();
+    _pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppTheme.teal,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: AppTheme.teal.withValues(alpha: 0.35),
-            blurRadius: 24,
-            offset: const Offset(0, 12),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _buildHorizontalStepper(),
-          const SizedBox(height: 16),
-          AnimatedSwitcher(
-            duration: const Duration(milliseconds: 500),
-            transitionBuilder: (child, anim) => FadeTransition(
-              opacity: anim,
-              child: SlideTransition(
-                position: Tween<Offset>(
-                  begin: const Offset(0, 0.2),
-                  end: Offset.zero,
-                ).animate(CurvedAnimation(
-                  parent: anim,
-                  curve: Curves.easeOut,
-                )),
-                child: child,
-              ),
-            ),
-            child: Text(
-              _steps[_stepIndex].$3,
-              key: ValueKey<int>(_stepIndex),
-              textAlign: TextAlign.center,
-              style: GoogleFonts.nunito(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-                color: Colors.white,
-                height: 1.35,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHorizontalStepper() {
-    return Row(
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        for (int i = 0; i < _steps.length; i++) ...[
-          if (i > 0)
-            Expanded(
-              child: Container(
-                height: 2,
-                color: i <= _stepIndex
-                    ? Colors.white.withValues(alpha: 0.8)
-                    : Colors.white.withValues(alpha: 0.2),
+        SizedBox(
+          height: 220,
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: _slides.length,
+            onPageChanged: (i) => setState(() => _currentPage = i),
+            itemBuilder: (context, index) {
+              final (imageUrl, title, description) = _slides[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      Image.network(
+                        imageUrl,
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, _, _) => Container(
+                          color: AppTheme.navy,
+                          child: const Center(
+                            child: Icon(Icons.image_outlined, color: Colors.white38, size: 48),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black.withValues(alpha: 0.3),
+                              Colors.black.withValues(alpha: 0.85),
+                            ],
+                            stops: const [0.2, 0.5, 1.0],
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 14,
+                        left: 14,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                            color: AppTheme.teal,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            '${index + 1}/${_slides.length}',
+                            style: GoogleFonts.dmSans(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.navy,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        left: 16,
+                        right: 16,
+                        bottom: 16,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              style: GoogleFonts.nunito(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w800,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              description,
+                              style: GoogleFonts.dmSans(
+                                fontSize: 13,
+                                color: Colors.white.withValues(alpha: 0.9),
+                                height: 1.4,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(_slides.length, (i) {
+            return AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              width: i == _currentPage ? 20 : 6,
+              height: 6,
+              margin: const EdgeInsets.symmetric(horizontal: 3),
+              decoration: BoxDecoration(
+                color: i == _currentPage
+                    ? AppTheme.teal
+                    : AppTheme.slateGrey.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(3),
               ),
-            ),
-          _buildStepIcon(i),
-        ],
+            );
+          }),
+        ),
       ],
-    );
-  }
-
-  Widget _buildStepIcon(int index) {
-    final isActive = index == _stepIndex;
-    final isPast = index < _stepIndex;
-
-    return AnimatedOpacity(
-      duration: const Duration(milliseconds: 300),
-      opacity: (isActive || isPast) ? 1.0 : 0.4,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          AnimatedScale(
-            scale: isActive ? 1.15 : 1.0,
-            duration: const Duration(milliseconds: 300),
-            child: isActive
-                ? FadeTransition(
-                    opacity: Tween<double>(begin: 0.6, end: 1.0).animate(
-                      CurvedAnimation(
-                          parent: _pulse, curve: Curves.easeInOut),
-                    ),
-                    child: Image.asset(_steps[index].$1,
-                        width: 32, height: 32),
-                  )
-                : Image.asset(_steps[index].$1,
-                    width: 28, height: 28),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            _steps[index].$2,
-            style: GoogleFonts.dmSans(
-              fontSize: 9,
-              fontWeight: isActive ? FontWeight.w700 : FontWeight.w500,
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
