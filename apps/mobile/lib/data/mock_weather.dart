@@ -1,0 +1,70 @@
+import 'package:kaiiak/models/weather_forecast.dart';
+
+final Map<String, WeatherForecast> mockWeatherByEventId = {
+  'e1': const WeatherForecast(
+    temperature: 31,
+    condition: WeatherCondition.sunny,
+    rainProbability: 5,
+    windSpeed: 8,
+    feelsLike: 34,
+    humidityPercent: 65,
+  ),
+  'e2': const WeatherForecast(
+    temperature: 23,
+    condition: WeatherCondition.partlyCloudy,
+    rainProbability: 20,
+    windSpeed: 15,
+    humidityPercent: 55,
+  ),
+  'e3': const WeatherForecast(
+    temperature: 27,
+    condition: WeatherCondition.sunny,
+    rainProbability: 0,
+    windSpeed: 8,
+    feelsLike: 29,
+    humidityPercent: 82,
+  ),
+  'e4': const WeatherForecast(
+    temperature: 22,
+    condition: WeatherCondition.partlyCloudy,
+    rainProbability: 30,
+    windSpeed: 28,
+    humidityPercent: 45,
+  ),
+  'e5': const WeatherForecast(
+    temperature: 14,
+    condition: WeatherCondition.rain,
+    rainProbability: 75,
+    windSpeed: 20,
+    humidityPercent: 90,
+  ),
+  'e6': const WeatherForecast(
+    temperature: 25,
+    condition: WeatherCondition.sunny,
+    rainProbability: 10,
+    windSpeed: 10,
+    humidityPercent: 40,
+  ),
+  'e7': const WeatherForecast(
+    temperature: 19,
+    condition: WeatherCondition.lightRain,
+    rainProbability: 65,
+    windSpeed: 22,
+    humidityPercent: 78,
+  ),
+  'e8': const WeatherForecast(
+    temperature: 5,
+    condition: WeatherCondition.cloudy,
+    rainProbability: 25,
+    windSpeed: 14,
+    feelsLike: 1,
+    humidityPercent: 60,
+  ),
+  'e9': const WeatherForecast(
+    temperature: 18,
+    condition: WeatherCondition.thunderstorm,
+    rainProbability: 85,
+    windSpeed: 35,
+    humidityPercent: 92,
+  ),
+};

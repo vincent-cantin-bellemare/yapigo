@@ -1,0 +1,120 @@
+---
+description: Django admin standards — URL racine, structure, mixins, AdminHTMLUtils, get_*_link patterns
+globs: backend/**/*.py
+alwaysApply: false
+---
+
+# Django Admin Standards
+
+## URL — root `/`, never `/admin/`
+
+```python
+# config/urls_admin.py
+path('', admin.site.urls)   # ✅ root
+path('admin/', ...)          # ❌ never
+```
+
+## File structure
+
+```
+<app>/
+  admin/
+    __init__.py          ← ONLY file that calls @admin.register + defines __all__
+    my_model_admin.py    ← defines class only, no @admin.register
+    my_model_filters.py  ← SimpleListFilter if many filters
+  admin_actions/
+    __init__.py
+    my_model_admin_actions.py
+```
+
+`__init__.py` registers, all other files only define classes.
+
+## Mixin inheritance order
+
+```python
+class MyModelAdmin(BaseAdminMixin, ReadOnlyAdminMixin, admin.ModelAdmin):
+    ...
+```
+
+- `BaseAdminMixin` — CSS, `list_per_page=50`, `show_full_result_count=False`
+- `ReadOnlyAdminMixin` — disables add/change/delete (read-only data)
+- `TimestampAdminMixin` — collapsible timestamps fieldset
+- `SelectRelatedAdminMixin` — auto select_related/prefetch_related via class attributes
+
+## Required on every ModelAdmin
+
+```python
+list_display = [...]          # always include id + get_*_link for FKs
+list_filter = [...]
+search_fields = [...]         # use "=id" prefix for exact ID search
+readonly_fields = ["id", "created_at", "updated_at", ...]
+fieldsets = (...)             # timestamps in a collapsible section
+```
+
+## get_*_link pattern — always use for FK and reverse relations
+
+Never use raw FK field values in list_display. Always use get_*_link methods.
+
+```python
+# ✅ For simple FK → use factory
+get_city_link = make_direct_link(
+    fk_field="city", model_name="city",
+    text_field="name", description="City",
+    order_field="city__name", app_label="geography",
+)
+
+# ✅ For reverse relation → use factory
+get_registrations_link = make_related_link(
+    related_field_name="registrations", model_name="eventregistration",
+    description="Registrations", app_label="events",
+)
+
+# ✅ For complex cases → use AdminHTMLUtils directly
+@admin.display(description="Meeting Point")
+def get_meeting_point_link(self, instance):
+    return AdminHTMLUtils.create_admin_changelist_link(
+        app_label="events", model_name="meetingpoint",
+        filter_params={"id__exact": instance.meeting_point_id},
+        text=str(instance.meeting_point),
+    )
+
+# ❌ Never inline HTML
+def get_city(self, obj):
+    return f'<a href="/admin/...">{obj.city}</a>'
+```
+
+## SimpleListFilter — two patterns
+
+```python
+# Pattern 1: with dynamic counts
+def lookups(self, request, model_admin):
+    qs = model_admin.get_queryset(request)
+    total = qs.count()
+    # ... return (value, f"{label} — {count}/{total} ({pct:.1f}%)")
+
+# Pattern 2: invisible filter (applied via get_*_link URLs)
+def lookups(self, request, model_admin): return ()
+def has_output(self): return False
+```
+
+## N+1 prevention
+
+```python
+# Via SelectRelatedAdminMixin
+select_related_fields = ("city", "neighborhood", "meeting_point")
+prefetch_related_fields = ("registrations",)
+```
+
+## raw_id_fields
+
+Use for any FK to a model with large data (User, KaiEvent):
+```python
+raw_id_fields = ("user", "event", "meeting_point")
+```
+
+## Never
+
+- Never `@admin.register` outside of `admin/__init__.py`
+- Never inline HTML in ModelAdmin — always use `AdminHTMLUtils`
+- Never skip `readonly_fields = ["id", "created_at", "updated_at"]`
+- Never skip `list_per_page` and `show_full_result_count` (inherited from BaseAdminMixin)

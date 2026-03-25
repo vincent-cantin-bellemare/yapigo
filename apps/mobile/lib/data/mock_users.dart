@@ -1,0 +1,473 @@
+import 'package:kaiiak/models/kai_event.dart';
+import 'package:kaiiak/models/user.dart';
+
+/// Logged-in user for demos and local state.
+final User currentUser = User(
+  id: 'u0',
+  firstName: 'Sophie',
+  lastName: 'Tremblay',
+  phone: '+15145550010',
+  gender: 'Femme',
+  sexualOrientation: 'Hétérosexuel(le)',
+  age: 34,
+  city: 'Montréal',
+  neighborhood: 'Le Plateau-Mont-Royal',
+  photoUrl: 'https://picsum.photos/seed/SophieTremblay/200/200',
+  bio:
+      'Dimanche matin : rando sur le Mont-Royal, puis yoga léger pour dénouer. '
+      'La semaine, j\'aime un 5-8 km tranquille pour jaser. Fan de brunch post-effort — kaiiak, c\'est mon excuse pour rencontrer du monde actif sans me prendre au sérieux.',
+  isVerified: true,
+  xp: 420,
+  badge: BadgeLevel.habitue,
+  isSuspended: false,
+  memberSince: DateTime(2023, 4, 12),
+  lastActivityDate: DateTime(2026, 3, 22),
+  lastSeenDate: DateTime(2026, 3, 23),
+  averageRating: 4.8,
+  totalActivities: 12,
+  totalKm: 78.5,
+  photoGallery: [
+    'https://picsum.photos/seed/SophieTremblay_1/400/400',
+    'https://picsum.photos/seed/SophieTremblay_2/400/400',
+    'https://picsum.photos/seed/SophieTremblay_3/400/400',
+  ],
+  activities: const [
+    UserActivity(category: EventCategory.running, level: IntensityLevel.moderate),
+    UserActivity(category: EventCategory.yoga, level: IntensityLevel.relax),
+    UserActivity(category: EventCategory.hiking, level: IntensityLevel.moderate),
+  ],
+  activityGoals: [
+    'Essayer une sortie vélo de route en groupe',
+    'Rencontrer du monde qui mixe course et rando',
+    'Garder un rythme régulier sans me brûler',
+  ],
+  buddyCode: 'KAYAKO-QUEEN',
+  isOrganizer: false,
+  connections: 24,
+  stravaConnected: true,
+  stravaAthleteId: 84201537,
+  stravaDisplayName: 'Sophie Tremblay',
+  stravaYtdKm: 312.4,
+  stravaYtdRuns: 58,
+  stravaAvgPaceSeconds: 345,
+  stravaMonthKm: 48.2,
+);
+
+final User _u1 = User(
+  id: 'u1',
+  firstName: 'Marc',
+  lastName: 'Gagnon',
+  phone: '+15145550021',
+  gender: 'Homme',
+  sexualOrientation: 'Hétérosexuel(le)',
+  age: 42,
+  city: 'Montréal',
+  neighborhood: 'Rosemont',
+  photoUrl: 'https://picsum.photos/seed/MarcGagnon/200/200',
+  bio:
+      'Mon médecin m\'a dit que le café seul, ça comptait pas comme cardio — ça fait huit ans que j\'écoute.\n\n'
+      'Le samedi c\'est souvent vélo de route ou rando : parc Maisonneuve, Mont-Royal quand j\'ai la patate. '
+      'En semaine, course à tempo dans Rosemont ou spin si la météo chie. J\'aime quand ça file, mais je ralentis si la conversation est bonne.\n\n'
+      'J\'ai bouclé deux demi-marathons (Montréal 2022, Ottawa 2023) et je vise un troisième en dessous de 1h45. '
+      'Côté vélo, je monte des sorties plus longues l\'été. Gestion de projets IT au boulot — bouger, c\'est ma soupape.\n\n'
+      'Sur kaiiak je cherche une gang régulière : course, vélo, rando, peu importe tant qu\'on se retrouve après pour un smoothie ou un café. '
+      'Pas besoin que tout le monde soit rapide.\n\n'
+      'Fun facts : bière sans alcool depuis 2021, playlists maison depuis 7 ans, et ma Garmin me connaît mieux que ma mère.',
+  isVerified: true,
+  xp: 1100,
+  badge: BadgeLevel.legende,
+  memberSince: DateTime(2022, 6, 1),
+  lastActivityDate: DateTime(2026, 3, 20),
+  lastSeenDate: DateTime(2026, 3, 23),
+  averageRating: 4.6,
+  totalActivities: 48,
+  totalKm: 612.0,
+  photoGallery: [
+    'https://picsum.photos/seed/MarcGagnon_1/400/400',
+    'https://picsum.photos/seed/MarcGagnon_2/400/400',
+    'https://picsum.photos/seed/MarcGagnon_3/400/400',
+    'https://picsum.photos/seed/MarcGagnon_4/400/400',
+  ],
+  activities: const [
+    UserActivity(category: EventCategory.running, level: IntensityLevel.intense),
+    UserActivity(category: EventCategory.roadCycling, level: IntensityLevel.moderate),
+    UserActivity(category: EventCategory.mountainBiking, level: IntensityLevel.relax),
+    UserActivity(category: EventCategory.mixedTraining, level: IntensityLevel.moderate),
+  ],
+  activityGoals: [
+    'Casser 1h45 au demi',
+    'Faire une sortie vélo groupe de 80 km',
+    'Trouver une équipe chill pour l\'hiver (ski de fond)',
+  ],
+  buddyCode: 'ORIGNAL-TURBO',
+  isOrganizer: false,
+  connections: 47,
+  stravaConnected: true,
+  stravaAthleteId: 15739284,
+  stravaDisplayName: 'Marc G.',
+  stravaYtdKm: 1247.0,
+  stravaYtdRuns: 134,
+  stravaAvgPaceSeconds: 298,
+  stravaMonthKm: 156.3,
+);
+
+final User _u2 = User(
+  id: 'u2',
+  firstName: 'Julie',
+  lastName: 'Roy',
+  phone: '+15145550032',
+  gender: 'Femme',
+  sexualOrientation: 'Bisexuel(le)',
+  age: 31,
+  city: 'Montréal',
+  neighborhood: 'Villeray',
+  photoUrl: 'https://picsum.photos/seed/JulieRoy/200/200',
+  bio:
+      'Nouvelle à Montréal — je veux découvrir la ville en bougeant : petites courses, yoga communautaire, rando le week-end. '
+      'Niveau chill mais motivée ; si tu connais un bon cours pas intimidant, envoie-moi ça!',
+  isVerified: false,
+  xp: 45,
+  badge: BadgeLevel.curieux,
+  memberSince: DateTime(2025, 1, 8),
+  lastActivityDate: DateTime(2026, 3, 18),
+  lastSeenDate: DateTime(2026, 3, 22),
+  averageRating: null,
+  totalActivities: 3,
+  totalKm: 12.4,
+  photoGallery: [
+    'https://picsum.photos/seed/JulieRoy_1/400/400',
+    'https://picsum.photos/seed/JulieRoy_2/400/400',
+  ],
+  activities: const [
+    UserActivity(category: EventCategory.running, level: IntensityLevel.chill),
+    UserActivity(category: EventCategory.yoga, level: IntensityLevel.relax),
+    UserActivity(category: EventCategory.hiking, level: IntensityLevel.chill),
+  ],
+  activityGoals: [
+    'Rencontrer du monde sur kaiiak',
+    'Ne pas me perdre au parc la première fois',
+    'Essayer le patin au bassin bon Dieu',
+  ],
+  buddyCode: 'TORTUE-ROCKET',
+  isOrganizer: false,
+  connections: 5,
+);
+
+final User _u3 = User(
+  id: 'u3',
+  firstName: 'Alex',
+  lastName: 'Bélanger',
+  phone: '+15145550043',
+  gender: 'Homme',
+  sexualOrientation: 'Hétérosexuel(le)',
+  age: 36,
+  city: 'Montréal',
+  neighborhood: 'Mile-End',
+  photoUrl: 'https://picsum.photos/seed/AlexBelanger/200/200',
+  bio:
+      'J\'anime des sorties course et vélo sur kaiiak : rythme soutenu, mais j\'recule si tu sens que t\'as besoin d\'air. '
+      'J\'aime aussi les séances HIIT en gang — le fun, c\'est que tout le monde finisse avec le sourire.',
+  isVerified: true,
+  xp: 380,
+  badge: BadgeLevel.habitue,
+  memberSince: DateTime(2023, 9, 20),
+  lastActivityDate: DateTime(2026, 3, 23),
+  lastSeenDate: DateTime(2026, 3, 23),
+  averageRating: 4.9,
+  totalActivities: 27,
+  totalKm: 298.0,
+  photoGallery: [
+    'https://picsum.photos/seed/AlexBelanger_1/400/400',
+    'https://picsum.photos/seed/AlexBelanger_2/400/400',
+    'https://picsum.photos/seed/AlexBelanger_3/400/400',
+  ],
+  activities: const [
+    UserActivity(category: EventCategory.running, level: IntensityLevel.intense),
+    UserActivity(category: EventCategory.roadCycling, level: IntensityLevel.intense),
+    UserActivity(category: EventCategory.mixedTraining, level: IntensityLevel.moderate),
+  ],
+  activityGoals: [
+    'Garder des sorties accessibles mais stimulantes',
+    'Aider les autres à monter en confiance',
+    'Alterner route et piste cyclable sans drama',
+  ],
+  buddyCode: 'FAUCON-DISCO',
+  isOrganizer: true,
+  connections: 38,
+  stravaConnected: true,
+  stravaAthleteId: 30582194,
+  stravaDisplayName: 'Alex Bélanger',
+  stravaYtdKm: 892.5,
+  stravaYtdRuns: 98,
+  stravaAvgPaceSeconds: 315,
+  stravaMonthKm: 104.0,
+);
+
+final User _u4 = User(
+  id: 'u4',
+  firstName: 'Samir',
+  lastName: 'Khadir',
+  phone: '+15145550054',
+  gender: 'Homme',
+  sexualOrientation: 'Hétérosexuel(le)',
+  age: 28,
+  city: 'Montréal',
+  neighborhood: 'Verdun',
+  photoUrl: 'https://picsum.photos/seed/SamirKhadir/200/200',
+  bio:
+      'Post-bureau, je décompresse en courant doux, en marchant le long du fleuve ou en faisant quelques longueurs. '
+      'Playlist pop québ, zéro jugement — l\'important, c\'est que tu te sentes bien après.',
+  isVerified: true,
+  xp: 210,
+  badge: BadgeLevel.social,
+  memberSince: DateTime(2024, 3, 5),
+  lastActivityDate: DateTime(2026, 3, 19),
+  lastSeenDate: DateTime(2026, 3, 21),
+  averageRating: 4.4,
+  totalActivities: 14,
+  totalKm: 88.2,
+  photoGallery: [
+    'https://picsum.photos/seed/SamirKhadir_1/400/400',
+    'https://picsum.photos/seed/SamirKhadir_2/400/400',
+    'https://picsum.photos/seed/SamirKhadir_3/400/400',
+  ],
+  activities: const [
+    UserActivity(category: EventCategory.running, level: IntensityLevel.relax),
+    UserActivity(category: EventCategory.hiking, level: IntensityLevel.chill),
+    UserActivity(category: EventCategory.swimming, level: IntensityLevel.relax),
+  ],
+  activityGoals: [
+    'Me remettre en forme sans me forcer',
+    'Rejoindre une sortie multi-activités relax',
+    'Découvrir du kayak calme sur la rivière',
+  ],
+  buddyCode: 'CANARD-NINJA',
+  isOrganizer: false,
+  connections: 12,
+  stravaConnected: true,
+  stravaAthleteId: 67184032,
+  stravaDisplayName: 'Samir K.',
+  stravaYtdKm: 198.5,
+  stravaYtdRuns: 32,
+  stravaAvgPaceSeconds: 362,
+  stravaMonthKm: 28.0,
+);
+
+final User _u5 = User(
+  id: 'u5',
+  firstName: 'Émilie',
+  lastName: 'Fortin',
+  phone: '+15145550065',
+  gender: 'Femme',
+  sexualOrientation: 'Hétérosexuel(le)',
+  age: 45,
+  city: 'Montréal',
+  neighborhood: 'Petite-Patrie',
+  photoUrl: 'https://picsum.photos/seed/EmilieFortin/200/200',
+  bio:
+      'Maman qui bouge tôt : 6h, café dans l\'sac, puis école. Entre deux, course modérée, yoga rapide ou p\'tit tour en vélo avec les kids le week-end. '
+      'Quand j\'ai dormi assez, j\'ose même une sortie kayak sur le calme plat.',
+  isVerified: true,
+  xp: 720,
+  badge: BadgeLevel.populaire,
+  memberSince: DateTime(2022, 11, 14),
+  lastActivityDate: DateTime(2026, 3, 22),
+  lastSeenDate: DateTime(2026, 3, 23),
+  averageRating: 4.7,
+  totalActivities: 35,
+  totalKm: 245.5,
+  photoGallery: [
+    'https://picsum.photos/seed/EmilieFortin_1/400/400',
+    'https://picsum.photos/seed/EmilieFortin_2/400/400',
+    'https://picsum.photos/seed/EmilieFortin_3/400/400',
+    'https://picsum.photos/seed/EmilieFortin_4/400/400',
+  ],
+  activities: const [
+    UserActivity(category: EventCategory.running, level: IntensityLevel.moderate),
+    UserActivity(category: EventCategory.yoga, level: IntensityLevel.relax),
+    UserActivity(category: EventCategory.roadCycling, level: IntensityLevel.chill),
+    UserActivity(category: EventCategory.kayaking, level: IntensityLevel.chill),
+  ],
+  activityGoals: [
+    'Garder l\'énergie pour la famille',
+    'Rencontrer d\'autres parents actifs sur kaiiak',
+    'Faire une rando famille au Mont-Saint-Bruno',
+  ],
+  buddyCode: 'LOUTRE-BINGO',
+  isOrganizer: false,
+  connections: 31,
+  stravaConnected: true,
+  stravaAthleteId: 42910385,
+  stravaDisplayName: 'Émilie Fortin',
+  stravaYtdKm: 524.0,
+  stravaYtdRuns: 71,
+  stravaAvgPaceSeconds: 330,
+  stravaMonthKm: 68.5,
+);
+
+final User _u6 = User(
+  id: 'u6',
+  firstName: 'Thomas',
+  lastName: 'Picard',
+  phone: '+15145550076',
+  gender: 'Homme',
+  sexualOrientation: 'Hétérosexuel(le)',
+  age: 38,
+  city: 'Montréal',
+  neighborhood: 'Griffintown',
+  photoUrl: 'https://picsum.photos/seed/ThomasPicard/200/200',
+  bio:
+      'Je fais le tour du canal à pied, à vélo ou en patin quand l\'humeur y est. Apporte une joke plate, j\'apporte le rythme.\n\n'
+      'J\'ai commencé à courir il y a 5 ans, après une rupture qui m\'a laissé avec du temps libre. '
+      'Rapidement c\'est devenu ma thérapie gratuite — le canal à 6h en été, meilleur psy de Montréal. '
+      'Depuis, j\'ajoute du vélo, des randos légers et des sorties kayak quand l\'eau est clémente.\n\n'
+      'Aujourd\'hui je bouge 3 à 4 fois par semaine. J\'aime varier : tempo un jour, chill le lendemain, podcast dans les oreilles.\n\n'
+      'Ce que je cherche avec kaiiak : du monde normal qui aime suer un peu. '
+      'Pas besoin d\'être un athlète, juste quelqu\'un qui se pointe avec le sourire. '
+      'J\'ai fait mes meilleurs chums dans des groupes d\'activités, j\'veux continuer comme ça.\n\n'
+      'Fun facts : meilleur pad thaï de Griffintown (source : moi-même), Habs depuis tout petit, '
+      'et je manque jamais le 5 à 7 du vendredi au marché.',
+  isVerified: true,
+  xp: 340,
+  badge: BadgeLevel.habitue,
+  memberSince: DateTime(2023, 7, 2),
+  lastActivityDate: DateTime(2026, 3, 21),
+  lastSeenDate: DateTime(2026, 3, 23),
+  averageRating: 4.5,
+  totalActivities: 22,
+  totalKm: 176.0,
+  photoGallery: [
+    'https://picsum.photos/seed/ThomasPicard_1/400/400',
+    'https://picsum.photos/seed/ThomasPicard_2/400/400',
+  ],
+  activities: const [
+    UserActivity(category: EventCategory.running, level: IntensityLevel.moderate),
+    UserActivity(category: EventCategory.roadCycling, level: IntensityLevel.relax),
+    UserActivity(category: EventCategory.hiking, level: IntensityLevel.relax),
+    UserActivity(category: EventCategory.skating, level: IntensityLevel.chill),
+  ],
+  activityGoals: [
+    'Explorer de nouveaux parcours à vélo et à pied',
+    'Organiser une sortie canal + apéro',
+    'Essayer une session entraînement mixte en groupe',
+  ],
+  buddyCode: 'CORBEAU-JAZZ',
+  isOrganizer: false,
+  connections: 19,
+  stravaConnected: true,
+  stravaAthleteId: 58293741,
+  stravaDisplayName: 'Thomas Picard',
+  stravaYtdKm: 387.0,
+  stravaYtdRuns: 48,
+  stravaAvgPaceSeconds: 338,
+  stravaMonthKm: 52.0,
+);
+
+final User _u7 = User(
+  id: 'u7',
+  firstName: 'Marie-Claude',
+  lastName: 'Denis',
+  phone: '+15145550087',
+  gender: 'Femme',
+  sexualOrientation: 'Homosexuel(le)',
+  age: 48,
+  city: 'Montréal',
+  neighborhood: 'Hochelaga-Maisonneuve',
+  photoUrl: 'https://picsum.photos/seed/MarieClaudeDenis/200/200',
+  bio:
+      'Je préfère jaser que sprinter — mais j\'arrive en avance au point de rencontre pour accueillir le monde. '
+      'Yoga doux, rando picnic, patin tranquille : tant qu\'on est ensemble dehors, je suis contente.',
+  isVerified: true,
+  xp: 180,
+  badge: BadgeLevel.social,
+  memberSince: DateTime(2024, 5, 18),
+  lastActivityDate: DateTime(2026, 3, 16),
+  lastSeenDate: DateTime(2026, 3, 20),
+  averageRating: 4.9,
+  totalActivities: 11,
+  totalKm: 62.0,
+  photoGallery: [
+    'https://picsum.photos/seed/MarieClaudeDenis_1/400/400',
+    'https://picsum.photos/seed/MarieClaudeDenis_2/400/400',
+    'https://picsum.photos/seed/MarieClaudeDenis_3/400/400',
+  ],
+  activities: const [
+    UserActivity(category: EventCategory.running, level: IntensityLevel.chill),
+    UserActivity(category: EventCategory.hiking, level: IntensityLevel.relax),
+    UserActivity(category: EventCategory.yoga, level: IntensityLevel.chill),
+    UserActivity(category: EventCategory.socialGathering, level: IntensityLevel.chill),
+  ],
+  activityGoals: [
+    'Accueillir les nouveaux sur kaiiak',
+    'Rester régulière sans me mettre la pression',
+    'Monter des sorties où tout le monde se sent à sa place',
+  ],
+  buddyCode: 'HERISSON-PIZZA',
+  isOrganizer: true,
+  connections: 22,
+);
+
+final User _u8 = User(
+  id: 'u8',
+  firstName: 'Jordan',
+  lastName: 'Meunier',
+  phone: '+15145550098',
+  gender: 'Femme',
+  sexualOrientation: 'Bisexuel(le)',
+  age: 29,
+  city: 'Montréal',
+  neighborhood: 'Saint-Henri',
+  photoUrl: 'https://picsum.photos/seed/JordanMeunier/200/200',
+  bio:
+      'Ultra social dans le sens longue distance : gros vélo, rando avec dénivelé, ski de fond — je veux du kilométrage, pas du stress. '
+      'Suis-moi sur le plat ou en montée, mais préviens-moi si t\'as besoin d\'un rythme plus cool.',
+  isVerified: true,
+  xp: 950,
+  badge: BadgeLevel.legende,
+  memberSince: DateTime(2022, 2, 22),
+  lastActivityDate: DateTime(2026, 3, 15),
+  lastSeenDate: DateTime(2026, 3, 19),
+  averageRating: 4.3,
+  totalActivities: 41,
+  totalKm: 520.0,
+  photoGallery: [
+    'https://picsum.photos/seed/JordanMeunier_1/400/400',
+    'https://picsum.photos/seed/JordanMeunier_2/400/400',
+    'https://picsum.photos/seed/JordanMeunier_3/400/400',
+    'https://picsum.photos/seed/JordanMeunier_4/400/400',
+  ],
+  activities: const [
+    UserActivity(category: EventCategory.running, level: IntensityLevel.intense),
+    UserActivity(category: EventCategory.hiking, level: IntensityLevel.intense),
+    UserActivity(category: EventCategory.roadCycling, level: IntensityLevel.intense),
+    UserActivity(category: EventCategory.crossCountrySkiing, level: IntensityLevel.moderate),
+  ],
+  activityGoals: [
+    'Boucler une rando de 30 km+',
+    'Enchaîner vélo + rando dans la même fin de semaine',
+    'Trouver une équipe pour le ski de fond l\'hiver',
+  ],
+  buddyCode: 'CARCAJOU-BEAT',
+  isOrganizer: false,
+  connections: 53,
+  stravaConnected: true,
+  stravaAthleteId: 91347620,
+  stravaDisplayName: 'Jordan M.',
+  stravaYtdKm: 1089.0,
+  stravaYtdRuns: 118,
+  stravaAvgPaceSeconds: 305,
+  stravaMonthKm: 138.0,
+);
+
+/// All mock profiles (includes [currentUser]).
+final List<User> mockUsers = [
+  currentUser,
+  _u1,
+  _u2,
+  _u3,
+  _u4,
+  _u5,
+  _u6,
+  _u7,
+  _u8,
+];

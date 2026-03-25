@@ -1,0 +1,61 @@
+# ============================================================
+# RunDate Monorepo
+# ============================================================
+
+# ---- Flutter (apps/mobile) ----
+apps/mobile/build/
+apps/mobile/.dart_tool/
+apps/mobile/.flutter-plugins
+apps/mobile/.flutter-plugins-dependencies
+apps/mobile/.packages
+apps/mobile/.pub-cache/
+apps/mobile/.pub/
+**/*.iml
+
+# iOS
+apps/mobile/ios/Pods/
+apps/mobile/ios/Runner.xcworkspace/xcuserdata/
+apps/mobile/ios/.symlinks/
+apps/mobile/ios/Flutter/Flutter.framework
+apps/mobile/ios/Flutter/Flutter.podspec
+
+# Android
+apps/mobile/android/local.properties
+apps/mobile/android/*.jks
+apps/mobile/android/key.properties
+apps/mobile/android/.gradle/
+apps/mobile/android/app/debug/
+apps/mobile/android/app/profile/
+apps/mobile/android/app/release/
+
+# ---- Next.js (apps/web) ----
+apps/web/.next/
+apps/web/node_modules/
+apps/web/out/
+apps/web/.env*.local
+
+# ---- Django (backend) ----
+backend/__pycache__/
+backend/**/__pycache__/
+**/*.pyc
+backend/db.sqlite3
+backend/.env
+backend/venv/
+backend/staticfiles/
+backend/media/
+
+# ---- Python scripts ----
+scripts/__pycache__/
+scripts/venv/
+
+# ---- IDE ----
+.vscode/
+.idea/
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Misc ----
+*.log
+*.swp

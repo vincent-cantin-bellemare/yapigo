@@ -1,0 +1,79 @@
+---
+description: GraphQL two-level authentication — ApplicationAccess + UserAccessToken, decorators, headers
+globs: backend/**/*.py
+alwaysApply: false
+---
+
+# GraphQL Authentication — Two Levels
+
+## Headers
+
+```
+Authorization: Basic <base64(username:password)>   ← every request (app identity)
+Token: <64 chars>                                  ← authenticated requests (user)
+language: fr | en                                  ← optional, default fr
+```
+
+Never use `Authorization: Bearer`. The user token goes in the `Token` header.
+
+## Decorator order — always this exact order
+
+```python
+@log_graphql_request
+@require_authorization
+@require_user_access_token   # only if user auth required
+@extract_language
+def mutate(self, info, application_access, user_access, language, ...):
+    ...
+```
+
+Public mutations (login, OTP request) use only `@require_authorization`:
+
+```python
+@log_graphql_request
+@require_authorization
+@extract_language
+def mutate(self, info, application_access, language, phone):
+    ...
+```
+
+## Models
+
+- `ApplicationAccess` — authorized client app (Basic Auth credentials)
+- `UserAccess` — user + application context + access_status
+- `UserAccessToken` — 64-char opaque token linked to UserAccess
+- `ApplicationAccessLog` — logs every GraphQL operation (via @log_graphql_request)
+- `RateLimit` — IP-based rate limiting counter (no Redis)
+
+## CORS allowed headers
+
+```python
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+    "token",
+    "language",
+    "x-csrftoken",
+    "x-language",
+]
+```
+
+## Naming convention for auth mutations
+
+```graphql
+# ✅ Good — follows <app><Model><Action>
+accountsUserAccessRequestOtp
+accountsUserAccessVerifyOtp
+
+# ❌ Bad
+requestOtp
+login
+userLogin
+```
+
+## Never
+
+- Never use JWT
+- Never use `Authorization: Bearer`
+- Never put business logic in decorators — decorators only validate and inject
+- Never log raw `Authorization` or `Token` header values in ApplicationAccessLog

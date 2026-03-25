@@ -1,0 +1,16 @@
+---
+description: Flutter/Dart coding conventions for kaiiak
+globs: apps/mobile/**/*.dart
+alwaysApply: false
+---
+
+# Flutter Conventions
+
+- Comments in English
+- File names: snake_case. Classes: PascalCase. Variables: camelCase.
+- Always use `const` constructors when possible
+- One main widget per file
+- Always use `Theme.of(context)` for colors and text styles — never hardcode colors
+- Minimum text size: 14px (target audience: 30-50 years old)
+- Use named routes for navigation
+- Keep widgets small — extract sub-widgets into separate methods or files when > 80 lines

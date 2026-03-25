@@ -1,0 +1,87 @@
+---
+description: Django settings architecture — ENV role vs ENVIRONMENT deployment, conditional URLs, multi-container
+globs: backend/config/**/*.py
+alwaysApply: false
+---
+
+# Settings Architecture — Two Axes
+
+## Never confuse ENVIRONMENT and ENV
+
+```
+ENVIRONMENT = dev | staging | production | test   → deployment context
+ENV         = None | "admin" | "graphql"          → Django process role
+```
+
+## ENV constants — always use, never hardcode strings
+
+```python
+# config/settings/env_settings.py
+ENV_ADMIN = "admin"
+ENV_GRAPHQL = "graphql"
+ENV = None  # default = dev (admin + graphql in one process)
+```
+
+## Specialized settings files — one line each
+
+```python
+# config/settings_admin.py
+from .settings.base import *
+ENV = ENV_ADMIN
+
+# config/settings_graphql.py
+from .settings.base import *
+ENV = ENV_GRAPHQL
+```
+
+## urls.py — always conditional on settings.ENV
+
+```python
+# ✅ Correct
+if ENV is None or ENV == ENV_ADMIN:
+    urlpatterns += [path('', admin.site.urls)]
+    urlpatterns += [path('graphql/', GraphQLView.as_view(graphiql=True))]
+elif ENV == ENV_GRAPHQL:
+    urlpatterns += [path('graphql/', GraphQLView.as_view(
+        graphiql=False,
+        validation_rules=[DisableIntrospectionRule(), MaxQueryDepthRule(7)],
+    ))]
+
+# ❌ Never hardcode behavior
+urlpatterns = [path('admin/', admin.site.urls)]  # wrong path AND wrong logic
+```
+
+## Security — always driven by ENVIRONMENT
+
+```python
+# ✅ Correct — in security_settings.py
+_IS_SECURE = ENVIRONMENT in ('production', 'staging')
+SECURE_SSL_REDIRECT = _IS_SECURE
+
+# ❌ Never hardcode
+SECURE_SSL_REDIRECT = True
+```
+
+## ENVIRONMENT must be validated at startup
+
+```python
+if ENVIRONMENT not in ('dev', 'staging', 'production', 'test'):
+    raise ImproperlyConfigured(f"Invalid ENVIRONMENT: {ENVIRONMENT!r}")
+```
+
+## Production Docker — one container per role
+
+```yaml
+app-admin:    DJANGO_SETTINGS_MODULE: config.settings_admin    # ENV="admin"
+app-graphql:  DJANGO_SETTINGS_MODULE: config.settings_graphql  # ENV="graphql"
+app-idle:     command: sleep infinity                           # for shell/migrate
+workers:      DJANGO_SETTINGS_MODULE: config.settings_graphql  # management commands
+```
+
+## CSP middleware — only on HTML-serving processes
+
+```python
+# In base.py — CSP is useless on pure GraphQL (JSON only)
+if ENV != ENV_GRAPHQL:
+    MIDDLEWARE.insert(1, "csp.middleware.CSPMiddleware")
+```

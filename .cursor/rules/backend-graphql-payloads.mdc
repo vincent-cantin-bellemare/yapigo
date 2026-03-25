@@ -1,0 +1,56 @@
+---
+description: GraphQL mutation payloads — status, JSON errors dict, Graphene JSONString, translate()
+globs: backend/**/*.py
+alwaysApply: false
+---
+
+# GraphQL — Mutation payload pattern
+
+## Three fields together
+
+Every mutation payload type exposes:
+
+- `status: Boolean` (required) — `True` on success, `False` on failure
+- `errors: JSONString` (required) — Python `dict` serialized to JSON; **`{}` on success**, never `null`
+- One nullable resource field (`registration`, `user`, `verification`, etc.) — **`None` on failure**
+
+## Graphene
+
+```python
+import graphene
+
+class MyMutationPayload(graphene.ObjectType):
+    status = graphene.Boolean(required=True)
+    errors = graphene.JSONString(required=True)
+    registration = graphene.Field(EventRegistrationType)
+```
+
+## Success / failure returns
+
+```python
+return MyMutationPayload(status=True, errors={}, registration=reg)
+
+return MyMutationPayload(
+    status=False,
+    errors={"event_id": translate("errors", "event_not_found", language)},
+    registration=None,
+)
+```
+
+## Error keys
+
+Use standardized keys when applicable: `email`, `password`, `token`, `permission`, `authentication`, `access_status`, `language`, `database`, `rate_limit`, `general`, or the GraphQL argument name for field-specific errors.
+
+## i18n
+
+All user-facing error **values** must come from `translate()` — never hardcoded English/French strings in production code (decorator edge cases may use fixed strings only if `language` is unavailable).
+
+## HTTP
+
+Business failures still return **HTTP 200**; the client checks `status` and `errors`, not the status code.
+
+## Naming
+
+kaiiak mutations use `<app><Model><Action>` (camelCase), not `portal_*` prefixes.
+
+Full spec: [docs/backend/06-api-graphql.md](../docs/backend/06-api-graphql.md) section *Norme GraphQL — Statuts et erreurs*.

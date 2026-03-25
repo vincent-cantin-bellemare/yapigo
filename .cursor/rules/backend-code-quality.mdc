@@ -1,0 +1,93 @@
+---
+description: Code quality — flake8, service layer, tests
+globs: backend/**/*.py
+alwaysApply: false
+---
+
+# Code Quality Rules
+
+## flake8 — always validate after changes
+
+Run after generating or modifying any Python file:
+
+```bash
+cd /app/code && flake8
+```
+
+Configuration `.flake8` at the backend root:
+```ini
+[flake8]
+max-line-length = 88
+extend-ignore = E203,W503,E501,F401,F841,F821,F403,F405
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    env,
+    .env,
+    migrations,
+    staticfiles,
+    media,
+    volumes,
+    project/graphql_documentation/docs/*_doc.py
+```
+
+Fix all errors before considering the task done.
+
+## Service Layer — mandatory
+
+All business logic lives in `services.py`. Never in views, admin, mutations, or management commands.
+
+```python
+# ✅ Good — mutation delegates to service (see docs/backend/06-api-graphql.md — status + JSONObject errors)
+def mutate(root, info, event_id, language):
+    try:
+        reg = services.register_user_to_event(info.context.user, event_id)
+        return Payload(status=True, errors={}, registration=reg)
+    except EventFullError:
+        return Payload(
+            status=False,
+            errors={"event": translate("errors", "event_full", language)},
+            registration=None,
+        )
+
+# ❌ Bad — business logic in mutation
+def mutate(root, info, event_id):
+    event = KaiEvent.objects.get(id=event_id)
+    if event.total_registered >= event.max_capacity:
+        return Payload(status=False, errors={"event": "Full"}, registration=None)
+    EventRegistration.objects.create(user=info.context.user, event=event)
+```
+
+## Tests — update, don't create
+
+After modifying code, update **existing tests** for that module. Do not create new test files unless the user explicitly asks.
+
+```python
+# If you modify events/services.py:
+# → update tests/test_services.py (existing file)
+# → do NOT create tests/test_services_new.py
+```
+
+## Logging — never print()
+
+```python
+import logging
+logger = logging.getLogger(__name__)
+
+# ✅
+logger.info("user_registered", extra={"user_id": str(user.id)})
+
+# ❌
+print("User registered:", user.id)
+```
+
+## Import order (isort)
+
+```python
+# 1. stdlib
+# 2. django
+# 3. third-party
+# 4. local apps
+```

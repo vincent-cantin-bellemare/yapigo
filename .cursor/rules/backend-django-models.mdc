@@ -1,0 +1,95 @@
+---
+description: Django model conventions — structure, Meta, field options, class ordering
+globs: backend/**/*.py
+alwaysApply: false
+---
+
+# Django Model Conventions
+
+## One model per file
+
+```
+models/
+  __init__.py       ← imports all models + defines __all__
+  user.py
+  auth_token.py
+```
+
+`__init__.py` must always export all models:
+```python
+from .user import User
+from .auth_token import AuthToken
+__all__ = ['User', 'AuthToken']
+```
+
+## Required on every ForeignKey and ManyToManyField
+
+`related_name` is mandatory on every FK and M2M. No exceptions.
+
+```python
+# ✅ Good
+city = models.ForeignKey(City, on_delete=models.PROTECT, related_name='users')
+members = models.ManyToManyField(User, related_name='run_groups')
+
+# ❌ Bad — missing related_name
+city = models.ForeignKey(City, on_delete=models.PROTECT)
+```
+
+## Required in every Meta class
+
+`verbose_name` and `verbose_name_plural` are mandatory:
+
+```python
+class Meta:
+    verbose_name = 'kai event'
+    verbose_name_plural = 'kai events'   # always pluralize all nouns
+```
+
+## Optional fields
+
+Use `null=True, blank=True` for optional fields by default:
+
+```python
+bio = models.TextField(null=True, blank=True)
+neighborhood = models.ForeignKey(Neighborhood, null=True, blank=True, related_name='users')
+```
+
+## Indexes
+
+Do NOT add new indexes without explicit user permission. Keep existing indexes as-is.
+
+## Class member ordering
+
+```python
+class MyModel(BaseModel):
+    # 1. Constants / choices
+    STATUS_CHOICES = [...]
+
+    # 2. Fields
+    name = models.CharField(...)
+
+    # 3. class Meta
+    class Meta:
+        verbose_name = '...'
+
+    # 4. __str__ and dunder methods
+    def __str__(self): ...
+
+    # 5. @classmethod
+    @classmethod
+    def from_phone(cls, phone): ...
+
+    # 6. @staticmethod
+    @staticmethod
+    def generate_code(): ...
+
+    # 7. @property
+    @property
+    def age(self): ...
+
+    # 8. Public methods
+    def soft_delete(self): ...
+
+    # 9. Private methods (_method)
+    def _validate_phone(self): ...
+```

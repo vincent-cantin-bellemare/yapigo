@@ -1,0 +1,87 @@
+---
+description: Deployment workflow — version bump + auto-deploy to iPhone after completing a batch of tasks
+alwaysApply: true
+---
+
+# Deploy Workflow
+
+After completing a batch of tasks (all todos marked as completed), automatically deploy the app to the connected iPhone.
+
+## Steps
+
+### 1. Bump version in `apps/mobile/pubspec.yaml`
+
+Before every deploy, update the `version:` line:
+
+- **Increment the build number** (`+N`) by 1
+- **Append the current date and time** as a comment
+
+Format: `version: X.Y.Z+N  # YYYY-MM-DD HH:mm`
+
+Example progression:
+```yaml
+version: 1.0.1+2   # 2026-03-23 10:15
+version: 1.0.1+3   # 2026-03-23 14:42
+version: 1.0.2+4   # 2026-03-24 09:00
+```
+
+Rules:
+- The **patch version** (Z) should be bumped when meaningful changes are made (new features, bug fixes)
+- The **build number** (+N) is always incremented by 1, regardless of version change
+- Use the **actual current date and time in Montreal timezone (America/Toronto)** at the moment of deploy
+- To get the correct Montreal time, run: `TZ=America/Toronto date "+%Y-%m-%d %H:%M"` before writing the version comment
+
+### 2. Run `flutter analyze`
+
+```bash
+cd apps/mobile
+flutter analyze
+```
+
+### 3. Clean zombie processes (MANDATORY before every deploy)
+
+```bash
+pkill -9 -f "flutter.*run" 2>/dev/null
+pkill -9 -f "devicectl" 2>/dev/null
+pkill -9 -f "iproxy" 2>/dev/null
+pkill -9 -f "frontend_server" 2>/dev/null
+pkill -9 -f "development-service" 2>/dev/null
+sleep 3
+```
+
+### 4. Build, install, and launch (3-step method)
+
+**CRITICAL: Always build in RELEASE mode.** Debug mode crashes when launched standalone.
+
+**CRITICAL: Always pass `--dart-define=BUILD_DATE=...`** with the current date/time so the user can verify the version inside the app (visible on the Profile screen).
+
+**CRITICAL: Always use Montreal timezone (America/Toronto)** for the BUILD_DATE — never use UTC or the system clock directly.
+
+```bash
+# Step A: Get Montreal time and build
+cd apps/mobile
+BUILD_DATE=$(TZ=America/Toronto date "+%d %B %Y %Hh%M" | sed 's/January/janvier/;s/February/février/;s/March/mars/;s/April/avril/;s/May/mai/;s/June/juin/;s/July/juillet/;s/August/août/;s/September/septembre/;s/October/octobre/;s/November/novembre/;s/December/décembre/')
+flutter build ios --release --dart-define=BUILD_DATE="$BUILD_DATE"
+
+# Step B: Install on device
+xcrun devicectl device install app --device 00008150-001E51840202401C build/ios/iphoneos/Runner.app
+
+# Step C: Launch
+xcrun devicectl device process launch --device 00008150-001E51840202401C com.codeshop.kaiiak
+```
+
+The `BUILD_DATE` value must be in French format: `"DD mois YYYY HHhMM"` (e.g. `"24 mars 2026 11h45"`), toujours en **heure de Montréal**.
+
+**Fallback:** If `flutter build ios --release` fails, run `flutter clean && flutter pub get` first, then retry.
+
+### 5. Report result to user
+
+**Important:**
+- Only deploy after ALL tasks in the current batch are done — never mid-batch
+- Always bump version and run `flutter analyze` first
+- If analyze fails, fix errors before deploying
+- **ALWAYS clean zombie processes before deploying**
+- **Do NOT use `flutter run`** — it frequently hangs or aborts. Use the 3-step build/install/launch method instead
+- **ALWAYS pass `--dart-define=BUILD_DATE`** — this is how the user verifies the correct version is deployed
+- The iPhone device ID is `00008150-001E51840202401C` (test device for kaiiak)
+- The bundle ID is `com.codeshop.kaiiak` (app display name: kaiiak)

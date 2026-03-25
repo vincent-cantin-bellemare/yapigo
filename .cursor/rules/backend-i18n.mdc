@@ -1,0 +1,132 @@
+---
+description: Custom i18n system — JSON translations, TranslationService, model field suffixes _fr/_en
+globs: backend/**/*.py
+alwaysApply: false
+---
+
+# i18n — Custom Translation System
+
+## Two complementary approaches
+
+| Content type | Approach | Example |
+|---|---|---|
+| Admin-managed content (FAQ, rules, legal…) | `_fr` / `_en` field suffixes on the model | `FaqItem.question_fr`, `FaqItem.question_en` |
+| System strings (errors, SMS, notifications…) | `TranslationService` JSON | `translate("errors", "otp_invalid", language)` |
+
+Rule: if a human writes the text via Django Admin → suffixes. If code generates the text → JSON.
+
+## Model field suffix convention — `_fr` / `_en`
+
+Any text field on an admin-managed model MUST have language suffix variants:
+
+```python
+# ✅ Correct
+class FaqItem(BaseModel):
+    question_fr = TextField()
+    question_en = TextField(blank=True)
+    answer_fr   = TextField()
+    answer_en   = TextField(blank=True)
+
+# ❌ Never use a separate `language` field on content models
+class FaqItem(BaseModel):
+    question = TextField()
+    language = CharField(...)  # WRONG
+```
+
+- `_fr` is **mandatory** — never empty in production
+- `_en` may be empty in development, must be filled before production
+- To add a future language (e.g. `_es`): search `_fr` in the codebase, add `_es` everywhere
+
+## GraphQL always returns both languages
+
+Never resolve a single `field` based on language server-side. Always expose both:
+
+```graphql
+# ✅ Always return both — Flutter picks the right one locally
+type FaqItem {
+  questionFr: String!
+  questionEn: String!
+}
+
+# ❌ Never resolve server-side
+type FaqItem {
+  question: String!   # WRONG — which language?
+}
+```
+
+Flutter switches languages instantly without refetch or restart.
+
+## AppNotification — generate both languages at creation
+
+```python
+# ✅ Generate both via TranslationService at creation time
+AppNotification.objects.create(
+    title_fr=translate("notifications", "run_confirmed_title", "fr"),
+    title_en=translate("notifications", "run_confirmed_title", "en"),
+    body_fr=translate("notifications", "run_confirmed_body", "fr", date=..., neighborhood=...),
+    body_en=translate("notifications", "run_confirmed_body", "en", date=..., neighborhood=...),
+)
+```
+
+## User.language — persisted preference
+
+Language preference is stored on `User.language` (default `fr`), set via `accountsUserUpdateLanguage` mutation.
+
+`@extract_language` priority order:
+1. HTTP header `language` (if present)
+2. `user.language` (persisted preference)
+3. `"fr"` (final fallback)
+
+## Never use Django gettext or .po files
+
+Do not use:
+- `django.utils.translation.gettext` / `_("...")`
+- `.po` / `.mo` files
+- `{% trans %}` template tag
+
+## System strings — TranslationService JSON
+
+```python
+# Standard (most common — in GraphQL mutations)
+from apps.i18n.utils import translate
+translate("errors", "otp_invalid", language)
+translate("notifications", "event_confirmed", language, date="samedi", neighborhood="Plateau")
+
+# Short alias
+from apps.i18n.services import t
+t("errors", "token_expired", language)
+```
+
+## language always comes from @extract_language decorator
+
+```python
+@log_graphql_request
+@require_authorization
+@require_user_access_token
+@extract_language          # ← injects `language` parameter
+def mutate(self, info, application_access, user_access, language, ...):
+    translate("errors", "some_error", language)  # ✅
+```
+
+## Section names
+
+Sections: `errors`, `notifications`, `sms`, `emails`, `events`
+
+When adding a new translatable string:
+1. Add it to the correct JSON section in both `fr` and `en`
+2. Run `python manage.py i18n_translations_check` to verify no missing keys
+
+## Missing key behavior
+
+Returns `*[section.identifier:lang]*` — never silent. Missing translations are immediately visible in the UI.
+
+## JSON file format
+
+```json
+{
+    "fr": { "key": "Texte en français {variable}" },
+    "en": { "key": "Text in English {variable}" }
+}
+```
+
+Always add both `fr` and `en`. Never leave one language missing.

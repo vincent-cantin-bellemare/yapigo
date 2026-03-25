@@ -1,0 +1,39 @@
+{
+    "name": "RunDate Dev Container",
+    "dockerComposeFile": [
+        "../docker-compose.dev.yml"
+    ],
+    "service": "django",
+    "workspaceFolder": "/app/code",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.linting.pylintEnabled": true,
+                "python.linting.enabled": true,
+                "python.formatting.provider": "black",
+                "editor.formatOnSave": true,
+                "[python]": {
+                    "editor.defaultFormatter": "ms-python.black-formatter"
+                }
+            },
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-python.black-formatter",
+                "visualstudioexptteam.vscodeintellicode",
+                "eamodio.gitlens",
+                "shardulm94.trailing-spaces",
+                "batisteo.vscode-django",
+                "rangav.vscode-thunder-client"
+            ]
+        }
+    },
+    "forwardPorts": [
+        8000,
+        8001,
+        5432
+    ],
+    "postCreateCommand": "cd /app/code && make migrate-dev && make seed-dev",
+    "features": {}
+}

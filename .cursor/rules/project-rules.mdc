@@ -1,0 +1,42 @@
+---
+description: General project rules — language, commits, git workflow
+alwaysApply: true
+---
+
+# kaiiak — General Project Rules
+
+## Language
+
+- Always respond to the user in **French**
+- All code, comments, docstrings, variable/function/class names must be in **English**
+- Django `verbose_name`, `help_text`, admin labels: **English**
+
+## Commits
+
+Never commit without explicit user permission.
+
+```
+✅ Triggers: "commit", "fais un commit", "pousse ça"
+❌ NOT triggers: "prends des actifs", "sauvegarde", "backup", "c'est bon"
+```
+
+## Git Branch Strategy
+
+```
+dev       ← daily work
+staging   ← push from dev
+main      ← PR from staging only, never force push
+```
+
+Deploy to staging:
+```bash
+git fetch origin && git checkout staging && git merge origin/dev --no-edit && git push origin staging && git checkout dev
+```
+
+Never `git push --force` on `main`.
+
+## Paths (inside Docker container)
+
+- All Django code: `/app/code/project/`
+- Documentation: `/app/docs/`
+- Never write code under `/app/project/` or `/app/`
