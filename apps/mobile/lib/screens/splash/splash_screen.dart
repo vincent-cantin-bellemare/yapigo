@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,9 +39,15 @@ class _SplashScreenState extends State<SplashScreen> {
     if (_videoController != null) return;
 
     _isDark = Theme.of(context).brightness == Brightness.dark;
+
+    const lightVideos = [
+      'assets/video/yapigo_light_v1.mp4',
+      'assets/video/yapigo_light_v2.mp4',
+      'assets/video/yapigo_light_v3.mp4',
+    ];
     final videoAsset = _isDark
         ? 'assets/video/yapigo_dark.mp4'
-        : 'assets/video/yapigo_light.mp4';
+        : lightVideos[Random().nextInt(lightVideos.length)];
 
     _videoController = VideoPlayerController.asset(videoAsset)
       ..initialize().then((_) {
