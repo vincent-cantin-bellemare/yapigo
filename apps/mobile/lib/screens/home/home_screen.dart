@@ -2788,20 +2788,32 @@ class _BecomeOrganizerCard extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppTheme.warning,
-            AppTheme.warning.withValues(alpha: 0.85),
+            AppTheme.navy,
+            Color(0xFF163A5C),
           ],
+        ),
+        border: Border.all(
+          color: AppTheme.teal.withValues(alpha: 0.25),
+          width: 1,
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.shield_rounded, size: 40, color: AppTheme.ocean),
-          const SizedBox(height: 10),
+          Container(
+            width: 44,
+            height: 44,
+            decoration: BoxDecoration(
+              color: AppTheme.teal.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Icon(Icons.shield_rounded, size: 26, color: AppTheme.teal),
+          ),
+          const SizedBox(height: 14),
           Text(
             'Deviens Organisateur dans ton quartier!',
             style: GoogleFonts.nunito(
@@ -2816,11 +2828,11 @@ class _BecomeOrganizerCard extends StatelessWidget {
             'tu donnes le rythme et tu t\'assures que tout le monde passe un bon moment.',
             style: GoogleFonts.dmSans(
               fontSize: 14,
-              color: Colors.white.withValues(alpha: 0.9),
+              color: Colors.white.withValues(alpha: 0.75),
               height: 1.5,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 18),
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
@@ -2834,8 +2846,8 @@ class _BecomeOrganizerCard extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: AppTheme.warning,
+                backgroundColor: AppTheme.teal,
+                foregroundColor: AppTheme.navy,
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
