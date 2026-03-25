@@ -20,7 +20,6 @@ import 'package:yapigo/screens/profile/contact_form_screen.dart';
 import 'package:yapigo/screens/profile/user_profile_sheet.dart';
 import 'package:yapigo/theme/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:yapigo/widgets/app_logo.dart';
 import 'package:yapigo/widgets/photo_gallery_viewer.dart';
 import 'package:yapigo/widgets/pace_label_icon.dart';
 import 'package:yapigo/widgets/user_avatar.dart';
@@ -426,13 +425,17 @@ class _HeroBanner extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Top bar: logo + badge
+                // Top bar: logo wordmark + badge
                 Row(
                   children: [
-                    const AppLogo(size: 28, showText: false, color: Colors.white)
+                    Image.asset(
+                      'assets/images/logo_yapigo_white.png',
+                      height: 42,
+                      fit: BoxFit.contain,
+                    )
                         .animate()
                         .fadeIn(duration: 400.ms)
-                        .scale(begin: const Offset(0.8, 0.8), end: const Offset(1, 1), duration: 400.ms),
+                        .slideX(begin: -0.1, end: 0, duration: 400.ms),
                     const Spacer(),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
