@@ -41,9 +41,8 @@ class _SplashScreenState extends State<SplashScreen> {
     _isDark = Theme.of(context).brightness == Brightness.dark;
 
     const lightVideos = [
-      'assets/video/rundate_light_v1.mp4',
-      'assets/video/rundate_light_v2.mp4',
-      'assets/video/rundate_light_v3.mp4',
+      'assets/video/rundate_light_1.mp4',
+      'assets/video/rundate_light_2.mp4',
     ];
     final videoAsset = _isDark
         ? 'assets/video/rundate_dark.mp4'
@@ -94,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bg = _isDark ? AppTheme.darkScaffold : AppTheme.cream;
+    final bg = _isDark ? AppTheme.darkScaffold : const Color(0xFFFDFEFE);
     final subtitleColor =
         _isDark ? const Color(0xFF94A3B8) : AppTheme.slateGrey;
     final dotColor = _isDark ? AppTheme.teal : AppTheme.ocean;

@@ -480,7 +480,7 @@ class _SignupWizardScreenState extends State<SignupWizardScreen> {
     1966: 'Star Trek a commencé — les geeks te remercient 🖖',
     1967: 'la première greffe du cœur a été réalisée ❤️',
     1968: 'la souris d\'ordinateur a été inventée — clic clic 🖱️',
-    1969: 'on a marché sur la Lune — et toi tu marches vers ton activité 🌙',
+    1969: 'on a marché sur la Lune — et toi tu cours vers ton date 🌙',
     1970: 'le premier Marathon de New York a eu lieu — ça te dit quelque chose? 🏃',
     1971: 'le premier courriel a été envoyé — et ta boîte est pleine depuis 📧',
     1972: 'Pong est sorti — le premier gamer est né 🎮',
@@ -494,7 +494,7 @@ class _SignupWizardScreenState extends State<SignupWizardScreen> {
     1980: 'le Post-it a été inventé — ton frigo te dit merci 📝',
     1981: 'le premier IBM PC est sorti — ton ordi pèserait 25 lbs 💾',
     1982: 'le CD a été inventé — t\'as sûrement rayé les tiens 💿',
-    1983: 'Internet (TCP/IP) est officiellement né — merci pour Run Date! 🌐',
+    1983: 'Internet (TCP/IP) est officiellement né — et les rencontres en ligne aussi 🌐',
     1984: 'le Macintosh est sorti — et Big Brother nous regarde 👁️',
     1985: 'Windows 1.0 est sorti — ton premier clic de frustration 🪟',
     1986: 'la Coupe du monde de Maradona — la main de Dieu ⚽',
@@ -1118,19 +1118,19 @@ class _SignupWizardScreenState extends State<SignupWizardScreen> {
 
   Widget _buildGoalsStep() {
     const goals = [
-      (icon: Icons.groups_outlined, label: 'Faire de nouveaux amis'),
-      (icon: Icons.fitness_center_outlined, label: 'Me remettre en forme'),
-      (icon: Icons.emoji_events_outlined, label: 'Performer / me dépasser'),
-      (icon: Icons.explore_outlined, label: 'Découvrir de nouveaux quartiers'),
       (icon: Icons.favorite_outline, label: 'Rencontrer quelqu\'un de spécial'),
+      (icon: Icons.directions_run_outlined, label: 'Trouver un partenaire de course'),
+      (icon: Icons.groups_outlined, label: 'Faire de nouveaux amis coureurs'),
+      (icon: Icons.explore_outlined, label: 'Découvrir de nouveaux quartiers en courant'),
+      (icon: Icons.fitness_center_outlined, label: 'Me motiver à courir plus souvent'),
     ];
 
     return _buildStepLayout(
-      title: 'Tes objectifs?',
+      title: 'Qu\'est-ce que tu cherches?',
       child: ListView(
         children: [
           Text(
-            'Sélectionne tout ce qui s\'applique. Ça nous aide à mieux te jumeler!',
+            'Sélectionne tout ce qui s\'applique. Ça nous aide à trouver ton match parfait!',
             style: GoogleFonts.dmSans(fontSize: 14, color: AppTheme.secondaryText(context), height: 1.4),
           ),
           const SizedBox(height: 20),
@@ -1648,7 +1648,7 @@ class _SignupWizardScreenState extends State<SignupWizardScreen> {
 
               // Subtitle with better contrast
               Text(
-                'Ton profil est créé.\nIl est temps de découvrir les prochaines activités!',
+                'Ton profil est créé.\nIl est temps de trouver ton premier Run Date!',
                 textAlign: TextAlign.center,
                 style: GoogleFonts.dmSans(
                   fontSize: 16,
@@ -1666,14 +1666,14 @@ class _SignupWizardScreenState extends State<SignupWizardScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _welcomeStat(Icons.sports_rounded, '3 activités', 'cette semaine'),
+                  _welcomeStat(Icons.directions_run_rounded, '3 run dates', 'cette semaine'),
                   Container(
                     width: 1,
                     height: 32,
                     margin: const EdgeInsets.symmetric(horizontal: 16),
                     color: AppTheme.slateGrey.withValues(alpha: 0.2),
                   ),
-                  _welcomeStat(Icons.people_rounded, '120+', 'membres actifs'),
+                  _welcomeStat(Icons.people_rounded, '120+', 'coureurs'),
                   Container(
                     width: 1,
                     height: 32,
@@ -1707,7 +1707,7 @@ class _SignupWizardScreenState extends State<SignupWizardScreen> {
                     textStyle: GoogleFonts.nunito(
                         fontSize: 17, fontWeight: FontWeight.w700),
                   ),
-                  child: const Text('Découvrir les événements'),
+                  child: const Text('Trouver mon premier Run Date'),
                 ),
               )
                   .animate(delay: 900.ms)
