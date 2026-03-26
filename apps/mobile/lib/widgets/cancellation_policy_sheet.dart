@@ -80,7 +80,7 @@ class CancellationPolicySheet extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'Cette politique s\'applique à tous les événements '
-                      'payants sur yapigo. Les remboursements sont traités '
+                      'payants sur Run Date. Les remboursements sont traités '
                       'sous 5 à 10 jours ouvrables.',
                       style: GoogleFonts.dmSans(
                         fontSize: 14,

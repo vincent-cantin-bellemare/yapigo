@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:rundate/data/mock_event_photos.dart';
 import 'package:rundate/data/mock_meeting_points.dart';
@@ -13,6 +14,7 @@ import 'package:rundate/models/meeting_point.dart';
 import 'package:rundate/models/kai_event.dart';
 import 'package:rundate/data/mock_messages.dart';
 import 'package:rundate/screens/apply/apply_wizard_screen.dart';
+import 'package:rundate/screens/profile/invite_friend_screen.dart';
 import 'package:rundate/screens/payment/payment_checkout_screen.dart';
 import 'package:rundate/widgets/cancellation_policy_sheet.dart';
 import 'package:rundate/screens/messages/chat_screen.dart';
@@ -504,13 +506,141 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                         ),
                       ),
                     ),
+                  // === PAST EVENT: Photos, Rating & Tip ===
+                  if (e.isPast) ...[
+                    const SizedBox(height: 20),
+                    if (photos.isNotEmpty) ...[
+                      Row(
+                        children: [
+                          Text(
+                            'Photos de l\'activité 📸',
+                            style: GoogleFonts.nunito(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.textColor(context),
+                            ),
+                          ),
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              showModalBottomSheet<void>(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (_) => AddPhotoSheet(preselectedEventId: e.id),
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: AppTheme.ocean.withValues(alpha: 0.1),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(Icons.add_photo_alternate_outlined, size: 16, color: AppTheme.ocean),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    'Ajouter',
+                                    style: GoogleFonts.dmSans(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppTheme.ocean,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      SizedBox(
+                        height: 100,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: photos.length,
+                          separatorBuilder: (_, _) => const SizedBox(width: 8),
+                          itemBuilder: (_, i) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute<void>(
+                                    builder: (_) => PhotoGalleryViewer(
+                                      photos: photos,
+                                      initialIndex: i,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(
+                                  photos[i].photoUrl,
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (_, _, _) => Container(
+                                    width: 100,
+                                    height: 100,
+                                    color: AppTheme.slateGrey.withValues(alpha: 0.1),
+                                    child: Icon(Icons.image_outlined, color: AppTheme.secondaryText(context)),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ] else ...[
+                      Center(
+                        child: OutlinedButton.icon(
+                          onPressed: () {
+                            showModalBottomSheet<void>(
+                              context: context,
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (_) => AddPhotoSheet(preselectedEventId: e.id),
+                            );
+                          },
+                          icon: const Icon(Icons.add_photo_alternate_outlined),
+                          label: const Text('Ajouter des photos de l\'activité'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: AppTheme.ocean,
+                            side: const BorderSide(color: AppTheme.ocean),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+                          ),
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 16),
+                    _RateEventCard(event: e),
+                    if (e.isRegistered) ...[
+                      const SizedBox(height: 12),
+                      _RateMembersCard(event: e),
+                    ],
+                    if (e.hasOrganizers) ...[
+                      const SizedBox(height: 12),
+                      _TipOrganizerCard(event: e),
+                    ],
+                  ],
+
                   if (!e.isPast && mockWeatherByEventId.containsKey(e.id)) ...[
                     const SizedBox(height: 16),
                     WeatherBadge(forecast: mockWeatherByEventId[e.id]!),
                   ],
 
-                  // Pace & Distance — visible to all
-                  const SizedBox(height: 28),
+                  if (!e.isPast) ...[
+                    const SizedBox(height: 16),
+                    _RegistrationGauge(event: e),
+                  ],
+
+                  // Pace & Distance
+                  const SizedBox(height: 12),
                   _StatCard(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -701,7 +831,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     ),
 
                   // --- SECTION: Point de départ ---
-                  if (meetingPoint != null) ...[
+                  if (!e.isPast && meetingPoint != null) ...[
                     const SizedBox(height: 16),
                     Text(
                       '📍 Point de départ',
@@ -731,9 +861,9 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                       ),
                   ],
 
-                  // --- SECTION: Trajet ---
-                  const SizedBox(height: 12),
-                  Builder(builder: (_) {
+                  // --- SECTION: Trajet (future only) ---
+                  if (!e.isPast) const SizedBox(height: 12),
+                  if (!e.isPast) Builder(builder: (_) {
                     String routeText;
                     if (e.hasOrganizers) {
                       final organizers = mockUsers
@@ -787,9 +917,9 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     ),
                   ],
 
-                  // --- SECTION: Inscription ---
+                  // --- SECTION: Share & Invite ---
                   const SizedBox(height: 16),
-                  _RegistrationGauge(event: e),
+                  _ShareInviteCard(event: e),
 
                   // Gender breakdown
                   const SizedBox(height: 12),
@@ -884,7 +1014,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                   ),
 
                   // My group section — only for registered users
-                  if (e.isRegistered) ...[
+                  if (!e.isPast && e.isRegistered) ...[
                     const SizedBox(height: 16),
                     _MyGroupCard(event: e),
                     const SizedBox(height: 16),
@@ -913,121 +1043,6 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                       _HowItWorksStep(number: '4', icon: Icons.local_cafe_outlined, title: 'L\'Apéro Smoothie', description: 'Après la course, on se retrouve dans un café pour mieux se connaître'),
                     ],
                   ),
-
-                  // Photos section for past events
-                  if (e.isPast && photos.isNotEmpty) ...[
-                    const SizedBox(height: 28),
-                    Row(
-                      children: [
-                        Text(
-                          'Photos de l\'activité 📸',
-                          style: GoogleFonts.nunito(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: AppTheme.textColor(context),
-                          ),
-                        ),
-                        const Spacer(),
-                        GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet<void>(
-                              context: context,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              builder: (_) => AddPhotoSheet(preselectedEventId: e.id),
-                            );
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                            decoration: BoxDecoration(
-                              color: AppTheme.ocean.withValues(alpha: 0.1),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(Icons.add_photo_alternate_outlined, size: 16, color: AppTheme.ocean),
-                                const SizedBox(width: 4),
-                                Text(
-                                  'Ajouter',
-                                  style: GoogleFonts.dmSans(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppTheme.ocean,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    SizedBox(
-                      height: 100,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: photos.length,
-                        separatorBuilder: (_, _) => const SizedBox(width: 8),
-                        itemBuilder: (_, i) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute<void>(
-                                  builder: (_) => PhotoGalleryViewer(
-                                    photos: photos,
-                                    initialIndex: i,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.network(
-                                photos[i].photoUrl,
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                                errorBuilder: (_, _, _) => Container(
-                                  width: 100,
-                                  height: 100,
-                                  color: AppTheme.slateGrey.withValues(alpha: 0.1),
-                                  child: Icon(Icons.image_outlined, color: AppTheme.secondaryText(context)),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-
-                  // Add photo button for past events without photos
-                  if (e.isPast && photos.isEmpty) ...[
-                    const SizedBox(height: 28),
-                    Center(
-                      child: OutlinedButton.icon(
-                        onPressed: () {
-                          showModalBottomSheet<void>(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            builder: (_) => AddPhotoSheet(preselectedEventId: e.id),
-                          );
-                        },
-                        icon: const Icon(Icons.add_photo_alternate_outlined),
-                        label: const Text('Ajouter des photos de l\'activité'),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: AppTheme.ocean,
-                          side: const BorderSide(color: AppTheme.ocean),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-                        ),
-                      ),
-                    ),
-                  ],
 
                   const SizedBox(height: 100),
                 ],
@@ -1406,7 +1421,7 @@ class _AperoSmoothieCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Image.asset('assets/icons/apero_smoothie.png', width: 32, height: 32, errorBuilder: (_, __, ___) => const Text('🥤', style: TextStyle(fontSize: 26))),
+              Image.asset('assets/icons/apero_smoothie.png', width: 32, height: 32, errorBuilder: (_, _, _) => const Text('🥤', style: TextStyle(fontSize: 26))),
               const SizedBox(width: 14),
               Expanded(
                 child: Column(
@@ -1817,6 +1832,646 @@ class _IceBreakersCard extends StatelessWidget {
                 ],
               ),
             ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RateEventCard extends StatefulWidget {
+  const _RateEventCard({required this.event});
+  final KaiEvent event;
+
+  @override
+  State<_RateEventCard> createState() => _RateEventCardState();
+}
+
+class _RateEventCardState extends State<_RateEventCard> {
+  int _rating = 0;
+  final _commentController = TextEditingController();
+  bool _submitted = false;
+
+  @override
+  void dispose() {
+    _commentController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppTheme.teal.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppTheme.teal.withValues(alpha: 0.25)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.star_rounded, color: AppTheme.teal, size: 24),
+              const SizedBox(width: 10),
+              Text(
+                'Comment c\'était?',
+                style: GoogleFonts.nunito(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.textColor(context),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Ton avis aide la communauté!',
+            style: GoogleFonts.dmSans(
+              fontSize: 14,
+              color: AppTheme.secondaryText(context),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(5, (i) {
+              final starIndex = i + 1;
+              return GestureDetector(
+                onTap: _submitted ? null : () => setState(() => _rating = starIndex),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: Icon(
+                    starIndex <= _rating ? Icons.star_rounded : Icons.star_outline_rounded,
+                    size: 40,
+                    color: starIndex <= _rating
+                        ? AppTheme.warning
+                        : AppTheme.slateGrey.withValues(alpha: 0.4),
+                  ),
+                ),
+              );
+            }),
+          ),
+          const SizedBox(height: 14),
+          if (!_submitted)
+            TextField(
+              controller: _commentController,
+              maxLines: 2,
+              style: GoogleFonts.dmSans(fontSize: 14, color: AppTheme.textColor(context)),
+              decoration: InputDecoration(
+                hintText: 'Un commentaire? (optionnel)',
+                hintStyle: GoogleFonts.dmSans(
+                  fontSize: 14,
+                  color: AppTheme.slateGrey.withValues(alpha: 0.6),
+                ),
+                filled: true,
+                fillColor: AppTheme.cardColor(context),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: AppTheme.slateGrey.withValues(alpha: 0.3)),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: AppTheme.slateGrey.withValues(alpha: 0.3)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(color: AppTheme.teal, width: 2),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+              ),
+            ),
+          const SizedBox(height: 14),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: _submitted || _rating == 0
+                  ? null
+                  : () {
+                      HapticFeedback.mediumImpact();
+                      setState(() => _submitted = true);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Merci pour ton avis! 🙏', style: GoogleFonts.dmSans()),
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
+                    },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.teal,
+                foregroundColor: Colors.white,
+                disabledBackgroundColor: AppTheme.slateGrey.withValues(alpha: 0.25),
+                disabledForegroundColor: Colors.white70,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                elevation: 0,
+                textStyle: GoogleFonts.nunito(fontSize: 15, fontWeight: FontWeight.w700),
+              ),
+              child: Text(_submitted ? 'Avis envoyé ✓' : 'Envoyer mon avis'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _RateMembersCard extends StatefulWidget {
+  const _RateMembersCard({required this.event});
+  final KaiEvent event;
+
+  @override
+  State<_RateMembersCard> createState() => _RateMembersCardState();
+}
+
+class _RateMembersCardState extends State<_RateMembersCard> {
+  final Map<String, bool> _votes = {};
+  bool _submitted = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final companions = mockUsers
+        .where((u) =>
+            u.activities.any((a) => a.level == widget.event.intensityLevel) &&
+            u.id != currentUser.id)
+        .take(6)
+        .toList();
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppTheme.cardColor(context),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppTheme.teal.withValues(alpha: 0.25)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.favorite_rounded, color: AppTheme.ocean, size: 22),
+              const SizedBox(width: 10),
+              Text(
+                'Tes compagnons de course',
+                style: GoogleFonts.nunito(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.textColor(context),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'As-tu passé un bon moment avec eux?',
+            style: GoogleFonts.dmSans(
+              fontSize: 14,
+              color: AppTheme.secondaryText(context),
+            ),
+          ),
+          const SizedBox(height: 16),
+          ...companions.map((u) {
+            final vote = _votes[u.id];
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: Row(
+                children: [
+                  UserAvatar(name: u.firstName, photoUrl: u.photoUrl, size: 40, showRing: false),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      u.firstName,
+                      style: GoogleFonts.dmSans(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.textColor(context),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: _submitted ? null : () => setState(() => _votes[u.id] = true),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: vote == true
+                            ? const Color(0xFF00C853).withValues(alpha: 0.12)
+                            : AppTheme.slateGrey.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(
+                        Icons.thumb_up_rounded,
+                        size: 20,
+                        color: vote == true ? const Color(0xFF00C853) : AppTheme.slateGrey,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  GestureDetector(
+                    onTap: _submitted ? null : () => setState(() => _votes[u.id] = false),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: vote == false
+                            ? AppTheme.error.withValues(alpha: 0.12)
+                            : AppTheme.slateGrey.withValues(alpha: 0.08),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Icon(
+                        Icons.thumb_down_rounded,
+                        size: 20,
+                        color: vote == false ? AppTheme.error : AppTheme.slateGrey,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }),
+          const SizedBox(height: 4),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: _submitted || _votes.isEmpty
+                  ? null
+                  : () {
+                      HapticFeedback.mediumImpact();
+                      setState(() => _submitted = true);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Merci pour ton feedback! 💪', style: GoogleFonts.dmSans()),
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
+                    },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.ocean,
+                foregroundColor: Colors.white,
+                disabledBackgroundColor: AppTheme.slateGrey.withValues(alpha: 0.25),
+                disabledForegroundColor: Colors.white70,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                elevation: 0,
+                textStyle: GoogleFonts.nunito(fontSize: 15, fontWeight: FontWeight.w700),
+              ),
+              child: Text(_submitted ? 'Envoyé ✓' : 'Envoyer'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TipOrganizerCard extends StatefulWidget {
+  const _TipOrganizerCard({required this.event});
+  final KaiEvent event;
+
+  @override
+  State<_TipOrganizerCard> createState() => _TipOrganizerCardState();
+}
+
+class _TipOrganizerCardState extends State<_TipOrganizerCard> {
+  int? _selectedAmount;
+  bool _submitted = false;
+
+  static const _amounts = [2, 5, 10];
+
+  @override
+  Widget build(BuildContext context) {
+    final organizers = mockUsers
+        .where((u) => widget.event.organizerIds.contains(u.id))
+        .toList();
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppTheme.warning.withValues(alpha: 0.06),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppTheme.warning.withValues(alpha: 0.25)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Text('🎁', style: TextStyle(fontSize: 22)),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  'Remercie ton organisateur!',
+                  style: GoogleFonts.nunito(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: AppTheme.textColor(context),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Un petit tip pour dire merci',
+            style: GoogleFonts.dmSans(
+              fontSize: 14,
+              color: AppTheme.secondaryText(context),
+            ),
+          ),
+          const SizedBox(height: 14),
+          Wrap(
+            spacing: 10,
+            runSpacing: 8,
+            children: organizers.map((o) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  UserAvatar(name: o.firstName, photoUrl: o.photoUrl, size: 40, showRing: false),
+                  const SizedBox(height: 4),
+                  Text(
+                    o.firstName,
+                    style: GoogleFonts.dmSans(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      color: AppTheme.textColor(context),
+                    ),
+                  ),
+                ],
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              ..._amounts.map((amount) {
+                final selected = _selectedAmount == amount;
+                return Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: GestureDetector(
+                      onTap: _submitted ? null : () => setState(() => _selectedAmount = amount),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        decoration: BoxDecoration(
+                          color: selected
+                              ? AppTheme.warning.withValues(alpha: 0.15)
+                              : AppTheme.cardColor(context),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: selected
+                                ? AppTheme.warning
+                                : AppTheme.slateGrey.withValues(alpha: 0.25),
+                            width: selected ? 2 : 1,
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          '$amount \$',
+                          style: GoogleFonts.nunito(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            color: selected ? AppTheme.warning : AppTheme.textColor(context),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 4),
+                  child: GestureDetector(
+                    onTap: _submitted ? null : () => setState(() => _selectedAmount = -1),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      decoration: BoxDecoration(
+                        color: _selectedAmount == -1
+                            ? AppTheme.warning.withValues(alpha: 0.15)
+                            : AppTheme.cardColor(context),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: _selectedAmount == -1
+                              ? AppTheme.warning
+                              : AppTheme.slateGrey.withValues(alpha: 0.25),
+                          width: _selectedAmount == -1 ? 2 : 1,
+                        ),
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Autre',
+                        style: GoogleFonts.dmSans(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                          color: _selectedAmount == -1 ? AppTheme.warning : AppTheme.textColor(context),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 14),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              onPressed: _submitted || _selectedAmount == null
+                  ? null
+                  : () {
+                      HapticFeedback.mediumImpact();
+                      setState(() => _submitted = true);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Merci pour ta générosité! 🎉', style: GoogleFonts.dmSans()),
+                          behavior: SnackBarBehavior.floating,
+                        ),
+                      );
+                    },
+              icon: _submitted
+                  ? const Icon(Icons.check_rounded, size: 20)
+                  : const Text('💝', style: TextStyle(fontSize: 16)),
+              label: Text(_submitted ? 'Tip envoyé!' : 'Envoyer un tip'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.warning,
+                foregroundColor: Colors.white,
+                disabledBackgroundColor: AppTheme.slateGrey.withValues(alpha: 0.25),
+                disabledForegroundColor: Colors.white70,
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                elevation: 0,
+                textStyle: GoogleFonts.nunito(fontSize: 15, fontWeight: FontWeight.w700),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ShareInviteCard extends StatelessWidget {
+  const _ShareInviteCard({required this.event});
+  final KaiEvent event;
+
+  String get _shareText {
+    final day = _frenchWeekday(event.date.weekday);
+    final time = '${event.date.hour}h${event.date.minute.toString().padLeft(2, '0')}';
+    return 'Viens bouger avec moi! 💪\n\n'
+        '${event.neighborhood} — $day $time\n'
+        '${event.category.emoji} ${event.category.label} · ${event.intensityLevel.label}\n'
+        '${event.distanceLabel.label}\n\n'
+        'Inscris-toi sur rundate.app';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        color: AppTheme.cardColor(context),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppTheme.slateGrey.withValues(alpha: 0.18)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(Icons.people_outline_rounded, color: AppTheme.ocean, size: 22),
+              const SizedBox(width: 10),
+              Text(
+                'Invite tes amis!',
+                style: GoogleFonts.nunito(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: AppTheme.textColor(context),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'Plus on est, plus c\'est le fun!',
+            style: GoogleFonts.dmSans(
+              fontSize: 14,
+              color: AppTheme.secondaryText(context),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _ShareIcon(
+                icon: Icons.camera_alt_outlined,
+                label: 'Stories',
+                color: const Color(0xFFE1306C),
+                onTap: () => Share.share(_shareText),
+              ),
+              _ShareIcon(
+                icon: Icons.facebook_rounded,
+                label: 'Facebook',
+                color: const Color(0xFF1877F2),
+                onTap: () => Share.share(_shareText),
+              ),
+              _ShareIcon(
+                icon: Icons.chat_rounded,
+                label: 'WhatsApp',
+                color: const Color(0xFF25D366),
+                onTap: () {
+                  final encoded = Uri.encodeComponent(_shareText);
+                  launchUrl(
+                    Uri.parse('https://wa.me/?text=$encoded'),
+                    mode: LaunchMode.externalApplication,
+                  );
+                },
+              ),
+              _ShareIcon(
+                icon: Icons.copy_rounded,
+                label: 'Copier',
+                color: AppTheme.slateGrey,
+                onTap: () {
+                  Clipboard.setData(ClipboardData(text: 'rundate.app'));
+                  HapticFeedback.lightImpact();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Lien copié!', style: GoogleFonts.dmSans()),
+                      behavior: SnackBarBehavior.floating,
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () {
+                Navigator.of(context).push<void>(
+                  MaterialPageRoute<void>(builder: (_) => const InviteFriendScreen()),
+                );
+              },
+              icon: const Icon(Icons.person_add_alt_1_rounded, size: 20),
+              label: Text(
+                'Envoyer à un ami',
+                style: GoogleFonts.dmSans(fontSize: 15, fontWeight: FontWeight.w600),
+              ),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: AppTheme.ocean,
+                side: BorderSide(color: AppTheme.ocean.withValues(alpha: 0.5)),
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ShareIcon extends StatelessWidget {
+  const _ShareIcon({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: color.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            alignment: Alignment.center,
+            child: Icon(icon, color: color, size: 24),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            label,
+            style: GoogleFonts.dmSans(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: AppTheme.secondaryText(context),
+            ),
+          ),
         ],
       ),
     );

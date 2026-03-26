@@ -41,13 +41,13 @@ class TermsScreen extends StatelessWidget {
                 '• Moins de 24 h avant : aucun remboursement\n\n'
                 'Les remboursements sont traités sous 5 à 10 jours ouvrables et crédités sur le mode de paiement original.'),
             _section(context, '8. Propriété intellectuelle',
-                'Tout le contenu de l\'application, y compris les textes, graphiques, logos et logiciels, est la propriété de yapigo et est protégé par les lois sur la propriété intellectuelle.'),
+                'Tout le contenu de l\'application, y compris les textes, graphiques, logos et logiciels, est la propriété de Run Date et est protégé par les lois sur la propriété intellectuelle.'),
             _section(context, '9. Limitation de responsabilité',
-                'yapigo ne peut être tenu responsable des interactions entre utilisateurs en dehors de la plateforme. Nous recommandons de toujours vous rencontrer dans des lieux publics et éclairés.'),
+                'Run Date ne peut être tenu responsable des interactions entre utilisateurs en dehors de la plateforme. Nous recommandons de toujours vous rencontrer dans des lieux publics et éclairés.'),
             _section(context, '10. Modifications',
                 'Nous nous réservons le droit de modifier ces conditions à tout moment. Les utilisateurs seront informés des changements importants par notification.'),
             _section(context, '11. Contact',
-                'Pour toute question concernant ces conditions, contactez-nous à contact@yapigo.com.'),
+                'Pour toute question concernant ces conditions, contactez-nous à contact@rundate.app.'),
             const SizedBox(height: 16),
             Text(
               'Dernière mise à jour: Mars 2026',
