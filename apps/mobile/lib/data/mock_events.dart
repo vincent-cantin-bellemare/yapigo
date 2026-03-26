@@ -45,7 +45,7 @@ List<KaiEvent> _buildMockEvents() {
       organizerIds: ['u2'],
       recurrence: RecurrenceType.weekly,
     ),
-    // --- Upcoming: long run Lachine Canal ---
+    // --- Upcoming: long run Lachine Canal (paid) ---
     KaiEvent(
       id: 'e2',
       category: EventCategory.running,
@@ -67,6 +67,7 @@ List<KaiEvent> _buildMockEvents() {
       registrationStatus: RegistrationStatus.notRegistered,
       organizerIds: ['u5', 'u3'],
       recurrence: RecurrenceType.biWeekly,
+      price: 15,
     ),
     // --- Upcoming: easy jog Villeray ---
     KaiEvent(
@@ -112,7 +113,7 @@ List<KaiEvent> _buildMockEvents() {
       registrationStatus: RegistrationStatus.notRegistered,
       organizerIds: ['u5'],
     ),
-    // --- Upcoming: trail run Mont-Royal ---
+    // --- Upcoming: trail run Mont-Royal (paid) ---
     KaiEvent(
       id: 'e5',
       category: EventCategory.running,
@@ -135,8 +136,9 @@ List<KaiEvent> _buildMockEvents() {
       organizerIds: ['u2'],
       recurrence: RecurrenceType.custom,
       customDays: [2, 4],
+      price: 10,
     ),
-    // --- Upcoming: tempo run Rosemont ---
+    // --- Upcoming: tempo run Rosemont (paid) ---
     KaiEvent(
       id: 'e6',
       category: EventCategory.running,
@@ -155,6 +157,7 @@ List<KaiEvent> _buildMockEvents() {
       maxCapacity: 16,
       isConfirmed: true,
       registrationStatus: RegistrationStatus.notRegistered,
+      price: 20,
     ),
     // --- Past: running, attended ---
     KaiEvent(

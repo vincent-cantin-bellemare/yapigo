@@ -104,6 +104,13 @@ enum DistanceLabel {
   });
 }
 
+enum PaymentStatus {
+  none,
+  pending,
+  completed,
+  refunded,
+}
+
 enum RecurrenceType {
   oneTime(label: 'Ponctuelle'),
   weekly(label: 'Chaque semaine'),
@@ -144,7 +151,7 @@ class KaiEvent {
   final int? waitlistPosition;
 
   final double? price;
-  final bool isPaidOnSite;
+  final PaymentStatus paymentStatus;
 
   final RecurrenceType recurrence;
   final List<int>? customDays;
@@ -175,7 +182,7 @@ class KaiEvent {
     this.myRating,
     this.waitlistPosition,
     this.price,
-    this.isPaidOnSite = false,
+    this.paymentStatus = PaymentStatus.none,
     this.recurrence = RecurrenceType.oneTime,
     this.customDays,
   });

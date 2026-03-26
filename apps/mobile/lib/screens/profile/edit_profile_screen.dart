@@ -5,10 +5,9 @@ import 'package:rundate/data/mock_users.dart';
 import 'package:rundate/data/quebec_cities.dart';
 import 'package:rundate/screens/profile/bio_quiz_screen.dart';
 import 'package:rundate/theme/app_theme.dart';
+import 'package:rundate/models/profile_visibility.dart';
 import 'package:rundate/widgets/demo_banner.dart';
 import 'package:rundate/widgets/user_photo_viewer.dart';
-
-enum ProfileVisibility { public, internal, private_ }
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});

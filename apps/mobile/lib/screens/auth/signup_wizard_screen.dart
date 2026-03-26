@@ -9,6 +9,7 @@ import 'package:rundate/screens/profile/terms_screen.dart';
 import 'package:rundate/screens/profile/privacy_screen.dart';
 import 'package:rundate/screens/profile/community_rules_screen.dart';
 import 'package:rundate/screens/profile/bio_quiz_screen.dart';
+import 'package:rundate/models/profile_visibility.dart';
 import 'package:rundate/theme/app_theme.dart';
 import 'package:rundate/utils/app_locale.dart';
 import 'package:rundate/widgets/demo_banner.dart';
@@ -24,7 +25,7 @@ class _SignupWizardScreenState extends State<SignupWizardScreen> {
   final _controller = PageController();
   int _currentStep = 0;
   bool get _showNeighborhoodStep => _selectedCity == 'Montréal';
-  int get _totalSteps => 14 + (_showNeighborhoodStep ? 1 : 0);
+  int get _totalSteps => 16 + (_showNeighborhoodStep ? 1 : 0);
 
   final _phoneController = TextEditingController();
   final _otpController = TextEditingController();
@@ -40,6 +41,8 @@ class _SignupWizardScreenState extends State<SignupWizardScreen> {
   final _citySearchController = TextEditingController();
   List<QuebecCity> _cityResults = quebecCities;
   final Set<String> _selectedGoals = {};
+  ProfileVisibility _selectedVisibility = ProfileVisibility.internal;
+  String _selectedLanguage = 'fr';
 
   int get _calculatedAge => DateTime.now().year - _selectedBirthYear;
 
@@ -138,6 +141,8 @@ class _SignupWizardScreenState extends State<SignupWizardScreen> {
                   _buildPhotoStep(),
                   _buildBioStep(),
                   _buildSelfieStep(),
+                  _buildVisibilityStep(),
+                  _buildLanguageStep(),
                   _buildTermsStep(),
                   _buildWelcomeStep(),
                 ],
@@ -1444,6 +1449,150 @@ class _SignupWizardScreenState extends State<SignupWizardScreen> {
             onPressed: _next,
             child: Text('Passer cette étape', style: GoogleFonts.dmSans(color: AppTheme.secondaryText(context))),
           )),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVisibilityStep() {
+    const options = [
+      (ProfileVisibility.public, '🌐', 'Public',
+          'Visible sur le site web, tout le monde peut consulter ton profil.'),
+      (ProfileVisibility.internal, '👥', 'Interne',
+          'Seulement les membres de la communauté Run Date peuvent te voir.'),
+      (ProfileVisibility.private_, '🔒', 'Privé',
+          'Seuls les membres de tes événements peuvent voir ton profil.'),
+    ];
+
+    return _buildStepLayout(
+      title: 'Qui peut voir ton profil?',
+      child: Column(
+        children: [
+          for (final opt in options)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: GestureDetector(
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  setState(() => _selectedVisibility = opt.$1);
+                  Future.delayed(const Duration(milliseconds: 300), _next);
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                  decoration: BoxDecoration(
+                    color: _selectedVisibility == opt.$1
+                        ? AppTheme.teal.withValues(alpha: 0.1)
+                        : AppTheme.cardColor(context),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: _selectedVisibility == opt.$1
+                          ? AppTheme.teal.withValues(alpha: 0.5)
+                          : AppTheme.slateGrey.withValues(alpha: 0.2),
+                      width: _selectedVisibility == opt.$1 ? 1.5 : 1,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(opt.$2, style: const TextStyle(fontSize: 22)),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(opt.$3,
+                                style: GoogleFonts.nunito(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                    color: _selectedVisibility == opt.$1
+                                        ? AppTheme.teal
+                                        : AppTheme.textColor(context))),
+                            const SizedBox(height: 2),
+                            Text(opt.$4,
+                                style: GoogleFonts.dmSans(
+                                    fontSize: 14,
+                                    color: AppTheme.secondaryText(context),
+                                    height: 1.3)),
+                          ],
+                        ),
+                      ),
+                      if (_selectedVisibility == opt.$1)
+                        const Icon(Icons.check_circle,
+                            size: 22, color: AppTheme.teal),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLanguageStep() {
+    const options = [
+      ('fr', '🇫🇷', 'Français'),
+      ('en', '🇬🇧', 'English'),
+    ];
+
+    return _buildStepLayout(
+      title: 'Dans quelle langue veux-tu utiliser Run Date?',
+      child: Column(
+        children: [
+          for (final opt in options)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: GestureDetector(
+                onTap: () {
+                  HapticFeedback.selectionClick();
+                  setState(() {
+                    _selectedLanguage = opt.$1;
+                    setLocale(Locale(opt.$1));
+                  });
+                  Future.delayed(const Duration(milliseconds: 300), _next);
+                },
+                child: AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                  decoration: BoxDecoration(
+                    color: _selectedLanguage == opt.$1
+                        ? AppTheme.ocean.withValues(alpha: 0.08)
+                        : AppTheme.cardColor(context),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: _selectedLanguage == opt.$1
+                          ? AppTheme.ocean
+                          : AppTheme.slateGrey.withValues(alpha: 0.2),
+                      width: _selectedLanguage == opt.$1 ? 2 : 1,
+                    ),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(opt.$2, style: const TextStyle(fontSize: 24)),
+                      const SizedBox(width: 14),
+                      Expanded(
+                        child: Text(
+                          opt.$3,
+                          style: GoogleFonts.nunito(
+                            fontSize: 18,
+                            fontWeight: _selectedLanguage == opt.$1
+                                ? FontWeight.w700
+                                : FontWeight.w500,
+                            color: _selectedLanguage == opt.$1
+                                ? AppTheme.ocean
+                                : AppTheme.textColor(context),
+                          ),
+                        ),
+                      ),
+                      if (_selectedLanguage == opt.$1)
+                        const Icon(Icons.check_circle, color: AppTheme.ocean),
+                    ],
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

@@ -13,6 +13,8 @@ import 'package:rundate/models/meeting_point.dart';
 import 'package:rundate/models/kai_event.dart';
 import 'package:rundate/data/mock_messages.dart';
 import 'package:rundate/screens/apply/apply_wizard_screen.dart';
+import 'package:rundate/screens/payment/payment_checkout_screen.dart';
+import 'package:rundate/widgets/cancellation_policy_sheet.dart';
 import 'package:rundate/screens/messages/chat_screen.dart';
 import 'package:rundate/screens/profile/contact_form_screen.dart';
 import 'package:rundate/screens/profile/user_profile_sheet.dart';
@@ -245,12 +247,21 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                     ),
                                   ),
                                   if (!e.isFree)
-                                    Text(
-                                      'Payable sur place à l\'organisateur',
-                                      style: GoogleFonts.dmSans(
-                                        fontSize: 12,
-                                        color: AppTheme.secondaryText(context),
-                                      ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(Icons.lock_outline_rounded,
+                                            size: 12,
+                                            color: AppTheme.secondaryText(context)),
+                                        const SizedBox(width: 4),
+                                        Text(
+                                          'Paiement en ligne sécurisé',
+                                          style: GoogleFonts.dmSans(
+                                            fontSize: 12,
+                                            color: AppTheme.secondaryText(context),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                 ],
                               ),
@@ -287,6 +298,33 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                       ],
                     ),
                   ),
+                  if (!e.isFree)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Center(
+                        child: GestureDetector(
+                          onTap: () => CancellationPolicySheet.show(context),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.policy_outlined,
+                                  size: 14, color: AppTheme.ocean),
+                              const SizedBox(width: 6),
+                              Text(
+                                'Politique d\'annulation',
+                                style: GoogleFonts.dmSans(
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppTheme.ocean,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor: AppTheme.ocean,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   if (!e.isPast && mockWeatherByEventId.containsKey(e.id)) ...[
                     const SizedBox(height: 16),
                     WeatherBadge(forecast: mockWeatherByEventId[e.id]!),
@@ -856,7 +894,9 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                           : () {
                               Navigator.of(context).push<void>(
                                 MaterialPageRoute<void>(
-                                  builder: (_) => ApplyWizardScreen(event: widget.event),
+                                  builder: (_) => e.isFree
+                                      ? ApplyWizardScreen(event: widget.event)
+                                      : PaymentCheckoutScreen(event: widget.event),
                                 ),
                               );
                             },

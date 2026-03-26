@@ -22,14 +22,13 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
   final PageController _pageController = PageController();
   final TextEditingController _buddyCodeController = TextEditingController();
 
-  static const int _totalSteps = 7;
+  static const int _totalSteps = 6;
 
   IntensityLevel? _intensityLevel;
   DistanceLabel? _distanceLabel;
   User? _buddyMatch;
   bool _buddyCodeInvalid = false;
   final Set<String> _preferredParticipants = {};
-  final Set<String> _bringItems = {};
   String? _bringsCompanion;
   bool _isAutoAdvancing = false;
 
@@ -163,8 +162,6 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
       case 3:
         return true;
       case 4:
-        return _bringItems.isNotEmpty;
-      case 5:
         return _bringsCompanion != null;
       default:
         return true;
@@ -193,11 +190,6 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
     return 'Aucun';
   }
 
-  String _bringLabel() {
-    if (_bringItems.isEmpty) return '—';
-    return _bringItems.join(', ');
-  }
-
   String _preferencesDisplayLabel() {
     if (_preferredParticipants.isEmpty) return 'Aucune préférence';
     final names = mockUsers
@@ -215,29 +207,6 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
         _preferredParticipants.remove(userId);
       } else {
         _preferredParticipants.add(userId);
-      }
-    });
-  }
-
-  static const _nothingKey = 'Rien';
-
-  void _toggleBringItem(String key) {
-    HapticFeedback.selectionClick();
-    setState(() {
-      if (key == _nothingKey) {
-        if (_bringItems.contains(_nothingKey)) {
-          _bringItems.remove(_nothingKey);
-        } else {
-          _bringItems.clear();
-          _bringItems.add(_nothingKey);
-        }
-      } else {
-        _bringItems.remove(_nothingKey);
-        if (_bringItems.contains(key)) {
-          _bringItems.remove(key);
-        } else {
-          _bringItems.add(key);
-        }
       }
     });
   }
@@ -613,51 +582,6 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
     );
   }
 
-  // Step 5: Running equipment
-  Widget _stepBring() {
-    final chips = <MapEntry<String, String>>[
-      const MapEntry('Gourde d\'eau', 'Gourde d\'eau 💧'),
-      const MapEntry('Casquette', 'Casquette 🧢'),
-      const MapEntry('Lunettes fumées', 'Lunettes fumées 🕶️'),
-      const MapEntry('Crème solaire', 'Crème solaire ☀️'),
-      const MapEntry('Écouteurs', 'Écouteurs 🎧'),
-      const MapEntry('Collation post-activité', 'Collation post-activité 🍌'),
-      const MapEntry('Gels énergétiques', 'Gels énergétiques ⚡'),
-      const MapEntry('Serviette', 'Serviette 🧺'),
-      const MapEntry('Rien', 'Rien du tout 🤷'),
-    ];
-    return _StepScaffold(
-      title: 'Ton équipement',
-      subtitle: 'Qu\'est-ce que t\'apportes pour l\'activité?',
-      titleStyle: _titleStyle(context),
-      child: Wrap(
-        spacing: 10,
-        runSpacing: 10,
-        alignment: WrapAlignment.center,
-        children: chips.map((e) {
-          final selected = _bringItems.contains(e.key);
-          return FilterChip(
-            label:
-                Text(e.value, style: GoogleFonts.dmSans(fontSize: 14)),
-            selected: selected,
-            onSelected: (_) => _toggleBringItem(e.key),
-            selectedColor: AppTheme.ocean.withValues(alpha: 0.25),
-            checkmarkColor: AppTheme.ocean,
-            backgroundColor: AppTheme.cardColor(context),
-            side: BorderSide(
-              color: selected
-                  ? AppTheme.ocean
-                  : AppTheme.slateGrey.withValues(alpha: 0.35),
-              width: selected ? 2 : 1,
-            ),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12)),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
   Widget _stepToutou() {
     return _StepScaffold(
       title: 'Tu amènes quelqu\'un? 🐕',
@@ -839,16 +763,6 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
                   editStep: 3,
                 ),
                 _summaryRow(
-                  'Équipement',
-                  Text(
-                    _bringLabel(),
-                    style: GoogleFonts.dmSans(
-                        fontSize: 14,
-                        color: AppTheme.textColor(context)),
-                  ),
-                  editStep: 4,
-                ),
-                _summaryRow(
                   'Compagnon',
                   Text(
                     _bringsCompanion == 'dog'
@@ -862,7 +776,7 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
                         fontSize: 14,
                         color: AppTheme.textColor(context)),
                   ),
-                  editStep: 5,
+                  editStep: 4,
                 ),
                 const SizedBox(height: 8),
                 Container(
@@ -1049,8 +963,8 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
 
   bool get _showNextButton {
     if (_currentPage == _totalSteps - 1) return false;
-    // Steps 0, 1 and 5 (toutou) auto-advance
-    if (_currentPage == 0 || _currentPage == 1 || _currentPage == 5) return false;
+    // Steps 0, 1 and 4 (toutou) auto-advance
+    if (_currentPage == 0 || _currentPage == 1 || _currentPage == 4) return false;
     return true;
   }
 
@@ -1100,7 +1014,6 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
                   _stepDistance(),
                   _stepBuddy(),
                   _stepPreferredParticipants(),
-                  _stepBring(),
                   _stepToutou(),
                   _stepConfirm(),
                 ],
