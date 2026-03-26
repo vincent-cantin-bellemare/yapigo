@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/data/mock_bring_items.dart';
-import 'package:yapigo/data/mock_events.dart';
-import 'package:yapigo/data/mock_meeting_points.dart';
-import 'package:yapigo/data/mock_users.dart';
-import 'package:yapigo/data/mock_weather.dart';
-import 'package:yapigo/models/meeting_point.dart';
-import 'package:yapigo/models/kai_event.dart';
-import 'package:yapigo/models/user.dart';
-import 'package:yapigo/screens/home/main_shell.dart';
-import 'package:yapigo/theme/app_theme.dart';
-import 'package:yapigo/widgets/weather_badge.dart';
+import 'package:rundate/data/mock_bring_items.dart';
+import 'package:rundate/data/mock_events.dart';
+import 'package:rundate/data/mock_meeting_points.dart';
+import 'package:rundate/data/mock_users.dart';
+import 'package:rundate/data/mock_weather.dart';
+import 'package:rundate/models/meeting_point.dart';
+import 'package:rundate/models/kai_event.dart';
+import 'package:rundate/models/user.dart';
+import 'package:rundate/screens/home/main_shell.dart';
+import 'package:rundate/theme/app_theme.dart';
+import 'package:rundate/widgets/weather_badge.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MatchRevealScreen extends StatefulWidget {

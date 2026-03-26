@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 class _QuizQuestion {
   final String title;

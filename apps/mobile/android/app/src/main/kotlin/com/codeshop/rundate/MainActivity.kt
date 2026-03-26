@@ -1,4 +1,4 @@
-package com.codeshop.yapigo
+package com.codeshop.rundate
 
 import io.flutter.embedding.android.FlutterActivity
 

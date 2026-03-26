@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yapigo/models/kai_event.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/models/kai_event.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 Widget distanceLabelIcon(DistanceLabel distance, {double size = 24}) {
   final level = DistanceLabel.values.indexOf(distance);

@@ -2,8 +2,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:yapigo/theme/app_theme.dart';
-import 'package:yapigo/main.dart';
+import 'package:rundate/theme/app_theme.dart';
+import 'package:rundate/main.dart';
 
 /// OPTION A — "Wave & Letters"
 /// Letters slide in one by one from below, then the wave draws itself

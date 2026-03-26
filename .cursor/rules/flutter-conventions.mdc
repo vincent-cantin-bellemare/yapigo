@@ -1,5 +1,5 @@
 ---
-description: Flutter/Dart coding conventions for yapigo
+description: Flutter/Dart coding conventions for Run Date
 globs: apps/mobile/**/*.dart
 alwaysApply: false
 ---

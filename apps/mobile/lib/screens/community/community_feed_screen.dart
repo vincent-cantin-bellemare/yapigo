@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/data/mock_event_photos.dart';
-import 'package:yapigo/data/mock_events.dart';
-import 'package:yapigo/data/mock_meeting_points.dart';
-import 'package:yapigo/models/event_photo.dart';
-import 'package:yapigo/theme/app_theme.dart';
-import 'package:yapigo/widgets/add_photo_sheet.dart';
-import 'package:yapigo/widgets/photo_gallery_viewer.dart';
+import 'package:rundate/data/mock_event_photos.dart';
+import 'package:rundate/data/mock_events.dart';
+import 'package:rundate/data/mock_meeting_points.dart';
+import 'package:rundate/models/event_photo.dart';
+import 'package:rundate/theme/app_theme.dart';
+import 'package:rundate/widgets/add_photo_sheet.dart';
+import 'package:rundate/widgets/photo_gallery_viewer.dart';
 
 class CommunityFeedScreen extends StatelessWidget {
   const CommunityFeedScreen({super.key});

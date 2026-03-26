@@ -1,5 +1,5 @@
-import 'package:yapigo/models/user.dart';
-import 'package:yapigo/models/meeting_point.dart';
+import 'package:rundate/models/user.dart';
+import 'package:rundate/models/meeting_point.dart';
 
 class ActivityMatch {
   final String id;

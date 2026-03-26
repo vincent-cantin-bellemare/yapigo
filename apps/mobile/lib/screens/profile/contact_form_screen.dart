@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/data/mock_users.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/data/mock_users.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 enum ContactSubject {
   newCity('Proposer une nouvelle ville', Icons.location_city_outlined),
@@ -256,7 +256,7 @@ class _ContactFormScreenState extends State<ContactFormScreen> {
             const SizedBox(height: 16),
             Center(
               child: Text(
-                'Tu peux aussi nous écrire à contact@yapigo.com',
+                'Tu peux aussi nous écrire à contact@rundate.app',
                 style: GoogleFonts.dmSans(
                   fontSize: 14,
                   color: AppTheme.secondaryText(context),

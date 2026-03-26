@@ -1,4 +1,4 @@
-import 'package:yapigo/models/user.dart';
+import 'package:rundate/models/user.dart';
 
 class Message {
   final String id;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 /// Reusable avatar widget that shows either a network image or a colored initial.
 /// Supports gradient ring for verified/active users.

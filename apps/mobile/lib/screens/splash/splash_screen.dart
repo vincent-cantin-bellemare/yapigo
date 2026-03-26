@@ -5,8 +5,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:video_player/video_player.dart';
-import 'package:yapigo/theme/app_theme.dart';
-import 'package:yapigo/main.dart';
+import 'package:rundate/theme/app_theme.dart';
+import 'package:rundate/main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -41,12 +41,12 @@ class _SplashScreenState extends State<SplashScreen> {
     _isDark = Theme.of(context).brightness == Brightness.dark;
 
     const lightVideos = [
-      'assets/video/yapigo_light_v1.mp4',
-      'assets/video/yapigo_light_v2.mp4',
-      'assets/video/yapigo_light_v3.mp4',
+      'assets/video/rundate_light_v1.mp4',
+      'assets/video/rundate_light_v2.mp4',
+      'assets/video/rundate_light_v3.mp4',
     ];
     final videoAsset = _isDark
-        ? 'assets/video/yapigo_dark.mp4'
+        ? 'assets/video/rundate_dark.mp4'
         : lightVideos[Random().nextInt(lightVideos.length)];
 
     _videoController = VideoPlayerController.asset(videoAsset)
@@ -119,15 +119,15 @@ class _SplashScreenState extends State<SplashScreen> {
                     )
                   : Image.asset(
                       _isDark
-                          ? 'assets/images/logo_yapigo_white.png'
-                          : 'assets/images/logo_yapigo.png',
+                          ? 'assets/images/logo_rundate_white.png'
+                          : 'assets/images/logo_rundate.png',
                       width: 220,
                       height: 220,
                     ),
             ),
             const SizedBox(height: 8),
             Text(
-              'Le hub des sportifs de ton quartier.',
+              'Cours. Rencontre. Connecte.',
               style: GoogleFonts.dmSans(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,

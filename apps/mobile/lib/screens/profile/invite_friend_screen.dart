@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 class InviteFriendScreen extends StatelessWidget {
   const InviteFriendScreen({super.key});
 
-  static const _inviteCode = 'YAPIGO-ALEX42';
+  static const _inviteCode = 'RUNDATE-ALEX42';
   static const _inviteLink =
-      'https://yapigo.com/invite/$_inviteCode';
+      'https://rundate.app/invite/$_inviteCode';
 
   @override
   Widget build(BuildContext context) {

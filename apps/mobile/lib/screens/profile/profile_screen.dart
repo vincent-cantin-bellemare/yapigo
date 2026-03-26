@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:yapigo/data/mock_users.dart';
-import 'package:yapigo/models/user.dart';
-import 'package:yapigo/screens/profile/buddy_code_screen.dart';
-import 'package:yapigo/screens/profile/connection_requests_screen.dart';
-import 'package:yapigo/screens/profile/connections_screen.dart';
-import 'package:yapigo/screens/profile/edit_profile_screen.dart';
-import 'package:yapigo/screens/profile/help_legal_screen.dart';
-import 'package:yapigo/screens/profile/invite_friend_screen.dart';
-import 'package:yapigo/screens/profile/user_profile_sheet.dart';
-import 'package:yapigo/screens/profile/verify_account_screen.dart';
-import 'package:yapigo/theme/app_theme.dart';
-import 'package:yapigo/utils/app_locale.dart';
-import 'package:yapigo/widgets/demo_banner.dart';
-import 'package:yapigo/widgets/user_photo_viewer.dart';
+import 'package:rundate/data/mock_users.dart';
+import 'package:rundate/models/user.dart';
+import 'package:rundate/screens/profile/buddy_code_screen.dart';
+import 'package:rundate/screens/profile/connection_requests_screen.dart';
+import 'package:rundate/screens/profile/connections_screen.dart';
+import 'package:rundate/screens/profile/edit_profile_screen.dart';
+import 'package:rundate/screens/profile/help_legal_screen.dart';
+import 'package:rundate/screens/profile/invite_friend_screen.dart';
+import 'package:rundate/screens/profile/user_profile_sheet.dart';
+import 'package:rundate/screens/profile/verify_account_screen.dart';
+import 'package:rundate/theme/app_theme.dart';
+import 'package:rundate/utils/app_locale.dart';
+import 'package:rundate/widgets/demo_banner.dart';
+import 'package:rundate/widgets/user_photo_viewer.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -170,8 +170,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const buildDate = String.fromEnvironment('BUILD_DATE',
                       defaultValue: '');
                   final label = buildDate.isNotEmpty
-                      ? 'yapigo v$version ($build) · $buildDate'
-                      : 'yapigo v$version ($build)';
+                      ? 'Run Date v$version ($build) · $buildDate'
+                      : 'Run Date v$version ($build)';
                   return Center(
                     child: Text(
                       label,

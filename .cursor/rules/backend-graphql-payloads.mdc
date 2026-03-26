@@ -51,6 +51,6 @@ Business failures still return **HTTP 200**; the client checks `status` and `err
 
 ## Naming
 
-yapigo mutations use `<app><Model><Action>` (camelCase), not `portal_*` prefixes.
+Run Date mutations use `<app><Model><Action>` (camelCase), not `portal_*` prefixes.
 
 Full spec: [docs/backend/06-api-graphql.md](../docs/backend/06-api-graphql.md) section *Norme GraphQL — Statuts et erreurs*.

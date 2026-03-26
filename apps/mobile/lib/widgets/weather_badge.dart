@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/models/weather_forecast.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/models/weather_forecast.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 /// Compact weather badge for event cards.
 class WeatherBadge extends StatelessWidget {

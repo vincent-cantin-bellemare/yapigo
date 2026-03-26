@@ -1,18 +1,18 @@
-# yapigo
+# Run Date
 
-Multi-sport social app for active people in Quebec. Sign up for outdoor activities together, meet at the point de chute, and gather for Apéro Smoothie after.
+Dating app for runners — meet people by going running together. Based in Montreal / Quebec. Domain: rundate.app
 
 ## Monorepo Structure
 
 ```
-yapigo/
+rundate/
   apps/
     mobile/       Flutter (Dart) — iOS/Android mobile app
     web/          Next.js (TypeScript) — Web app (coming soon)
   backend/        Django (Python) — REST API (coming soon)
   scripts/        Utility scripts (icon generation, etc.)
   assets/
-    originals/    Original design files (logos, videos)
+    logos/         Logo files and candidates
 ```
 
 ## Tech Stack
@@ -20,7 +20,7 @@ yapigo/
 - **Mobile**: Flutter 3.41.5 / Dart 3.11.3
 - **Web**: Next.js + TypeScript + Tailwind CSS (planned)
 - **Backend**: Django + Django REST Framework (planned)
-- **Matching**: AI-powered group matching (planned)
+- **Matching**: AI-powered matching (planned)
 
 ## Getting Started
 
@@ -39,10 +39,10 @@ flutter run
 ```bash
 cd scripts
 pip install fal-client Pillow
-python generate_icons.py
+python generate_rundate_logo_fal.py
 ```
 
 ## Target Audience
 
-- Active people in Quebec who enjoy outdoor sports and group activities
+- Runners in Quebec who want to meet new people through running
 - Tone: casual "tu" (tutoiement), natural Québécois French, fun and encouraging

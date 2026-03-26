@@ -4,14 +4,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:yapigo/data/quebec_cities.dart';
-import 'package:yapigo/screens/profile/terms_screen.dart';
-import 'package:yapigo/screens/profile/privacy_screen.dart';
-import 'package:yapigo/screens/profile/community_rules_screen.dart';
-import 'package:yapigo/screens/profile/bio_quiz_screen.dart';
-import 'package:yapigo/theme/app_theme.dart';
-import 'package:yapigo/utils/app_locale.dart';
-import 'package:yapigo/widgets/demo_banner.dart';
+import 'package:rundate/data/quebec_cities.dart';
+import 'package:rundate/screens/profile/terms_screen.dart';
+import 'package:rundate/screens/profile/privacy_screen.dart';
+import 'package:rundate/screens/profile/community_rules_screen.dart';
+import 'package:rundate/screens/profile/bio_quiz_screen.dart';
+import 'package:rundate/theme/app_theme.dart';
+import 'package:rundate/utils/app_locale.dart';
+import 'package:rundate/widgets/demo_banner.dart';
 
 class SignupWizardScreen extends StatefulWidget {
   const SignupWizardScreen({super.key});
@@ -494,7 +494,7 @@ class _SignupWizardScreenState extends State<SignupWizardScreen> {
     1980: 'le Post-it a été inventé — ton frigo te dit merci 📝',
     1981: 'le premier IBM PC est sorti — ton ordi pèserait 25 lbs 💾',
     1982: 'le CD a été inventé — t\'as sûrement rayé les tiens 💿',
-    1983: 'Internet (TCP/IP) est officiellement né — merci pour yapigo! 🌐',
+    1983: 'Internet (TCP/IP) est officiellement né — merci pour Run Date! 🌐',
     1984: 'le Macintosh est sorti — et Big Brother nous regarde 👁️',
     1985: 'Windows 1.0 est sorti — ton premier clic de frustration 🪟',
     1986: 'la Coupe du monde de Maradona — la main de Dieu ⚽',

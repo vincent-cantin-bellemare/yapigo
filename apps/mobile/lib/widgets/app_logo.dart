@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 /// App icon ("y" with wave on gradient) with optional app name text.
 ///
@@ -26,8 +26,8 @@ class AppLogo extends StatelessWidget {
       final isDark =
           Theme.of(context).brightness == Brightness.dark;
       final asset = isDark
-          ? 'assets/images/logo_yapigo_white.png'
-          : 'assets/images/logo_yapigo.png';
+          ? 'assets/images/logo_rundate_white.png'
+          : 'assets/images/logo_rundate.png';
       return Image.asset(
         asset,
         width: size,
@@ -43,7 +43,7 @@ class AppLogo extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(size * 0.22),
           child: Image.asset(
-            'assets/images/yapigo_icon.png',
+            'assets/images/rundate_icon.png',
             width: size,
             height: size,
             fit: BoxFit.cover,
@@ -52,7 +52,7 @@ class AppLogo extends StatelessWidget {
         if (showText) ...[
           SizedBox(height: size * 0.18),
           Text(
-            'yapigo',
+            'Run Date',
             style: GoogleFonts.dmSans(
               fontSize: size * 0.22,
               fontWeight: FontWeight.w300,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 Future<void> showLikeMessageBottomSheet(
   BuildContext context, {

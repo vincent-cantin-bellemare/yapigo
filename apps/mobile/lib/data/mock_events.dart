@@ -1,4 +1,4 @@
-import 'package:yapigo/models/kai_event.dart';
+import 'package:rundate/models/kai_event.dart';
 
 /// Mock events for demos and UI development.
 /// Dates are anchored to [DateTime.now()] at first access.

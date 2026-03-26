@@ -3,11 +3,11 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/data/mock_messages.dart';
-import 'package:yapigo/models/message.dart';
-import 'package:yapigo/models/user.dart';
-import 'package:yapigo/screens/messages/chat_screen.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/data/mock_messages.dart';
+import 'package:rundate/models/message.dart';
+import 'package:rundate/models/user.dart';
+import 'package:rundate/screens/messages/chat_screen.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 const _bannerSubtitles = [
   'Planifie ta prochaine sortie!',

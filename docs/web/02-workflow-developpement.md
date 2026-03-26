@@ -34,7 +34,7 @@ npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir
 
 ### 1.2 Configurer le thème Tailwind
 
-- Couleurs yapigo dans `tailwind.config.ts` :
+- Couleurs Run Date dans `tailwind.config.ts` :
 
 ```typescript
 const config = {

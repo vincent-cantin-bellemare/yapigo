@@ -1,5 +1,5 @@
-import 'package:yapigo/models/message.dart';
-import 'package:yapigo/data/mock_users.dart';
+import 'package:rundate/models/message.dart';
+import 'package:rundate/data/mock_users.dart';
 
 final mockConversations = <Conversation>[
   Conversation(
@@ -126,7 +126,7 @@ final mockConversations = <Conversation>[
       Message(
         id: 'pm4',
         senderId: 'u1',
-        content: 'On se refait une sortie yapigo bientôt? Je connais un beau spot kayak à Lachine',
+        content: 'On se refait une sortie Run Date bientôt? Je connais un beau spot kayak à Lachine',
         timestamp: DateTime.now().subtract(const Duration(hours: 20)),
       ),
       Message(

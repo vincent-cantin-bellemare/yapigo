@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:yapigo/theme/app_theme.dart';
-import 'package:yapigo/main.dart';
+import 'package:rundate/theme/app_theme.dart';
+import 'package:rundate/main.dart';
 
 /// OPTION B — "Ripple Drop"
 /// The logo PNG fades in with a scale bounce, then concentric ripple rings
@@ -146,7 +146,7 @@ class _SplashScreenRippleState extends State<SplashScreenRipple>
                       );
                     },
                     child: Image.asset(
-                      'assets/images/logo_yapigo.png',
+                      'assets/images/logo_rundate.png',
                       width: 240,
                       fit: BoxFit.contain,
                     ),

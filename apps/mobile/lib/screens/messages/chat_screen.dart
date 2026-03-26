@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/data/mock_questions.dart';
-import 'package:yapigo/data/mock_users.dart';
-import 'package:yapigo/models/message.dart';
-import 'package:yapigo/models/user.dart';
-import 'package:yapigo/screens/profile/user_profile_sheet.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/data/mock_questions.dart';
+import 'package:rundate/data/mock_users.dart';
+import 'package:rundate/models/message.dart';
+import 'package:rundate/models/user.dart';
+import 'package:rundate/screens/profile/user_profile_sheet.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 const String _kCurrentUserId = 'current';
 

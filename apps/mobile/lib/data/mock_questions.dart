@@ -1,4 +1,4 @@
-import 'package:yapigo/models/waiting_question.dart';
+import 'package:rundate/models/waiting_question.dart';
 
 final mockWaitingQuestions = <WaitingQuestion>[
   const WaitingQuestion(
@@ -95,7 +95,7 @@ final mockWaitingQuestions = <WaitingQuestion>[
   ),
   const WaitingQuestion(
     id: 'q12',
-    question: 'Objectif sur un yapigo?',
+    question: 'Objectif sur un Run Date?',
     options: [
       'Finir en souriant',
       'Me faire un ami sportif',
@@ -153,7 +153,7 @@ final mockWaitingQuestions = <WaitingQuestion>[
   ),
   const WaitingQuestion(
     id: 'q20',
-    question: 'Premier yapigo, tu espères surtout...',
+    question: 'Premier Run Date, tu espères surtout...',
     options: [
       'Ne pas finir à la traîne (lol)',
       'Rire au moins une fois',

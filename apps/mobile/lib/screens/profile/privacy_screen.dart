@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 class PrivacyScreen extends StatelessWidget {
   const PrivacyScreen({super.key});
@@ -38,7 +38,7 @@ class PrivacyScreen extends StatelessWidget {
             _section(context, '8. Cookies et analytics',
                 'L\'application mobile n\'utilise pas de cookies. Nous collectons des données d\'utilisation anonymisées pour améliorer l\'expérience utilisateur.'),
             _section(context, '9. Contact DPO',
-                'Pour toute question relative à la protection de vos données, contactez notre délégué à la protection des données: contact@yapigo.com'),
+                'Pour toute question relative à la protection de vos données, contactez notre délégué à la protection des données: contact@rundate.app'),
             const SizedBox(height: 16),
             Text(
               'Dernière mise à jour: Mars 2026',

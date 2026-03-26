@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/data/mock_users.dart';
-import 'package:yapigo/models/user.dart';
-import 'package:yapigo/models/kai_event.dart';
-import 'package:yapigo/screens/profile/user_profile_sheet.dart';
-import 'package:yapigo/theme/app_theme.dart';
-import 'package:yapigo/widgets/user_avatar.dart';
+import 'package:rundate/data/mock_users.dart';
+import 'package:rundate/models/user.dart';
+import 'package:rundate/models/kai_event.dart';
+import 'package:rundate/screens/profile/user_profile_sheet.dart';
+import 'package:rundate/theme/app_theme.dart';
+import 'package:rundate/widgets/user_avatar.dart';
 
 enum _SortMode { recentActivity, totalActivities }
 

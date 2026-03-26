@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/data/mock_users.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/data/mock_users.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 class VerifyAccountScreen extends StatefulWidget {
   const VerifyAccountScreen({super.key});

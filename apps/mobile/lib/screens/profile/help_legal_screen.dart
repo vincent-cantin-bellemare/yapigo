@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/screens/profile/community_rules_screen.dart';
-import 'package:yapigo/screens/profile/contact_form_screen.dart';
-import 'package:yapigo/screens/profile/faq_screen.dart';
-import 'package:yapigo/screens/profile/privacy_screen.dart';
-import 'package:yapigo/screens/profile/terms_screen.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/screens/profile/community_rules_screen.dart';
+import 'package:rundate/screens/profile/contact_form_screen.dart';
+import 'package:rundate/screens/profile/faq_screen.dart';
+import 'package:rundate/screens/profile/privacy_screen.dart';
+import 'package:rundate/screens/profile/terms_screen.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 class HelpAndLegalScreen extends StatelessWidget {
   const HelpAndLegalScreen({super.key});

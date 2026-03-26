@@ -6,24 +6,24 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:yapigo/data/mock_event_photos.dart';
-import 'package:yapigo/data/mock_events.dart';
-import 'package:yapigo/data/mock_users.dart';
-import 'package:yapigo/screens/community/community_feed_screen.dart';
-import 'package:yapigo/models/kai_event.dart';
-import 'package:yapigo/models/user.dart';
-import 'package:yapigo/screens/events/event_detail_screen.dart';
-import 'package:yapigo/screens/events/events_list_screen.dart';
-import 'package:yapigo/screens/events/rate_event_screen.dart';
-import 'package:yapigo/screens/home/main_shell.dart';
-import 'package:yapigo/screens/profile/contact_form_screen.dart';
-import 'package:yapigo/screens/profile/user_profile_sheet.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/data/mock_event_photos.dart';
+import 'package:rundate/data/mock_events.dart';
+import 'package:rundate/data/mock_users.dart';
+import 'package:rundate/screens/community/community_feed_screen.dart';
+import 'package:rundate/models/kai_event.dart';
+import 'package:rundate/models/user.dart';
+import 'package:rundate/screens/events/event_detail_screen.dart';
+import 'package:rundate/screens/events/events_list_screen.dart';
+import 'package:rundate/screens/events/rate_event_screen.dart';
+import 'package:rundate/screens/home/main_shell.dart';
+import 'package:rundate/screens/profile/contact_form_screen.dart';
+import 'package:rundate/screens/profile/user_profile_sheet.dart';
+import 'package:rundate/theme/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:yapigo/widgets/photo_gallery_viewer.dart';
-import 'package:yapigo/widgets/pace_label_icon.dart';
-import 'package:yapigo/widgets/user_avatar.dart';
-import 'package:yapigo/widgets/skeletons/shimmer_block.dart';
+import 'package:rundate/widgets/photo_gallery_viewer.dart';
+import 'package:rundate/widgets/pace_label_icon.dart';
+import 'package:rundate/widgets/user_avatar.dart';
+import 'package:rundate/widgets/skeletons/shimmer_block.dart';
 
 // ---------------------------------------------------------------------------
 // Testimonial data
@@ -31,7 +31,7 @@ import 'package:yapigo/widgets/skeletons/shimmer_block.dart';
 
 final _testimonials = [
   (
-    'On s\'est rencontrés lors d\'une activité yapigo. Maintenant on bouge ensemble tous les matins!',
+    'On s\'est rencontrés lors d\'une activité Run Date. Maintenant on bouge ensemble tous les matins!',
     'Sophie',
     31,
     'https://i.pravatar.cc/100?img=1',
@@ -429,7 +429,7 @@ class _HeroBanner extends StatelessWidget {
                 Row(
                   children: [
                     Image.asset(
-                      'assets/images/logo_yapigo_white.png',
+                      'assets/images/logo_rundate_white.png',
                       height: 42,
                       fit: BoxFit.contain,
                     )
@@ -1960,7 +1960,7 @@ class _CompatibleProfilesSection extends StatelessWidget {
             .slideY(begin: 0.1, end: 0, duration: 400.ms, delay: 900.ms),
         const SizedBox(height: 6),
         Text(
-          'yapigo favorise les rencontres actives, en vrai. '
+          'Run Date favorise les rencontres actives, en vrai. '
           'Découvre ces profils à ta prochaine activité!',
           style: GoogleFonts.dmSans(
             fontSize: 14,

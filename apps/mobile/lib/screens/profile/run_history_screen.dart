@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/data/mock_event_photos.dart';
-import 'package:yapigo/data/mock_events.dart';
-import 'package:yapigo/data/mock_users.dart';
-import 'package:yapigo/models/kai_event.dart';
-import 'package:yapigo/models/user.dart';
-import 'package:yapigo/screens/events/rate_event_screen.dart';
-import 'package:yapigo/screens/profile/user_profile_sheet.dart';
-import 'package:yapigo/theme/app_theme.dart';
-import 'package:yapigo/widgets/add_photo_sheet.dart';
-import 'package:yapigo/widgets/like_message_sheet.dart';
-import 'package:yapigo/widgets/photo_gallery_viewer.dart';
-import 'package:yapigo/widgets/user_avatar.dart';
+import 'package:rundate/data/mock_event_photos.dart';
+import 'package:rundate/data/mock_events.dart';
+import 'package:rundate/data/mock_users.dart';
+import 'package:rundate/models/kai_event.dart';
+import 'package:rundate/models/user.dart';
+import 'package:rundate/screens/events/rate_event_screen.dart';
+import 'package:rundate/screens/profile/user_profile_sheet.dart';
+import 'package:rundate/theme/app_theme.dart';
+import 'package:rundate/widgets/add_photo_sheet.dart';
+import 'package:rundate/widgets/like_message_sheet.dart';
+import 'package:rundate/widgets/photo_gallery_viewer.dart';
+import 'package:rundate/widgets/user_avatar.dart';
 
 class RunHistoryScreen extends StatelessWidget {
   const RunHistoryScreen({super.key});

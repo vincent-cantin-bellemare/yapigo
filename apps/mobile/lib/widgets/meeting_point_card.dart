@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/models/meeting_point.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/models/meeting_point.dart';
+import 'package:rundate/theme/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MeetingPointCard extends StatelessWidget {

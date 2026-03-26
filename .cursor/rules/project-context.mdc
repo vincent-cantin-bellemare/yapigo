@@ -1,17 +1,17 @@
 ---
-description: Project context for yapigo
+description: Project context for Run Date
 alwaysApply: true
 ---
 
-# yapigo — Project Context
+# Run Date — Project Context
 
-Multi-sport social app for all active people in Quebec. Domain: yapigo.com
+Dating app for runners — meet people by going running together. Domain: rundate.app
 
-- **Scope**: not running-only — all outdoor sports (running, road cycling, mountain biking, kayak, yoga, hiking, swimming, cross-country skiing, snowshoeing, skating). Not a dating app — for everyone who wants to move outside together.
-- **Concept**: people sign up for outdoor activities together. They meet at a "point de chute" (park, café, landmark), the group does the activity together. Afterward, "Apéro Smoothie" at a nearby café.
-- **Features**: buddy codes (ANIMAL-MOT format) for pairing with friends; sub-groups for large events; threshold system (min 6 to confirm); multiple Organisateurs per event; paid activities (on-site payment); recurring events (weekly, biweekly, monthly, custom days).
-- **Models (domain)**: `YapiEvent` (not RunDateEvent), `IntensityLevel` (not PaceLabel), `UserActivity` (sport + level per user), `ActivityMatch`.
-- **Tone**: casual "tu" (tutoiement), natural Québécois French, encouraging, light and fun
+- **Scope**: dating through running — you match with someone, go for a run together, and see where it goes. Focused on running, not multi-sport.
+- **Concept**: people sign up, get matched based on pace/distance/location preferences, and meet for a run date. They meet at a "point de chute" (park, café, landmark), run together, then optionally grab a smoothie or coffee after.
+- **Features**: buddy codes (ANIMAL-MOT format) for pairing with friends; group run dates; threshold system (min participants to confirm); multiple Organisateurs per event; recurring events (weekly, biweekly, monthly, custom days).
+- **Models (domain)**: `RunDateEvent`, `IntensityLevel`, `UserActivity` (running preferences per user), `ActivityMatch`.
+- **Tone**: casual "tu" (tutoiement), natural Québécois French, encouraging, light and fun — romantic but not cheesy
 - **Stack**: Monorepo — Flutter mobile app (`apps/mobile/`), Next.js web app (`apps/web/`, planned), Django backend (`backend/`, planned)
 - **Data**: all data is currently mocked (no backend connected)
 - **Matching**: described as AI-powered — no actual algorithm yet

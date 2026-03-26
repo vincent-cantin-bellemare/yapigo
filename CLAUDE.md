@@ -1,4 +1,4 @@
-# yapigo — Instructions Claude Code
+# Run Date — Instructions Claude Code
 
 ## Langue
 
@@ -24,7 +24,7 @@ main      ← PR depuis staging uniquement — jamais de force push
 
 ## Projet
 
-Application sociale multi-sports pour les personnes actives au Québec — activités de plein air en groupe (course, vélo, kayak, randonnée, etc.).
+Application de dating en courant — rencontre des gens en allant courir ensemble. Basée à Montréal / Québec. Domain: rundate.app
 
 - **Stack mobile** : Flutter (`apps/mobile/`)
 - **Stack backend** : Django + Graphene-Django + PostgreSQL (`backend/`)

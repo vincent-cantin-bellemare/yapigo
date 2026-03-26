@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:yapigo/data/mock_events.dart';
-import 'package:yapigo/models/kai_event.dart';
-import 'package:yapigo/theme/app_theme.dart';
+import 'package:rundate/data/mock_events.dart';
+import 'package:rundate/models/kai_event.dart';
+import 'package:rundate/theme/app_theme.dart';
 
 class AddPhotoSheet extends StatefulWidget {
   const AddPhotoSheet({super.key, this.preselectedEventId});
@@ -351,7 +351,7 @@ class _AddPhotoSheetState extends State<AddPhotoSheet> {
                       const SizedBox(width: 10),
                       Expanded(
                         child: Text(
-                          'Je confirme que cette photo ne contient aucune nudité, violence ou contenu inapproprié. J\'accepte qu\'elle puisse être affichée sur la page communauté de yapigo.',
+                          'Je confirme que cette photo ne contient aucune nudité, violence ou contenu inapproprié. J\'accepte qu\'elle puisse être affichée sur la page communauté de Run Date.',
                           style: GoogleFonts.dmSans(
                             fontSize: 14,
                             color: AppTheme.navy,

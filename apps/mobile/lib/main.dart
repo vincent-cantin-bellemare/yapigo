@@ -4,12 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:yapigo/theme/app_theme.dart';
-import 'package:yapigo/screens/onboarding/onboarding_screen.dart';
-import 'package:yapigo/screens/splash/splash_screen.dart';
-import 'package:yapigo/utils/app_locale.dart';
-import 'package:yapigo/widgets/demo_banner.dart';
-import 'package:yapigo/screens/home/main_shell.dart';
+import 'package:rundate/theme/app_theme.dart';
+import 'package:rundate/screens/onboarding/onboarding_screen.dart';
+import 'package:rundate/screens/splash/splash_screen.dart';
+import 'package:rundate/utils/app_locale.dart';
+import 'package:rundate/widgets/demo_banner.dart';
+import 'package:rundate/screens/home/main_shell.dart';
 
 void main() async {
   runZonedGuarded(() async {
@@ -17,11 +17,11 @@ void main() async {
 
     FlutterError.onError = (FlutterErrorDetails details) {
       FlutterError.presentError(details);
-      debugPrint('[yapigo] FlutterError: ${details.exceptionAsString()}');
+      debugPrint('[rundate] FlutterError: ${details.exceptionAsString()}');
     };
 
     PlatformDispatcher.instance.onError = (error, stack) {
-      debugPrint('[yapigo] Uncaught: $error\n$stack');
+      debugPrint('[rundate] Uncaught: $error\n$stack');
       return true;
     };
 
@@ -32,7 +32,7 @@ void main() async {
 
     runApp(const KaiakApp());
   }, (error, stack) {
-    debugPrint('[yapigo] Zone error: $error\n$stack');
+    debugPrint('[rundate] Zone error: $error\n$stack');
   });
 }
 
@@ -48,7 +48,7 @@ class KaiakApp extends StatelessWidget {
           valueListenable: appLocale,
           builder: (context, locale, _) {
             return MaterialApp(
-              title: 'yapigo',
+              title: 'Run Date',
               debugShowCheckedModeBanner: false,
               theme: AppTheme.lightTheme,
               darkTheme: AppTheme.darkTheme,

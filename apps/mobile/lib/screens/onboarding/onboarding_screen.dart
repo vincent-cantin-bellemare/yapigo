@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:yapigo/theme/app_theme.dart';
-import 'package:yapigo/screens/auth/signup_wizard_screen.dart';
-import 'package:yapigo/screens/onboarding/guest_events_screen.dart';
-import 'package:yapigo/widgets/app_logo.dart';
-import 'package:yapigo/widgets/demo_banner.dart';
+import 'package:rundate/theme/app_theme.dart';
+import 'package:rundate/screens/auth/signup_wizard_screen.dart';
+import 'package:rundate/screens/onboarding/guest_events_screen.dart';
+import 'package:rundate/widgets/app_logo.dart';
+import 'package:rundate/widgets/demo_banner.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
