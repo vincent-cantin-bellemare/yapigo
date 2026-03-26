@@ -50,13 +50,6 @@ class FaqScreen extends StatelessWidget {
           'expérimentés et bénévoles sélectionnés par l\'équipe Run Date.',
     ),
     _FaqItem(
-      question: 'C\'est quoi un Buddy Code?',
-      answer: 'C\'est un code unique que tu partages avec un ami. En '
-          'entrant ton Buddy Code à l\'inscription, ton ami et toi serez '
-          'placés dans le même sous-groupe. Parfait pour se motiver '
-          'ensemble tout en rencontrant du nouveau monde!',
-    ),
-    _FaqItem(
       question: 'C\'est quoi le système de badges?',
       answer: 'Plus tu participes aux activités et reçois de bonnes évaluations, '
           'plus ton badge évolue! Les niveaux sont:\n'
@@ -70,8 +63,7 @@ class FaqScreen extends StatelessWidget {
       question: 'Est-ce que je peux choisir les membres de mon groupe?',
       answer: 'Non, la magie de Run Date c\'est de rencontrer des '
           'nouvelles personnes! L\'IA se charge de former un groupe avec '
-          'lequel tu devrais bien t\'entendre. Par contre, tu peux '
-          'utiliser un Buddy Code pour être jumelé avec un ami.',
+          'lequel tu devrais bien t\'entendre.',
     ),
     _FaqItem(
       question: 'C\'est quoi les différents niveaux d\'intensité?',

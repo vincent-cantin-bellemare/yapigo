@@ -10,7 +10,6 @@ class ActivityMatch {
   final MatchStatus status;
   final double? ratingGiven;
   final List<String> organizerIds;
-  final String? buddyId;
 
   const ActivityMatch({
     required this.id,
@@ -21,18 +20,12 @@ class ActivityMatch {
     this.status = MatchStatus.confirmed,
     this.ratingGiven,
     this.organizerIds = const [],
-    this.buddyId,
   });
 
   int get groupSize => groupMembers.length;
 
   List<User> get organizers =>
       groupMembers.where((u) => organizerIds.contains(u.id)).toList();
-
-  User? get buddy =>
-      buddyId != null
-          ? groupMembers.where((u) => u.id == buddyId).firstOrNull
-          : null;
 }
 
 enum MatchStatus {

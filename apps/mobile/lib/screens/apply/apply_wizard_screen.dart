@@ -20,14 +20,11 @@ class ApplyWizardScreen extends StatefulWidget {
 
 class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
   final PageController _pageController = PageController();
-  final TextEditingController _buddyCodeController = TextEditingController();
 
-  static const int _totalSteps = 6;
+  static const int _totalSteps = 5;
 
   IntensityLevel? _intensityLevel;
   DistanceLabel? _distanceLabel;
-  User? _buddyMatch;
-  bool _buddyCodeInvalid = false;
   final Set<String> _preferredParticipants = {};
   String? _bringsCompanion;
   bool _isAutoAdvancing = false;
@@ -48,39 +45,9 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
       );
 
   @override
-  void initState() {
-    super.initState();
-    _buddyCodeController.addListener(_onBuddyCodeChanged);
-  }
-
-  @override
   void dispose() {
-    _buddyCodeController.dispose();
     _pageController.dispose();
     super.dispose();
-  }
-
-  void _onBuddyCodeChanged() {
-    final code = _buddyCodeController.text.trim().toUpperCase();
-    if (code.isEmpty) {
-      setState(() {
-        _buddyMatch = null;
-        _buddyCodeInvalid = false;
-      });
-      return;
-    }
-    final matches = mockUsers.where(
-      (u) => u.buddyCode.toUpperCase() == code && u.id != currentUser.id,
-    );
-    setState(() {
-      if (matches.isNotEmpty) {
-        _buddyMatch = matches.first;
-        _buddyCodeInvalid = false;
-      } else {
-        _buddyMatch = null;
-        _buddyCodeInvalid = true;
-      }
-    });
   }
 
   void _goNext() {
@@ -160,8 +127,6 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
       case 2:
         return true;
       case 3:
-        return true;
-      case 4:
         return _bringsCompanion != null;
       default:
         return true;
@@ -174,7 +139,6 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
       MaterialPageRoute<void>(
         builder: (_) => PostRegistrationInviteScreen(
           event: widget.event,
-          buddyUserId: _buddyMatch?.id,
         ),
       ),
     );
@@ -183,11 +147,6 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
   String _distanceDisplayLabel() {
     if (_distanceLabel == null) return '—';
     return '${_distanceLabel!.emoji} ${_distanceLabel!.label}';
-  }
-
-  String _buddyDisplayLabel() {
-    if (_buddyMatch != null) return _buddyMatch!.firstName;
-    return 'Aucun';
   }
 
   String _preferencesDisplayLabel() {
@@ -345,149 +304,6 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
             ),
           );
         }).toList(),
-      ),
-    );
-  }
-
-  // Step 3: Buddy code
-  Widget _stepBuddy() {
-    return _StepScaffold(
-      title: 'Tu viens avec quelqu\'un?',
-      subtitle:
-          'Entre le code buddy de ton ami(e) pour participer ensemble (optionnel)',
-      titleStyle: _titleStyle(context),
-      child: Column(
-        children: [
-          TextField(
-            controller: _buddyCodeController,
-            textCapitalization: TextCapitalization.characters,
-            decoration: InputDecoration(
-              hintText: 'Ex: RENARD-DISCO',
-              prefixIcon: const Icon(Icons.people_outline_rounded),
-              filled: true,
-              fillColor: AppTheme.cardColor(context),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(
-                    color: AppTheme.slateGrey.withValues(alpha: 0.3)),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: BorderSide(
-                    color: AppTheme.slateGrey.withValues(alpha: 0.3)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: const BorderSide(color: AppTheme.ocean, width: 2),
-              ),
-            ),
-            style: GoogleFonts.dmSans(
-                fontSize: 16, color: AppTheme.textColor(context)),
-          ),
-          const SizedBox(height: 16),
-          if (_buddyMatch != null)
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: AppTheme.teal.withValues(alpha: 0.12),
-                borderRadius: BorderRadius.circular(12),
-                border:
-                    Border.all(color: AppTheme.teal.withValues(alpha: 0.4)),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.check_circle_rounded,
-                          color: AppTheme.teal, size: 20),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Text(
-                          'Tu participes avec ${_buddyMatch!.firstName}! 🎯',
-                          style: GoogleFonts.dmSans(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w600,
-                            color: AppTheme.teal,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30),
-                    child: Text(
-                      '${_buddyMatch!.firstName} sera notifié(e) de ton inscription. '
-                      'Vous serez dans le même groupe si elle/il s\'inscrit aussi!',
-                      style: GoogleFonts.dmSans(
-                        fontSize: 14,
-                        color: AppTheme.teal.withValues(alpha: 0.8),
-                        height: 1.4,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          if (_buddyCodeInvalid &&
-              _buddyCodeController.text.trim().isNotEmpty)
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              decoration: BoxDecoration(
-                color: AppTheme.error.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(12),
-                border:
-                    Border.all(color: AppTheme.error.withValues(alpha: 0.3)),
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.error_outline_rounded,
-                      color: AppTheme.error, size: 20),
-                  const SizedBox(width: 10),
-                  Text(
-                    'Code introuvable',
-                    style: GoogleFonts.dmSans(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                      color: AppTheme.error,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          const SizedBox(height: 24),
-          Text(
-            'Jumelages précédents',
-            style: GoogleFonts.dmSans(
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.textColor(context)),
-          ),
-          const SizedBox(height: 10),
-          Wrap(
-            spacing: 10,
-            runSpacing: 10,
-            children: [mockUsers[1], mockUsers[4]].map((u) {
-              return ActionChip(
-                avatar: CircleAvatar(
-                  radius: 14,
-                  backgroundColor: AppTheme.ocean.withValues(alpha: 0.2),
-                  backgroundImage: u.photoUrl != null ? NetworkImage(u.photoUrl!) : null,
-                ),
-                label: Text('${u.firstName} · ${u.buddyCode}', style: GoogleFonts.dmSans(fontSize: 14)),
-                onPressed: () {
-                  _buddyCodeController.text = u.buddyCode;
-                },
-                backgroundColor: AppTheme.cardColor(context),
-                side: BorderSide(color: AppTheme.slateGrey.withValues(alpha: 0.25)),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              );
-            }).toList(),
-          ),
-        ],
       ),
     );
   }
@@ -743,16 +559,6 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
                   editStep: 1,
                 ),
                 _summaryRow(
-                  'Buddy',
-                  Text(
-                    _buddyDisplayLabel(),
-                    style: GoogleFonts.dmSans(
-                        fontSize: 14,
-                        color: AppTheme.textColor(context)),
-                  ),
-                  editStep: 2,
-                ),
-                _summaryRow(
                   'Préférences',
                   Text(
                     _preferencesDisplayLabel(),
@@ -760,7 +566,7 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
                         fontSize: 14,
                         color: AppTheme.textColor(context)),
                   ),
-                  editStep: 3,
+                  editStep: 2,
                 ),
                 _summaryRow(
                   'Compagnon',
@@ -776,7 +582,7 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
                         fontSize: 14,
                         color: AppTheme.textColor(context)),
                   ),
-                  editStep: 4,
+                  editStep: 3,
                 ),
                 const SizedBox(height: 8),
                 Container(
@@ -963,8 +769,8 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
 
   bool get _showNextButton {
     if (_currentPage == _totalSteps - 1) return false;
-    // Steps 0, 1 and 4 (toutou) auto-advance
-    if (_currentPage == 0 || _currentPage == 1 || _currentPage == 4) return false;
+    // Steps 0, 1 and 3 (toutou) auto-advance
+    if (_currentPage == 0 || _currentPage == 1 || _currentPage == 3) return false;
     return true;
   }
 
@@ -1012,7 +818,6 @@ class _ApplyWizardScreenState extends State<ApplyWizardScreen> {
                 children: [
                   _stepIntensity(),
                   _stepDistance(),
-                  _stepBuddy(),
                   _stepPreferredParticipants(),
                   _stepToutou(),
                   _stepConfirm(),
@@ -1133,11 +938,9 @@ class PostRegistrationInviteScreen extends StatefulWidget {
   const PostRegistrationInviteScreen({
     super.key,
     this.event,
-    this.buddyUserId,
   });
 
   final KaiEvent? event;
-  final String? buddyUserId;
 
   @override
   State<PostRegistrationInviteScreen> createState() =>

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rundate/screens/messages/conversations_screen.dart';
 import 'package:rundate/screens/notifications/notifications_screen.dart';
+import 'package:rundate/screens/profile/connection_requests_screen.dart';
 import 'package:rundate/theme/app_theme.dart';
 
 class ActivityScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _ActivityScreenState extends State<ActivityScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -76,6 +77,7 @@ class _ActivityScreenState extends State<ActivityScreen>
                   tabs: const [
                     Tab(text: 'Messages'),
                     Tab(text: 'Notifications'),
+                    Tab(text: 'Connexions'),
                   ],
                 ),
               ),
@@ -87,6 +89,7 @@ class _ActivityScreenState extends State<ActivityScreen>
                 children: const [
                   ConversationsScreen(embedded: true),
                   NotificationsScreen(embedded: true),
+                  ConnectionRequestsScreen(embedded: true),
                 ],
               ),
             ),

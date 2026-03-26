@@ -14,9 +14,8 @@ import 'package:rundate/widgets/weather_badge.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MatchRevealScreen extends StatefulWidget {
-  const MatchRevealScreen({super.key, this.event, this.buddyUserId});
+  const MatchRevealScreen({super.key, this.event});
   final KaiEvent? event;
-  final String? buddyUserId;
 
   @override
   State<MatchRevealScreen> createState() => _MatchRevealScreenState();
@@ -93,13 +92,6 @@ class _MatchRevealScreenState extends State<MatchRevealScreen>
       if (organizerMatches.isNotEmpty) organizer = organizerMatches.first;
     }
 
-    User? buddy;
-    if (widget.buddyUserId != null) {
-      final buddyMatches =
-          mockUsers.where((u) => u.id == widget.buddyUserId);
-      if (buddyMatches.isNotEmpty) buddy = buddyMatches.first;
-    }
-
     return Scaffold(
       body: AnimatedSwitcher(
         duration: const Duration(milliseconds: 500),
@@ -111,7 +103,6 @@ class _MatchRevealScreenState extends State<MatchRevealScreen>
                 event: ev,
                 groupMembers: matchedGroup,
                 organizer: organizer,
-                buddy: buddy,
                 onMessage: () => _openMainShell(3),
                 onHome: () => _openMainShell(0),
               )
@@ -190,14 +181,12 @@ class _PhaseTwoContent extends StatelessWidget {
     required this.onMessage,
     required this.onHome,
     this.organizer,
-    this.buddy,
   });
 
   final MeetingPoint meetingPoint;
   final KaiEvent event;
   final List<User> groupMembers;
   final User? organizer;
-  final User? buddy;
   final VoidCallback onMessage;
   final VoidCallback onHome;
 
@@ -255,10 +244,6 @@ class _PhaseTwoContent extends StatelessWidget {
                     _GroupMembersGrid(members: groupMembers),
                     const SizedBox(height: 20),
                     _OrganizerSection(organizer: organizer),
-                    if (buddy != null) ...[
-                      const SizedBox(height: 12),
-                      _BuddyBanner(buddy: buddy!),
-                    ],
                     const SizedBox(height: 24),
                     Text(
                       'Votre rendez-vous',
@@ -522,40 +507,6 @@ class _OrganizerSection extends StatelessWidget {
               style: GoogleFonts.dmSans(
                 fontSize: 14,
                 color: AppTheme.secondaryText(context),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Buddy highlight banner.
-class _BuddyBanner extends StatelessWidget {
-  const _BuddyBanner({required this.buddy});
-  final User buddy;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppTheme.teal.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: AppTheme.teal.withValues(alpha: 0.4)),
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.people_rounded, color: AppTheme.teal, size: 22),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-              'Tu participes avec ${buddy.firstName}! 🎯',
-              style: GoogleFonts.dmSans(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-                color: AppTheme.teal,
               ),
             ),
           ),

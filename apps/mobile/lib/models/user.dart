@@ -32,7 +32,6 @@ class User {
   final List<String> photoGallery;
   final List<UserActivity> activities;
   final List<String> activityGoals;
-  final String buddyCode;
   final bool isOrganizer;
   final int connections;
 
@@ -69,7 +68,6 @@ class User {
     this.photoGallery = const [],
     this.activities = const [],
     this.activityGoals = const [],
-    this.buddyCode = '',
     this.isOrganizer = false,
     this.connections = 0,
     this.stravaConnected = false,

@@ -6,8 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rundate/data/mock_users.dart';
 import 'package:rundate/models/user.dart';
-import 'package:rundate/screens/profile/buddy_code_screen.dart';
-import 'package:rundate/screens/profile/connection_requests_screen.dart';
 import 'package:rundate/screens/profile/connections_screen.dart';
 import 'package:rundate/screens/profile/edit_profile_screen.dart';
 import 'package:rundate/screens/profile/help_legal_screen.dart';
@@ -210,12 +208,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onTap: () => _push(const EditProfileScreen()),
           ),
           _ProfileMenuTile(
-            icon: Icons.group_add_outlined,
-            title: 'Mon Buddy Code',
-            iconColor: AppTheme.ocean,
-            onTap: () => _push(const BuddyCodeScreen()),
-          ),
-          _ProfileMenuTile(
             icon: Icons.verified_user_outlined,
             title: 'Vérifier mon compte',
             iconColor: user.isVerified ? AppTheme.navyIcon(context) : AppTheme.teal,
@@ -226,12 +218,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             title: 'Inviter un ami',
             iconColor: AppTheme.ocean,
             onTap: () => _push(const InviteFriendScreen()),
-          ),
-          _ProfileMenuTile(
-            icon: Icons.people_outline_rounded,
-            title: 'Connexions',
-            iconColor: AppTheme.teal,
-            onTap: () => _push(const ConnectionRequestsScreen()),
           ),
           _ProfileMenuTile(
             icon: Icons.directions_run_rounded,
@@ -704,9 +690,8 @@ class _ProfileCompletenessCard extends StatelessWidget {
     if (user.bio != null && user.bio!.isNotEmpty) total += 15;
     if (user.isVerified) total += 20;
     if (user.totalActivities >= 1) total += 15;
-    if (user.averageRating != null) total += 10;
-    if (user.activities.isNotEmpty) total += 10;
-    if (user.buddyCode.isNotEmpty) total += 10;
+    if (user.averageRating != null) total += 15;
+    if (user.activities.isNotEmpty) total += 15;
     return total;
   }
 

@@ -25,7 +25,9 @@ class _ConnectionRequest {
 }
 
 class ConnectionRequestsScreen extends StatefulWidget {
-  const ConnectionRequestsScreen({super.key});
+  const ConnectionRequestsScreen({super.key, this.embedded = false});
+
+  final bool embedded;
 
   @override
   State<ConnectionRequestsScreen> createState() =>
@@ -116,8 +118,70 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen>
     );
   }
 
+  Widget _buildInnerTabBar() {
+    return TabBar(
+      controller: _tabController,
+      labelColor: AppTheme.ocean,
+      unselectedLabelColor: AppTheme.secondaryText(context),
+      indicatorColor: AppTheme.ocean,
+      indicatorSize: TabBarIndicatorSize.label,
+      labelStyle:
+          GoogleFonts.dmSans(fontSize: 14, fontWeight: FontWeight.w700),
+      unselectedLabelStyle:
+          GoogleFonts.dmSans(fontSize: 14, fontWeight: FontWeight.w500),
+      dividerColor: Colors.transparent,
+      tabs: [
+        Tab(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('Reçues'),
+              if (_pendingCount > 0) ...[
+                const SizedBox(width: 6),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 7, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: AppTheme.ocean,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text(
+                    '$_pendingCount',
+                    style: GoogleFonts.dmSans(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+        const Tab(text: 'Envoyées'),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.embedded) {
+      return Column(
+        children: [
+          _buildInnerTabBar(),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [
+                _buildReceivedTab(),
+                _buildSentTab(),
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -129,47 +193,9 @@ class _ConnectionRequestsScreenState extends State<ConnectionRequestsScreen>
             color: AppTheme.textColor(context),
           ),
         ),
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: AppTheme.ocean,
-          unselectedLabelColor: AppTheme.secondaryText(context),
-          indicatorColor: AppTheme.ocean,
-          indicatorSize: TabBarIndicatorSize.label,
-          labelStyle:
-              GoogleFonts.dmSans(fontSize: 14, fontWeight: FontWeight.w700),
-          unselectedLabelStyle:
-              GoogleFonts.dmSans(fontSize: 14, fontWeight: FontWeight.w500),
-          dividerColor: Colors.transparent,
-          tabs: [
-            Tab(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('Reçues'),
-                  if (_pendingCount > 0) ...[
-                    const SizedBox(width: 6),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 7, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: AppTheme.ocean,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Text(
-                        '$_pendingCount',
-                        style: GoogleFonts.dmSans(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-            const Tab(text: 'Envoyées'),
-          ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(48),
+          child: _buildInnerTabBar(),
         ),
       ),
       body: TabBarView(

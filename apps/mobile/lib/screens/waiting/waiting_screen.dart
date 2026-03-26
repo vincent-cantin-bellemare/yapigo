@@ -9,9 +9,8 @@ import 'package:rundate/screens/waiting/match_reveal_screen.dart';
 import 'package:rundate/theme/app_theme.dart';
 
 class WaitingScreen extends StatefulWidget {
-  const WaitingScreen({super.key, this.event, this.buddyUserId});
+  const WaitingScreen({super.key, this.event});
   final KaiEvent? event;
-  final String? buddyUserId;
 
   @override
   State<WaitingScreen> createState() => _WaitingScreenState();
@@ -85,7 +84,6 @@ class _WaitingScreenState extends State<WaitingScreen>
       MaterialPageRoute<void>(
         builder: (_) => MatchRevealScreen(
           event: widget.event,
-          buddyUserId: widget.buddyUserId,
         ),
       ),
     );
