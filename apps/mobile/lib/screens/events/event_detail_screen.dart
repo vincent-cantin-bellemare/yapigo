@@ -687,13 +687,13 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                   const SizedBox(height: 14),
                   Column(
                     children: [
-                      _HowItWorksStep(number: '1', icon: Icons.edit_outlined, title: 'Inscris-toi', description: 'Choisis ton intensité pour voir tes compagnons de groupe'),
+                      _HowItWorksStep(number: '1', icon: Icons.edit_outlined, title: 'Inscris-toi', description: 'Choisis ton rythme et découvre avec qui tu vas courir'),
                       const SizedBox(height: 10),
-                      _HowItWorksStep(number: '2', icon: Icons.location_on_outlined, title: 'Rendez-vous au point de départ', description: 'Tout le monde se retrouve ensemble au même endroit'),
+                      _HowItWorksStep(number: '2', icon: Icons.location_on_outlined, title: 'Rendez-vous au point de départ', description: 'On se rejoint tous au même endroit pour partir ensemble'),
                       const SizedBox(height: 10),
-                      _HowItWorksStep(number: '3', icon: Icons.fitness_center_rounded, title: 'On bouge!', description: 'Des sous-groupes se forment naturellement selon les intensités — pas d\'obligation'),
+                      _HowItWorksStep(number: '3', icon: Icons.directions_run_rounded, title: 'On court!', description: 'On court en duo ou en groupe, à ton rythme — l\'important c\'est la connexion'),
                       const SizedBox(height: 10),
-                      _HowItWorksStep(number: '4', icon: Icons.local_cafe_outlined, title: 'Ravito Smoothie!', description: 'Tout le monde se retrouve au café pour célébrer'),
+                      _HowItWorksStep(number: '4', icon: Icons.local_cafe_outlined, title: 'L\'Apéro Smoothie', description: 'Après la course, on se retrouve dans un café pour mieux se connaître'),
                     ],
                   ),
 

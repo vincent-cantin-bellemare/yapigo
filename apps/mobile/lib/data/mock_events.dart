@@ -45,10 +45,10 @@ List<KaiEvent> _buildMockEvents() {
       organizerIds: ['u2'],
       recurrence: RecurrenceType.weekly,
     ),
-    // --- Upcoming: road cycling ---
+    // --- Upcoming: long run Lachine Canal ---
     KaiEvent(
       id: 'e2',
-      category: EventCategory.roadCycling,
+      category: EventCategory.running,
       neighborhood: 'Lachine',
       city: 'Montréal',
       date: atDay(5, hour: 7, minute: 0),
@@ -66,14 +66,12 @@ List<KaiEvent> _buildMockEvents() {
       isConfirmed: true,
       registrationStatus: RegistrationStatus.notRegistered,
       organizerIds: ['u5', 'u3'],
-      price: 10,
-      isPaidOnSite: true,
       recurrence: RecurrenceType.biWeekly,
     ),
-    // --- Upcoming: yoga ---
+    // --- Upcoming: easy jog Villeray ---
     KaiEvent(
       id: 'e3',
-      category: EventCategory.yoga,
+      category: EventCategory.running,
       neighborhood: 'Villeray',
       city: 'Montréal',
       date: atDay(8, hour: 8, minute: 0),
@@ -90,13 +88,11 @@ List<KaiEvent> _buildMockEvents() {
       isConfirmed: false,
       registrationStatus: RegistrationStatus.notRegistered,
       organizerIds: ['u6'],
-      price: 15,
-      isPaidOnSite: true,
     ),
-    // --- Upcoming: kayak ---
+    // --- Upcoming: group run Vieux-Port ---
     KaiEvent(
       id: 'e4',
-      category: EventCategory.kayaking,
+      category: EventCategory.running,
       neighborhood: 'Vieux-Port',
       city: 'Montréal',
       date: atDay(11, hour: 9, minute: 0),
@@ -115,13 +111,11 @@ List<KaiEvent> _buildMockEvents() {
       isConfirmed: true,
       registrationStatus: RegistrationStatus.notRegistered,
       organizerIds: ['u5'],
-      price: 25,
-      isPaidOnSite: true,
     ),
-    // --- Upcoming: hiking ---
+    // --- Upcoming: trail run Mont-Royal ---
     KaiEvent(
       id: 'e5',
-      category: EventCategory.hiking,
+      category: EventCategory.running,
       neighborhood: 'Mont-Royal',
       city: 'Montréal',
       date: atDay(2, hour: 7, minute: 15),
@@ -142,27 +136,25 @@ List<KaiEvent> _buildMockEvents() {
       recurrence: RecurrenceType.custom,
       customDays: [2, 4],
     ),
-    // --- Upcoming: mountain biking ---
+    // --- Upcoming: tempo run Rosemont ---
     KaiEvent(
       id: 'e6',
-      category: EventCategory.mountainBiking,
-      neighborhood: 'Bromont',
-      city: 'Bromont',
+      category: EventCategory.running,
+      neighborhood: 'Rosemont',
+      city: 'Montréal',
       date: atDay(14, hour: 10, minute: 0),
       deadline: deadlineBefore(atDay(14, hour: 10, minute: 0), 2),
       totalRegistered: 14,
       menCount: 6,
       womenCount: 7,
       meetingPointId: 'mp6',
-      intensityLevel: IntensityLevel.extreme,
+      intensityLevel: IntensityLevel.intense,
       distanceLabel: DistanceLabel.veryLong,
       aperoSmoothieSpot: 'Café In Gamba',
       minThreshold: 6,
       maxCapacity: 16,
       isConfirmed: true,
       registrationStatus: RegistrationStatus.notRegistered,
-      price: 20,
-      isPaidOnSite: true,
     ),
     // --- Past: running, attended ---
     KaiEvent(
@@ -188,10 +180,10 @@ List<KaiEvent> _buildMockEvents() {
       organizerIds: ['u5'],
       myRating: 4.5,
     ),
-    // --- Past: social gathering ---
+    // --- Past: easy run Vieux-Port ---
     KaiEvent(
       id: 'e8',
-      category: EventCategory.socialGathering,
+      category: EventCategory.running,
       neighborhood: 'Vieux-Port',
       city: 'Montréal',
       date: atDay(-11, hour: 11, minute: 0),
@@ -209,10 +201,10 @@ List<KaiEvent> _buildMockEvents() {
       registrationStatus: RegistrationStatus.confirmed,
       myRating: 5.0,
     ),
-    // --- Past: swimming ---
+    // --- Past: interval run Plateau ---
     KaiEvent(
       id: 'e9',
-      category: EventCategory.swimming,
+      category: EventCategory.running,
       neighborhood: 'Plateau',
       city: 'Montréal',
       date: atDay(-18),
@@ -221,8 +213,8 @@ List<KaiEvent> _buildMockEvents() {
       menCount: 4,
       womenCount: 5,
       meetingPointId: 'mp9',
-      intensityLevel: IntensityLevel.relax,
-      distanceLabel: DistanceLabel.short_,
+      intensityLevel: IntensityLevel.moderate,
+      distanceLabel: DistanceLabel.medium,
       aperoSmoothieSpot: 'La Petite Marche',
       minThreshold: 6,
       maxCapacity: 24,
@@ -231,10 +223,10 @@ List<KaiEvent> _buildMockEvents() {
       organizerIds: ['u2'],
       myRating: 4.0,
     ),
-    // --- Past: skating ---
+    // --- Past: tempo run Mile-End ---
     KaiEvent(
       id: 'e10',
-      category: EventCategory.skating,
+      category: EventCategory.running,
       neighborhood: 'Mile-End',
       city: 'Montréal',
       date: atDay(-25),
@@ -252,10 +244,10 @@ List<KaiEvent> _buildMockEvents() {
       registrationStatus: RegistrationStatus.confirmed,
       myRating: 4.7,
     ),
-    // --- Past: cross country skiing ---
+    // --- Past: recovery jog Villeray ---
     KaiEvent(
       id: 'e11',
-      category: EventCategory.crossCountrySkiing,
+      category: EventCategory.running,
       neighborhood: 'Villeray',
       city: 'Montréal',
       date: atDay(-32),
@@ -264,8 +256,8 @@ List<KaiEvent> _buildMockEvents() {
       menCount: 5,
       womenCount: 6,
       meetingPointId: 'mp11',
-      intensityLevel: IntensityLevel.moderate,
-      distanceLabel: DistanceLabel.long_,
+      intensityLevel: IntensityLevel.relax,
+      distanceLabel: DistanceLabel.short_,
       aperoSmoothieSpot: 'Café Guillaume',
       minThreshold: 6,
       maxCapacity: 28,
@@ -273,10 +265,10 @@ List<KaiEvent> _buildMockEvents() {
       registrationStatus: RegistrationStatus.cancelled,
       myRating: 3.5,
     ),
-    // --- Past: mixed training ---
+    // --- Past: long run Rosemont ---
     KaiEvent(
       id: 'e12',
-      category: EventCategory.mixedTraining,
+      category: EventCategory.running,
       neighborhood: 'Rosemont',
       city: 'Montréal',
       date: atDay(-45, hour: 9, minute: 30),

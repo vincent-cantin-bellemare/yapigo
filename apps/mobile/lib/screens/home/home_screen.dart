@@ -31,7 +31,7 @@ import 'package:rundate/widgets/skeletons/shimmer_block.dart';
 
 final _testimonials = [
   (
-    'On s\'est rencontrés lors d\'une activité Run Date. Maintenant on bouge ensemble tous les matins!',
+    'On s\'est rencontrés lors d\'un Run Date. Maintenant on court ensemble tous les matins!',
     'Sophie',
     31,
     'https://i.pravatar.cc/100?img=1',
@@ -65,7 +65,7 @@ const _taglines = [
   'Les plus belles rencontres commencent en bougeant',
   'Ton prochain coup de cœur t\'attend à la prochaine course',
   'Sors du swipe, bouge pour vrai',
-  'Chaque activité est une nouvelle rencontre',
+  'Chaque course est une nouvelle rencontre',
 ];
 
 // ---------------------------------------------------------------------------
@@ -558,7 +558,7 @@ class _HeroBanner extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      _HeroStat(value: '${user.totalActivities}', label: 'activités', icon: Icons.directions_run),
+                      _HeroStat(value: '${user.totalActivities}', label: 'courses', icon: Icons.directions_run),
                       Container(width: 1, height: 28, color: Colors.white.withValues(alpha: 0.2)),
                       _HeroStat(value: '4.6', label: 'note', icon: Icons.favorite_rounded),
                     ],
@@ -673,7 +673,7 @@ class _NotRegisteredCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Ta prochaine activité t\'attend!',
+            'Ton prochain Run Date t\'attend!',
             textAlign: TextAlign.center,
             style: GoogleFonts.nunito(
               fontSize: 22,
@@ -1151,7 +1151,7 @@ class _PastRunCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(14)),
             ),
             child: Text(
-              'Noter l\'activité',
+              'Noter la course',
               style: theme.textTheme.titleMedium?.copyWith(
                 color: AppTheme.teal,
                 fontWeight: FontWeight.w700,
@@ -1179,7 +1179,7 @@ class _CommunityStats extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Cette semaine',
+          'Ce mois-ci',
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w800,
           ),
@@ -1195,7 +1195,7 @@ class _CommunityStats extends StatelessWidget {
                 icon: Icons.event_rounded,
                 iconColor: AppTheme.ocean,
                 targetValue: 8,
-                label: 'activités à venir',
+                label: 'courses à venir',
               )
                   .animate()
                   .fadeIn(duration: 500.ms, delay: 500.ms)
@@ -1549,7 +1549,7 @@ class _RunnersOfTheMonth extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        '${u.totalActivities} activités',
+                        '${u.totalActivities} courses',
                         style: GoogleFonts.dmSans(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -1675,7 +1675,7 @@ class _CrownCard extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  '${user.totalActivities} activités',
+                  '${user.totalActivities} courses',
                   style: GoogleFonts.dmSans(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
@@ -1927,7 +1927,7 @@ class _NewMemberCard extends StatelessWidget {
 const _compatibilityReasons = [
   'Même niveau d\'intensité',
   'Actif dans ton quartier',
-  'Activités en commun',
+  'Courses en commun',
   'Même tranche d\'âge',
 ];
 
@@ -1961,7 +1961,7 @@ class _CompatibleProfilesSection extends StatelessWidget {
         const SizedBox(height: 6),
         Text(
           'Run Date favorise les rencontres actives, en vrai. '
-          'Découvre ces profils à ta prochaine activité!',
+          'Découvre ces profils à ta prochaine course!',
           style: GoogleFonts.dmSans(
             fontSize: 14,
             color: AppTheme.secondaryText(context),
@@ -2360,7 +2360,7 @@ class _PromoVideoCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Inspiration activité',
+          'Inspiration course',
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w800,
           ),
@@ -2997,10 +2997,10 @@ class _CommunityPhotosPreview extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              Image.asset(
-                'assets/icons/communaute.png',
-                width: 24,
-                height: 24,
+              Icon(
+                Icons.camera_alt_rounded,
+                size: 22,
+                color: AppTheme.teal,
               ),
               const Spacer(),
               GestureDetector(

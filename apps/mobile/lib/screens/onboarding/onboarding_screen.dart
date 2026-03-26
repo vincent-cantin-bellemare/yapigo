@@ -24,21 +24,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       assetPath: 'assets/onboarding/onboarding_quartier.png',
       title: 'Choisis ton quartier',
       subtitle:
-          'Plateau, Mile-End, Griffintown...\nTes activités sportives sociales, c\'est dans ton coin qu\'on les planifie!',
+          'Plateau, Mile-End, Griffintown...\nTrouve une course près de chez toi et découvre qui court dans ton coin!',
     ),
     _OnboardingPage(
       icon: Icons.groups,
       assetPath: 'assets/onboarding/onboarding_group.png',
-      title: 'Bouge avec un groupe de gens actifs',
+      title: 'Cours avec quelqu\'un de nouveau',
       subtitle:
-          'Tu te retrouves avec des gens qui bougent comme toi — pour voir si ça clique en vrai.',
+          'On te jumelle avec des coureurs à ton rythme — pour voir si ça clique en vrai.',
     ),
     _OnboardingPage(
       icon: Icons.local_cafe,
       assetPath: 'assets/onboarding/onboarding_apero.png',
-      title: 'Rendez-vous au point de départ',
+      title: 'L\'Apéro Smoothie',
       subtitle:
-          'Vous choisissez l\'itinéraire ensemble, avec des repères d\'intensité clairs (Chill, Modéré, Intense...).\nAprès l\'activité : Ravito Smoothie pour jaser tranquillement.',
+          'Après la course, on se retrouve dans un café pour mieux se connaître.\nC\'est là que la magie opère!',
     ),
   ];
 
