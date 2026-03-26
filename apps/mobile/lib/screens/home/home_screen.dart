@@ -63,7 +63,7 @@ final _testimonials = [
 const _taglines = [
   'Ce weekend, on bouge ensemble!',
   'Les plus belles rencontres commencent en bougeant',
-  'Ton prochain coup de cœur t\'attend à la prochaine activité',
+  'Ton prochain coup de cœur t\'attend à la prochaine course',
   'Sors du swipe, bouge pour vrai',
   'Chaque activité est une nouvelle rencontre',
 ];
@@ -873,23 +873,23 @@ class _WaitingCardState extends State<_WaitingCard> {
   static const _slides = [
     (
       'assets/images/carousel/carousel_01_activity.png',
-      'Trouve ton activité',
-      'Course, vélo, kayak, rando, yoga… choisis ce qui te fait tripper près de chez toi.',
+      'Trouve ton Run Date',
+      'Choisis une course près de chez toi et rencontre quelqu\'un qui partage ta passion.',
     ),
     (
       'assets/images/carousel/carousel_02_meetup.png',
       'Rejoins le groupe',
-      'On se retrouve au point de chute. L\'organisateur t\'accueille et forme les groupes.',
+      'On se retrouve au point de chute. L\'organisateur fait les présentations.',
     ),
     (
       'assets/images/carousel/carousel_03_activity.png',
-      'On bouge ensemble!',
-      'On bouge en gang, à ton rythme. C\'est le fun, pas la compétition.',
+      'On court ensemble!',
+      'On court en duo ou en groupe, à ton rythme. L\'important, c\'est la connexion.',
     ),
     (
       'assets/images/carousel/carousel_04_ravito.png',
-      'Le Ravito',
-      'Après l\'effort, le réconfort! On jase autour d\'un smoothie entre nouveaux amis.',
+      'L\'Apéro Smoothie',
+      'Après la course, on jase autour d\'un smoothie. C\'est là que la magie opère!',
     ),
   ];
 

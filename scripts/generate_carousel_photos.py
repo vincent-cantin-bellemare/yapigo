@@ -28,17 +28,16 @@ PHOTO_STYLE = (
 )
 
 PROMPTS = {
-    "carousel_02_meetup": (
+    "carousel_01_activity": (
         PHOTO_STYLE +
-        "A small group of 5-6 sporty friends gathered at the Kondiaronk Belvedere lookout "
-        "on Mount Royal in Montreal. They are stretching and greeting each other with smiles "
-        "and fist bumps on the stone terrace. The Montreal downtown skyline panorama is "
-        "visible far below — skyscrapers, Place Ville Marie, and the St Lawrence river. "
-        "No cross visible, no religious symbols. Green trees framing the view. "
-        "Morning golden light, everyone in running shoes and activewear. "
-        "Medium shot, friendly welcoming community atmosphere."
+        "A group of 4-5 attractive young runners jogging together along the Lachine Canal "
+        "bike path in Montreal at golden hour. They are running side by side, laughing and "
+        "chatting while jogging. Mixed group of men and women in running shorts, t-shirts, "
+        "and running shoes. The canal water reflects the warm sunset light on the left. "
+        "Industrial brick buildings and a railway bridge visible in the background. "
+        "Green trees lining the path. Action shot with slight motion blur on legs. "
+        "Warm romantic golden light, fun energetic dating vibe."
     ),
-    # "carousel_04_ravito": already generated, kept as-is
 }
 
 
