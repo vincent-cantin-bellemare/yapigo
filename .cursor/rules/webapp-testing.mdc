@@ -1,0 +1,46 @@
+---
+description: Procedure to build and serve the Flutter web app for testing via Tailscale
+alwaysApply: false
+---
+
+# Web App Testing (Tailscale)
+
+When the user asks to start/launch the webapp for testing:
+
+## 1. Build the Flutter web app in release mode
+
+```bash
+cd apps/mobile
+flutter build web --release
+```
+
+Debug mode (`flutter run`) does NOT work for remote access — WebSocket debug connections fail from other devices.
+
+## 2. Kill any previous server on port 8080
+
+```bash
+lsof -ti:8080 | xargs kill -9 2>/dev/null
+```
+
+## 3. Serve the build with Python HTTP server
+
+```bash
+cd apps/mobile/build/web
+python3 -m http.server 8080 --bind 0.0.0.0
+```
+
+## 4. Give the user the Tailscale URL
+
+```
+http://100.74.29.56:8080
+```
+
+- Tailscale IP: `100.74.29.56`
+- Port: `8080`
+- The user accesses this URL from their iPhone via Tailscale VPN
+
+## Notes
+
+- If code changes are made, rebuild (`flutter build web --release`) and refresh the browser
+- No hot reload available in release mode — must rebuild each time
+- `--web-renderer html` flag no longer exists in current Flutter — just use `--release`
