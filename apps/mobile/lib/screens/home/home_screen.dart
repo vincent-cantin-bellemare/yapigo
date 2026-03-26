@@ -868,7 +868,6 @@ class _WaitingCard extends StatefulWidget {
 
 class _WaitingCardState extends State<_WaitingCard> {
   late final PageController _pageController;
-  late final Timer _autoScroll;
   int _currentPage = 0;
 
   static const _slides = [
@@ -898,20 +897,10 @@ class _WaitingCardState extends State<_WaitingCard> {
   void initState() {
     super.initState();
     _pageController = PageController(viewportFraction: 1.0);
-    _autoScroll = Timer.periodic(const Duration(seconds: 5), (_) {
-      if (!mounted) return;
-      final next = (_currentPage + 1) % _slides.length;
-      _pageController.animateToPage(
-        next,
-        duration: const Duration(milliseconds: 600),
-        curve: Curves.easeInOut,
-      );
-    });
   }
 
   @override
   void dispose() {
-    _autoScroll.cancel();
     _pageController.dispose();
     super.dispose();
   }
