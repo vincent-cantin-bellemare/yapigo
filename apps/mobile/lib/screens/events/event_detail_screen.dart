@@ -71,6 +71,185 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     super.dispose();
   }
 
+  void _showUnsubscribeSheet(BuildContext context, KaiEvent event) {
+    String? selectedReason;
+    final otherController = TextEditingController();
+
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) {
+        return StatefulBuilder(
+          builder: (ctx, setLocal) {
+            final reasons = [
+              'J\'ai un empêchement',
+              'Je ne suis plus intéressé(e)',
+              'J\'ai trouvé autre chose',
+              'Autre raison',
+            ];
+            return Container(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(ctx).viewInsets.bottom,
+              ),
+              decoration: BoxDecoration(
+                color: AppTheme.cardColor(ctx),
+                borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(24)),
+              ),
+              child: SafeArea(
+                top: false,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Center(
+                        child: Container(
+                          width: 40,
+                          height: 4,
+                          decoration: BoxDecoration(
+                            color: AppTheme.slateGrey.withValues(alpha: 0.3),
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        'Se désinscrire',
+                        style: GoogleFonts.nunito(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: AppTheme.textColor(ctx),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        'Dis-nous pourquoi tu te désinscris',
+                        style: GoogleFonts.dmSans(
+                          fontSize: 14,
+                          color: AppTheme.secondaryText(context),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      ...reasons.map((r) {
+                        final selected = selectedReason == r;
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 10),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius: BorderRadius.circular(12),
+                              onTap: () =>
+                                  setLocal(() => selectedReason = r),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 14),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: selected
+                                        ? AppTheme.error
+                                        : AppTheme.slateGrey
+                                            .withValues(alpha: 0.25),
+                                    width: selected ? 2 : 1,
+                                  ),
+                                  color: selected
+                                      ? AppTheme.error
+                                          .withValues(alpha: 0.06)
+                                      : AppTheme.cardColor(ctx),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      selected
+                                          ? Icons.radio_button_checked
+                                          : Icons.radio_button_off,
+                                      color: selected
+                                          ? AppTheme.error
+                                          : AppTheme.slateGrey,
+                                      size: 20,
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Text(
+                                        r,
+                                        style: GoogleFonts.dmSans(
+                                          fontSize: 15,
+                                          color: AppTheme.textColor(ctx),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                      if (selectedReason == 'Autre raison') ...[
+                        const SizedBox(height: 4),
+                        TextField(
+                          controller: otherController,
+                          maxLines: 2,
+                          style: GoogleFonts.dmSans(fontSize: 14),
+                          decoration: InputDecoration(
+                            hintText: 'Précise ta raison...',
+                            hintStyle: GoogleFonts.dmSans(
+                                color: AppTheme.secondaryText(context)),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                      ],
+                      const SizedBox(height: 8),
+                      ElevatedButton(
+                        onPressed: selectedReason != null
+                            ? () {
+                                Navigator.of(ctx).pop();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Tu as été désinscrit(e) de ${event.neighborhood}',
+                                      style: GoogleFonts.dmSans(),
+                                    ),
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
+                              }
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppTheme.error,
+                          foregroundColor: Colors.white,
+                          disabledBackgroundColor:
+                              AppTheme.slateGrey.withValues(alpha: 0.3),
+                          padding:
+                              const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                          elevation: 0,
+                          textStyle: GoogleFonts.nunito(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        child: const Text('Confirmer la désinscription'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final e = widget.event;
@@ -886,40 +1065,68 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     ),
                     const SizedBox(height: 10),
                   ],
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: e.isPast
-                          ? null
-                          : () {
-                              Navigator.of(context).push<void>(
-                                MaterialPageRoute<void>(
-                                  builder: (_) => e.isFree
-                                      ? ApplyWizardScreen(event: widget.event)
-                                      : PaymentCheckoutScreen(event: widget.event),
-                                ),
-                              );
-                            },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.ocean,
-                        foregroundColor: Colors.white,
-                        disabledBackgroundColor:
-                            AppTheme.slateGrey.withValues(alpha: 0.35),
-                        disabledForegroundColor: Colors.white70,
-                        padding: const EdgeInsets.symmetric(vertical: 18),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
+                  if (e.registrationStatus == RegistrationStatus.confirmed) ...[
+                    SizedBox(
+                      width: double.infinity,
+                      child: OutlinedButton.icon(
+                        onPressed: e.isPast
+                            ? null
+                            : () => _showUnsubscribeSheet(context, e),
+                        icon: const Icon(Icons.close_rounded, size: 18),
+                        label: Text(
+                          'Se désinscrire',
+                          style: GoogleFonts.dmSans(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        'S\'inscrire à cette activité',
-                        style: GoogleFonts.nunito(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: AppTheme.error,
+                          side: BorderSide(
+                              color: AppTheme.error.withValues(alpha: 0.5)),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ] else ...[
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: e.isPast
+                            ? null
+                            : () {
+                                Navigator.of(context).push<void>(
+                                  MaterialPageRoute<void>(
+                                    builder: (_) => e.isFree
+                                        ? ApplyWizardScreen(event: widget.event)
+                                        : PaymentCheckoutScreen(event: widget.event),
+                                  ),
+                                );
+                              },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppTheme.ocean,
+                          foregroundColor: Colors.white,
+                          disabledBackgroundColor:
+                              AppTheme.slateGrey.withValues(alpha: 0.35),
+                          disabledForegroundColor: Colors.white70,
+                          padding: const EdgeInsets.symmetric(vertical: 18),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                        child: Text(
+                          'S\'inscrire à cette activité',
+                          style: GoogleFonts.nunito(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                   const SizedBox(height: 10),
                   SizedBox(
                     width: double.infinity,

@@ -879,7 +879,7 @@ class _WaitingCardState extends State<_WaitingCard> {
     (
       'assets/images/carousel/carousel_02_meetup.png',
       'Rejoins le groupe',
-      'On se retrouve au point de chute. L\'organisateur fait les présentations.',
+      'On se retrouve au point de rencontre. L\'organisateur fait les présentations.',
     ),
     (
       'assets/images/carousel/carousel_03_activity.png',
@@ -1195,7 +1195,7 @@ class _CommunityStats extends StatelessWidget {
                 icon: Icons.event_rounded,
                 iconColor: AppTheme.ocean,
                 targetValue: 8,
-                label: 'courses à venir',
+                label: 'courses',
               )
                   .animate()
                   .fadeIn(duration: 500.ms, delay: 500.ms)
@@ -1688,7 +1688,7 @@ class _CrownCard extends StatelessWidget {
                   child: SizedBox(
                     height: 6,
                     child: LinearProgressIndicator(
-                      value: (user.totalActivities / 50).clamp(0.0, 1.0),
+                      value: (user.totalActivities / 15).clamp(0.0, 1.0),
                       backgroundColor:
                           accentColor.withValues(alpha: 0.1),
                       valueColor:
@@ -1756,7 +1756,7 @@ class _NewMembersSection extends StatelessWidget {
             .slideY(begin: 0.1, end: 0, duration: 400.ms, delay: 820.ms),
         const SizedBox(height: 6),
         Text(
-          'Bienvenue dans la gang!',
+          'Bienvenue parmi nous!',
           style: GoogleFonts.dmSans(
             fontSize: 14,
             color: AppTheme.secondaryText(context),
@@ -2681,7 +2681,7 @@ class _EnhancedEventCard extends StatelessWidget {
                             size: 14, color: AppTheme.secondaryText(context)),
                         const SizedBox(width: 4),
                         Text(
-                        '${event.totalRegistered}/${event.maxCapacity}',
+                        '${event.menCount}H - ${event.womenCount}F',
                         style: GoogleFonts.dmSans(
                           fontSize: 14,
                           color: AppTheme.textColor(context),
@@ -2729,7 +2729,7 @@ class _ProposeRouteCard extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  'Tu connais un beau parcours?',
+                  'Propose-nous un endroit',
                   style: GoogleFonts.nunito(
                     fontSize: 18,
                     fontWeight: FontWeight.w700,
@@ -2741,7 +2741,7 @@ class _ProposeRouteCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           Text(
-            'Propose un endroit à la communauté et on pourrait l\'ajouter au prochain événement!',
+            'On pourrait l\'ajouter au prochain événement!',
             style: GoogleFonts.dmSans(
               fontSize: 14,
               color: AppTheme.secondaryText(context),

@@ -137,16 +137,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   .animate()
                   .fadeIn(duration: 400.ms, delay: 100.ms)
                   .slideY(begin: 0.08, end: 0, duration: 400.ms, delay: 100.ms),
-              const SizedBox(height: 20),
-              _XpBadgeCard(user: user)
-                  .animate()
-                  .fadeIn(duration: 400.ms, delay: 200.ms)
-                  .slideY(begin: 0.08, end: 0, duration: 400.ms, delay: 200.ms),
-              const SizedBox(height: 20),
-              _ActivityStreakCard(totalActivities: user.totalActivities)
-                  .animate()
-                  .fadeIn(duration: 400.ms, delay: 300.ms)
-                  .slideY(begin: 0.08, end: 0, duration: 400.ms, delay: 300.ms),
               if (user.bio != null && user.bio!.trim().isNotEmpty) ...[
                 const SizedBox(height: 20),
                 _BioCard(bio: user.bio!.trim()),
@@ -220,6 +210,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onTap: () => _push(const InviteFriendScreen()),
           ),
           _ProfileMenuTile(
+            icon: Icons.receipt_long_outlined,
+            title: 'Factures & paiements',
+            iconColor: AppTheme.navyIcon(context),
+            onTap: () {},
+          ),
+          const Divider(height: 1, indent: 16, endIndent: 16),
+          _ProfileMenuTile(
             icon: Icons.directions_run_rounded,
             title: 'Strava',
             iconColor: const Color(0xFFFC4C02),
@@ -237,6 +234,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             title: 'Langue : ${isFrench ? 'Français' : 'English'}',
             iconColor: AppTheme.navyIcon(context),
             onTap: _showLanguageDialog,
+            showChevron: false,
           ),
           _ProfileMenuTile(
             icon: AppTheme.themeMode.value == ThemeMode.dark
@@ -248,6 +246,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               AppTheme.toggleTheme();
               setState(() {});
             },
+            showChevron: false,
           ),
           const Divider(height: 1, indent: 16, endIndent: 16),
           _ProfileMenuTile(
@@ -576,109 +575,6 @@ class _VerificationChip extends StatelessWidget {
   }
 }
 
-class _XpBadgeCard extends StatelessWidget {
-  const _XpBadgeCard({required this.user});
-
-  final User user;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(22),
-      decoration: BoxDecoration(
-        color: AppTheme.cardColor(context),
-        borderRadius: BorderRadius.circular(16),
-        border:
-            Border.all(color: AppTheme.slateGrey.withValues(alpha: 0.15)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Image.asset(
-                user.badge.assetPath,
-                width: 20,
-                height: 20,
-                errorBuilder: (_, _, _) => Text(
-                  user.badge.icon,
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Text(
-                  user.badge.label,
-                  style: GoogleFonts.nunito(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w800,
-                    color: AppTheme.navyIcon(context),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 22),
-          Row(
-            children: [
-              Expanded(
-                child: _StatPill(
-                    label: '${user.totalActivities} activité${user.totalActivities > 1 ? 's' : ''}',
-                    icon: Icons.fitness_center_outlined),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: _StatPill(
-                    label: user.averageRating != null
-                        ? '${user.averageRating!.toStringAsFixed(1)} ★'
-                        : '— ★',
-                    icon: Icons.star_border_rounded),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StatPill extends StatelessWidget {
-  const _StatPill({required this.label, required this.icon});
-  final String label;
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
-      decoration: BoxDecoration(
-        color: AppTheme.cardColor(context),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-            color: AppTheme.slateGrey.withValues(alpha: 0.12)),
-      ),
-      child: Column(
-        children: [
-          Icon(icon, size: 18,
-              color: AppTheme.navyIcon(context).withValues(alpha: 0.7)),
-          const SizedBox(height: 6),
-          Text(
-            label,
-            textAlign: TextAlign.center,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.dmSans(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-              color: AppTheme.textColor(context),
-              height: 1.2,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
 
 class _ProfileCompletenessCard extends StatelessWidget {
   const _ProfileCompletenessCard({required this.user});
@@ -893,109 +789,6 @@ class _CircularProgressPainter extends CustomPainter {
       oldDelegate.progress != progress;
 }
 
-class _ActivityStreakCard extends StatelessWidget {
-  const _ActivityStreakCard({required this.totalActivities});
-  final int totalActivities;
-
-  int get _streak => totalActivities.clamp(0, 99);
-
-  String get _streakMessage {
-    if (_streak == 0) return 'Participe à ta première activité pour démarrer ta série!';
-    if (_streak == 1) return 'Première activité complétée! Continue sur ta lancée!';
-    if (_streak < 3) return 'Belle lancée! Encore ${3 - _streak} activité(s) pour le badge Bronze!';
-    if (_streak < 5) return 'Série de $_streak activités! Tu approches du badge Argent!';
-    if (_streak < 10) return 'Impressionnant! $_streak activités d\'affilée! 🔥';
-    return 'Légendaire! $_streak activités consécutives!';
-  }
-
-  String get _streakEmoji {
-    if (_streak == 0) return '💤';
-    if (_streak < 3) return '🔥';
-    if (_streak < 5) return '🔥🔥';
-    if (_streak < 10) return '🔥🔥🔥';
-    return '🏆';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: AppTheme.cardColor(context),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: _streak >= 3
-              ? AppTheme.warning.withValues(alpha: 0.4)
-              : AppTheme.slateGrey.withValues(alpha: 0.15),
-        ),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 52,
-            height: 52,
-            decoration: BoxDecoration(
-              color: _streak >= 3
-                  ? AppTheme.warning.withValues(alpha: 0.15)
-                  : AppTheme.slateGrey.withValues(alpha: 0.08),
-              borderRadius: BorderRadius.circular(14),
-            ),
-            alignment: Alignment.center,
-            child: Text(_streakEmoji, style: const TextStyle(fontSize: 26)),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Série d\'activités',
-                      style: GoogleFonts.nunito(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: AppTheme.textColor(context),
-                      ),
-                    ),
-                    if (_streak > 0) ...[
-                      const SizedBox(width: 8),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: AppTheme.warning.withValues(alpha: 0.15),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          '$_streak',
-                          style: GoogleFonts.dmSans(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w800,
-                            color: AppTheme.warning,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  _streakMessage,
-                  style: GoogleFonts.dmSans(
-                    fontSize: 14,
-                    color: AppTheme.secondaryText(context),
-                    height: 1.3,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    ).animate().fadeIn(duration: 300.ms);
-  }
-}
 
 class _BioCard extends StatefulWidget {
   const _BioCard({required this.bio});
@@ -1101,12 +894,14 @@ class _ProfileMenuTile extends StatelessWidget {
     required this.title,
     required this.iconColor,
     required this.onTap,
+    this.showChevron = true,
   });
 
   final IconData icon;
   final String title;
   final Color iconColor;
   final VoidCallback onTap;
+  final bool showChevron;
 
   @override
   Widget build(BuildContext context) {
@@ -1122,10 +917,12 @@ class _ProfileMenuTile extends StatelessWidget {
           color: AppTheme.textColor(context),
         ),
       ),
-      trailing: Icon(
-        Icons.chevron_right_rounded,
-        color: AppTheme.slateGrey.withValues(alpha: 0.6),
-      ),
+      trailing: showChevron
+          ? Icon(
+              Icons.chevron_right_rounded,
+              color: AppTheme.slateGrey.withValues(alpha: 0.6),
+            )
+          : null,
       onTap: onTap,
     );
   }
@@ -1159,85 +956,36 @@ class _ActivityGoalsCard extends StatelessWidget {
           ),
           const SizedBox(height: 14),
           if (user.activityGoals.isNotEmpty)
-            _InterestRow(
-              icon: Icons.emoji_events_outlined,
-              label: 'Objectifs',
-              items: user.activityGoals,
-              chipColor: AppTheme.ocean,
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _InterestRow extends StatelessWidget {
-  const _InterestRow({
-    required this.icon,
-    required this.label,
-    required this.items,
-    required this.chipColor,
-  });
-
-  final IconData icon;
-  final String label;
-  final List<String> items;
-  final Color chipColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, size: 18, color: chipColor),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  label,
-                  style: GoogleFonts.dmSans(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppTheme.secondaryText(context),
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: user.activityGoals.map((goal) {
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
                   ),
-                ),
-                const SizedBox(height: 4),
-                Wrap(
-                  spacing: 6,
-                  runSpacing: 4,
-                  children: items.map((item) {
-                    return Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: chipColor.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        item,
-                        style: GoogleFonts.dmSans(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: chipColor,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ],
+                  decoration: BoxDecoration(
+                    color: AppTheme.ocean.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    goal,
+                    style: GoogleFonts.dmSans(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.ocean,
+                    ),
+                  ),
+                );
+              }).toList(),
             ),
-          ),
         ],
       ),
     );
   }
 }
+
 
 class _LanguageOption extends StatelessWidget {
   const _LanguageOption({

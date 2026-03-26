@@ -3,26 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:rundate/data/mock_event_photos.dart';
 import 'package:rundate/data/mock_events.dart';
 import 'package:rundate/data/mock_weather.dart';
-import 'package:rundate/models/event_photo.dart';
 import 'package:rundate/models/kai_event.dart';
+import 'package:rundate/models/user.dart';
 import 'package:rundate/screens/events/event_detail_screen.dart';
 import 'package:rundate/screens/profile/contact_form_screen.dart';
-import 'package:rundate/data/mock_messages.dart';
 import 'package:rundate/data/mock_users.dart';
-import 'package:rundate/screens/events/rate_event_screen.dart';
-import 'package:rundate/screens/messages/chat_screen.dart';
-import 'package:rundate/screens/profile/user_profile_sheet.dart';
 import 'package:rundate/theme/app_theme.dart';
 import 'package:rundate/utils/neighborhood_assets.dart';
-import 'package:rundate/widgets/add_photo_sheet.dart';
-import 'package:rundate/widgets/photo_gallery_viewer.dart';
 import 'package:rundate/widgets/user_avatar.dart';
 import 'package:rundate/widgets/pace_label_icon.dart' show intensityLevelIcon;
 import 'package:rundate/widgets/weather_badge.dart';
-import 'package:share_plus/share_plus.dart';
 
 String _frenchDate(DateTime dt) {
   const days = [
@@ -44,13 +36,6 @@ String _formatCountdown(KaiEvent event) {
   return '${days}j ${hours}h ${minutes}min';
 }
 
-String _frenchDateShort(DateTime dt) {
-  const months = [
-    '', 'jan.', 'fév.', 'mars', 'avr.', 'mai', 'juin',
-    'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.',
-  ];
-  return '${dt.day} ${months[dt.month]}';
-}
 
 class EventsListScreen extends StatefulWidget {
   const EventsListScreen({super.key});
@@ -1227,55 +1212,6 @@ class _SuggestLocationBlock extends StatelessWidget {
 }
 
 
-class _MatchedGroupRow extends StatelessWidget {
-  const _MatchedGroupRow({required this.event});
-  final KaiEvent event;
-
-  @override
-  Widget build(BuildContext context) {
-    final companions = mockUsers
-        .where((u) =>
-            u.activities.any((a) => a.level == event.intensityLevel) &&
-            u.id != currentUser.id)
-        .take(6)
-        .toList();
-    if (companions.isEmpty) return const SizedBox.shrink();
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Ton groupe d\'intensité',
-          style: GoogleFonts.dmSans(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            color: AppTheme.secondaryText(context),
-          ),
-        ),
-        const SizedBox(height: 6),
-        SizedBox(
-          height: 38,
-          child: ListView.separated(
-            scrollDirection: Axis.horizontal,
-            itemCount: companions.length,
-            separatorBuilder: (_, _) => const SizedBox(width: 6),
-            itemBuilder: (context, i) {
-              final u = companions[i];
-              return GestureDetector(
-                onTap: () => UserProfileSheet.show(context, u),
-                child: UserAvatar(
-                  name: u.firstName,
-                  photoUrl: u.photoUrl,
-                  size: 32,
-                  showRing: false,
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-}
 
 class _PastEventList extends StatelessWidget {
   const _PastEventList({required this.events});
@@ -1334,179 +1270,6 @@ class _EventCard extends StatelessWidget {
   final String countdownLabel;
   final VoidCallback onTap;
   final bool showRegisteredBadge;
-
-  void _showUnsubscribeSheet(BuildContext context) {
-    String? selectedReason;
-    final otherController = TextEditingController();
-
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (ctx) {
-        return StatefulBuilder(
-          builder: (ctx, setLocal) {
-            final reasons = [
-              'J\'ai un empêchement',
-              'Je ne suis plus intéressé(e)',
-              'J\'ai trouvé autre chose',
-              'Autre raison',
-            ];
-            return Container(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(ctx).viewInsets.bottom,
-              ),
-              decoration: BoxDecoration(
-                color: AppTheme.cardColor(ctx),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-              ),
-              child: SafeArea(
-                top: false,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(24, 16, 24, 24),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Center(
-                        child: Container(
-                          width: 40, height: 4,
-                          decoration: BoxDecoration(
-                            color: AppTheme.slateGrey.withValues(alpha: 0.3),
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        'Se désinscrire',
-                        style: GoogleFonts.nunito(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          color: AppTheme.textColor(ctx),
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Dis-nous pourquoi tu te désinscris',
-                        style: GoogleFonts.dmSans(
-                          fontSize: 14,
-                          color: AppTheme.secondaryText(context),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      ...reasons.map((r) {
-                        final selected = selectedReason == r;
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: 10),
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              borderRadius: BorderRadius.circular(12),
-                              onTap: () => setLocal(() => selectedReason = r),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16, vertical: 14),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    color: selected
-                                        ? AppTheme.error
-                                        : AppTheme.slateGrey.withValues(alpha: 0.25),
-                                    width: selected ? 2 : 1,
-                                  ),
-                                  color: selected
-                                      ? AppTheme.error.withValues(alpha: 0.06)
-                                      : AppTheme.cardColor(ctx),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      selected
-                                          ? Icons.radio_button_checked
-                                          : Icons.radio_button_off,
-                                      color: selected
-                                          ? AppTheme.error
-                                          : AppTheme.slateGrey,
-                                      size: 20,
-                                    ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      child: Text(
-                                        r,
-                                        style: GoogleFonts.dmSans(
-                                          fontSize: 15,
-                                          color: AppTheme.textColor(ctx),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                      if (selectedReason == 'Autre raison') ...[
-                        const SizedBox(height: 4),
-                        TextField(
-                          controller: otherController,
-                          maxLines: 2,
-                          style: GoogleFonts.dmSans(fontSize: 14),
-                          decoration: InputDecoration(
-                            hintText: 'Précise ta raison...',
-                            hintStyle: GoogleFonts.dmSans(
-                                color: AppTheme.secondaryText(context)),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                      ],
-                      const SizedBox(height: 8),
-                      ElevatedButton(
-                        onPressed: selectedReason != null
-                            ? () {
-                                Navigator.of(ctx).pop();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Tu as été désinscrit(e) de ${event.neighborhood}',
-                                      style: GoogleFonts.dmSans(),
-                                    ),
-                                    behavior: SnackBarBehavior.floating,
-                                  ),
-                                );
-                              }
-                            : null,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppTheme.error,
-                          foregroundColor: Colors.white,
-                          disabledBackgroundColor:
-                              AppTheme.slateGrey.withValues(alpha: 0.3),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(14),
-                          ),
-                          elevation: 0,
-                          textStyle: GoogleFonts.nunito(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        child: const Text('Confirmer la désinscription'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -1584,6 +1347,21 @@ class _EventCard extends StatelessWidget {
                           ),
                       ],
                     ),
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Icon(Icons.calendar_today_outlined, size: 16, color: AppTheme.secondaryText(context)),
+                  const SizedBox(width: 6),
+                  Text(
+                    '${_frenchDate(event.date)} à ${event.date.hour}h${event.date.minute.toString().padLeft(2, '0')}',
+                    style: GoogleFonts.dmSans(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.textColor(context),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -1602,6 +1380,36 @@ class _EventCard extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 8),
+              Builder(
+                builder: (context) {
+                  final orgUser = event.organizerIds.isNotEmpty
+                      ? mockUsers.cast<User?>().firstWhere(
+                            (u) => u!.id == event.organizerIds.first,
+                            orElse: () => null,
+                          )
+                      : null;
+                  if (orgUser == null) return const SizedBox.shrink();
+                  return Row(
+                    children: [
+                      UserAvatar(
+                        name: orgUser.firstName,
+                        photoUrl: orgUser.photoUrl,
+                        size: 22,
+                        showRing: false,
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        'Organisé par ${orgUser.firstName}',
+                        style: GoogleFonts.dmSans(
+                          fontSize: 13,
+                          color: AppTheme.secondaryText(context),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
               const SizedBox(height: 10),
               Row(
                 children: [
@@ -1615,14 +1423,22 @@ class _EventCard extends StatelessWidget {
                       color: AppTheme.textColor(context),
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  intensityLevelIcon(event.intensityLevel, size: 18),
-                  const SizedBox(width: 4),
-                  Text(
-                    event.intensitySummary,
-                    style: GoogleFonts.dmSans(
-                      fontSize: 12,
-                      color: AppTheme.secondaryText(context),
+                  const SizedBox(width: 12),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                    decoration: BoxDecoration(
+                      color: event.isFree
+                          ? AppTheme.teal.withValues(alpha: 0.12)
+                          : AppTheme.warning.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      event.priceLabel,
+                      style: GoogleFonts.dmSans(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: event.isFree ? AppTheme.teal : AppTheme.warning,
+                      ),
                     ),
                   ),
                 ],
@@ -1720,62 +1536,7 @@ class _EventCard extends StatelessWidget {
                   ),
                 ),
               ],
-              // Pace & distance only for registered/matched events
-              if (showRegisteredBadge) ...[
-                const SizedBox(height: 10),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.fitness_center,
-                        size: 18, color: AppTheme.secondaryText(context)),
-                    const SizedBox(width: 6),
-                    intensityLevelIcon(event.intensityLevel),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: Text(
-                        event.intensitySummary,
-                        style: GoogleFonts.dmSans(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: AppTheme.textColor(context),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                Row(
-                  children: [
-                    Icon(Icons.straighten, size: 18, color: AppTheme.secondaryText(context)),
-                    const SizedBox(width: 6),
-                    Expanded(
-                      child: Text(
-                        event.distanceSummary,
-                        style: GoogleFonts.dmSans(
-                          fontSize: 14,
-                          color: AppTheme.secondaryText(context),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-              if (!showRegisteredBadge) ...[
-                const SizedBox(height: 8),
-                Text(
-                  'L\'intensité et la distance seront définies avec ton groupe',
-                  style: GoogleFonts.dmSans(
-                    fontSize: 14,
-                    color: AppTheme.secondaryText(context),
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-              ],
-              // Matched group avatars for registered events
-              if (showRegisteredBadge) ...[
-                const SizedBox(height: 10),
-                _MatchedGroupRow(event: event),
-              ],
+              
               // Ravito Smoothie note
               if (event.aperoSmoothieSpot != null) ...[
                 const SizedBox(height: 8),
@@ -1813,51 +1574,7 @@ class _EventCard extends StatelessWidget {
                   ],
                 ),
               ],
-              const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.centerRight,
-                child: IconButton(
-                  onPressed: () {
-                    final time = '${event.date.hour}h${event.date.minute.toString().padLeft(2, '0')}';
-                    Share.share(
-                      'Viens bouger avec moi! 💪\n\n'
-                      '${event.neighborhood} — ${_frenchDate(event.date)} à $time\n'
-                      '${event.distanceLabel.label}\n\n'
-                      'Inscris-toi sur rundate.app',
-                    );
-                  },
-                  icon: Icon(Icons.share_outlined,
-                      size: 20, color: AppTheme.secondaryText(context)),
-                  padding: EdgeInsets.zero,
-                  constraints:
-                      const BoxConstraints(minWidth: 32, minHeight: 32),
-                  tooltip: 'Partager',
-                ),
-              ),
-              if (showRegisteredBadge) ...[
-                const SizedBox(height: 6),
-                SizedBox(
-                  width: double.infinity,
-                  child: OutlinedButton.icon(
-                    onPressed: () => _showUnsubscribeSheet(context),
-                    icon: const Icon(Icons.close_rounded, size: 18),
-                    label: const Text('Se désinscrire'),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: AppTheme.error,
-                      side: BorderSide(
-                          color: AppTheme.error.withValues(alpha: 0.5)),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      textStyle: GoogleFonts.dmSans(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              
             ],
                 ),
               ),
@@ -1873,162 +1590,144 @@ class _PastEventCard extends StatelessWidget {
   const _PastEventCard({required this.event});
   final KaiEvent event;
 
-  void _goToRate(BuildContext context) {
-    Navigator.of(context).push<void>(
-      MaterialPageRoute<void>(
-        builder: (_) => RateEventScreen(event: event),
-      ),
-    );
-  }
-
-  void _openAddPhoto(BuildContext context) {
-    AddPhotoSheet.show(context, eventId: event.id);
-  }
-
-  void _openMessaging(BuildContext context) {
-    final conv = mockConversations.isNotEmpty ? mockConversations.first : null;
-    if (conv != null) {
-      Navigator.of(context).push<void>(
-        MaterialPageRoute<void>(
-          builder: (_) => ChatScreen(conversation: conv),
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final photos =
-        mockEventPhotos.where((p) => p.eventId == event.id).toList();
-    final members = mockUsers.take(6).toList();
-
-    return Container(
-      decoration: BoxDecoration(
-        color: AppTheme.cardColor(context),
+    return Material(
+      color: AppTheme.cardColor(context),
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).push<void>(
+            MaterialPageRoute<void>(
+              builder: (_) => EventDetailScreen(event: event),
+            ),
+          );
+        },
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.slateGrey.withValues(alpha: 0.15)),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          NeighborhoodBanner(
-            neighborhood: event.neighborhood,
-            height: 140,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(16),
-              topRight: Radius.circular(16),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: AppTheme.slateGrey.withValues(alpha: 0.15)),
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              NeighborhoodBanner(
+                neighborhood: event.neighborhood,
+                height: 140,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+            padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
                     Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            event.neighborhood,
-                            style: GoogleFonts.nunito(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w700,
-                              color: AppTheme.textColor(context),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            _frenchDateShort(event.date),
-                            style: GoogleFonts.dmSans(
-                              fontSize: 14,
-                              color: AppTheme.secondaryText(context),
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Row(
-                            children: [
-                              Text(event.category.emoji,
-                                  style: const TextStyle(fontSize: 12)),
-                              const SizedBox(width: 4),
-                              Text(
-                                event.category.label,
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppTheme.secondaryText(context),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                      child: Text(
+                        event.neighborhood,
+                        style: GoogleFonts.nunito(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: AppTheme.textColor(context),
+                        ),
                       ),
                     ),
-                    if (event.myRating != null) ...[
-                      GestureDetector(
-                        onTap: () => _goToRate(context),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: AppTheme.warning.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.star_rounded,
-                                  size: 18, color: AppTheme.warning),
-                              const SizedBox(width: 4),
-                              Text(
-                                event.myRating!.toStringAsFixed(1),
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppTheme.warning,
-                                ),
+                    if (event.myRating != null)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: AppTheme.warning.withValues(alpha: 0.12),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.star_rounded,
+                                size: 16, color: AppTheme.warning),
+                            const SizedBox(width: 4),
+                            Text(
+                              event.myRating!.toStringAsFixed(1),
+                              style: GoogleFonts.dmSans(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: AppTheme.warning,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(width: 6),
-                      TextButton(
-                        onPressed: () => _goToRate(context),
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          minimumSize: Size.zero,
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        child: Text(
-                          'Modifier',
-                          style: GoogleFonts.dmSans(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppTheme.ocean,
-                          ),
-                        ),
-                      ),
-                    ] else ...[
-                      TextButton.icon(
-                        onPressed: () => _goToRate(context),
-                        icon: Icon(Icons.star_outline,
-                            size: 18, color: AppTheme.ocean),
-                        label: Text(
-                          'Noter',
-                          style: GoogleFonts.dmSans(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppTheme.ocean,
-                          ),
-                        ),
-                      ),
-                    ],
                   ],
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 6),
+                Row(
+                  children: [
+                    Icon(Icons.calendar_today_outlined, size: 16,
+                        color: AppTheme.secondaryText(context)),
+                    const SizedBox(width: 6),
+                    Text(
+                      '${_frenchDate(event.date)} à ${event.date.hour}h${event.date.minute.toString().padLeft(2, '0')}',
+                      style: GoogleFonts.dmSans(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.textColor(context),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Text(event.category.emoji,
+                        style: const TextStyle(fontSize: 13)),
+                    const SizedBox(width: 5),
+                    Text(
+                      event.category.label,
+                      style: GoogleFonts.dmSans(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.secondaryText(context),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Builder(
+                  builder: (context) {
+                    final orgUser = event.organizerIds.isNotEmpty
+                        ? mockUsers.cast<User?>().firstWhere(
+                              (u) => u!.id == event.organizerIds.first,
+                              orElse: () => null,
+                            )
+                        : null;
+                    if (orgUser == null) return const SizedBox.shrink();
+                    return Row(
+                      children: [
+                        UserAvatar(
+                          name: orgUser.firstName,
+                          photoUrl: orgUser.photoUrl,
+                          size: 22,
+                          showRing: false,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          'Organisé par ${orgUser.firstName}',
+                          style: GoogleFonts.dmSans(
+                            fontSize: 13,
+                            color: AppTheme.secondaryText(context),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                const SizedBox(height: 10),
                 Row(
                   children: [
                     Icon(Icons.people_outline,
@@ -2041,376 +1740,34 @@ class _PastEventCard extends StatelessWidget {
                         color: AppTheme.secondaryText(context),
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    Icon(Icons.fitness_center,
-                        size: 18, color: AppTheme.secondaryText(context)),
-                    const SizedBox(width: 6),
-                    intensityLevelIcon(event.intensityLevel),
-                    const SizedBox(width: 4),
-                    Flexible(
+                    const SizedBox(width: 12),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: event.isFree
+                            ? AppTheme.teal.withValues(alpha: 0.12)
+                            : AppTheme.warning.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                       child: Text(
-                        event.intensitySummary,
+                        event.priceLabel,
                         style: GoogleFonts.dmSans(
-                          fontSize: 14,
-                          color: AppTheme.secondaryText(context),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: event.isFree ? AppTheme.teal : AppTheme.warning,
                         ),
-                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
                 ),
-                if (event.aperoSmoothieSpot != null) ...[
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Image.asset(
-                        'assets/icons/apero_smoothie.png',
-                        width: 22,
-                        height: 22,
-                        errorBuilder: (_, _, _) =>
-                            const Text('🥤', style: TextStyle(fontSize: 16)),
-                      ),
-                      const SizedBox(width: 6),
-                      Expanded(
-                        child: Text(
-                          '${event.aperoSmoothieSpot} · Tous les groupes s\'y sont retrouvés!',
-                          style: GoogleFonts.dmSans(
-                            fontSize: 14,
-                            color: AppTheme.secondaryText(context),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-                const SizedBox(height: 14),
-                Text(
-                  'Ton groupe d\'intensité',
-                  style: GoogleFonts.dmSans(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppTheme.secondaryText(context),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  height: 56,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: members.length,
-                    separatorBuilder: (_, _) => const SizedBox(width: 10),
-                    itemBuilder: (context, i) {
-                      final u = members[i];
-                      return GestureDetector(
-                        onTap: () => UserProfileSheet.show(context, u),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            UserAvatar(
-                              name: u.firstName,
-                              photoUrl: u.photoUrl,
-                              size: 32,
-                              showRing: false,
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              u.firstName,
-                              style: GoogleFonts.dmSans(
-                                fontSize: 14,
-                                color: AppTheme.secondaryText(context),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
               ],
-            ),
-          ),
-
-          // Photo gallery strip (full width of card content)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 14, 20, 8),
-            child: Row(
-              children: [
-                Text(
-                  'Photos de l\'activité',
-                  style: GoogleFonts.dmSans(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppTheme.secondaryText(context),
-                  ),
-                ),
-                const Spacer(),
-                if (photos.isNotEmpty)
-                  GestureDetector(
-                    onTap: () => _openAddPhoto(context),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(Icons.add_a_photo_outlined,
-                            size: 16, color: AppTheme.teal),
-                        const SizedBox(width: 4),
-                        Text(
-                          'Ajouter',
-                          style: GoogleFonts.dmSans(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppTheme.teal,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 160,
-            child: photos.isEmpty
-                ? ListView(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    children: [
-                      _PastEventPhotoPlaceholderCard(
-                        onTap: () => _openAddPhoto(context),
-                      ),
-                    ],
-                  )
-                : ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    itemCount: photos.length,
-                    separatorBuilder: (context, index) =>
-                        const SizedBox(width: 10),
-                    itemBuilder: (context, i) {
-                      return _PastEventPhotoGalleryCard(
-                        photo: photos[i],
-                        index: i,
-                        total: photos.length,
-                        allPhotos: photos,
-                      );
-                    },
-                  ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
-            child: OutlinedButton.icon(
-              onPressed: () => _openMessaging(context),
-              icon: const Icon(Icons.chat_bubble_outline_rounded, size: 16),
-              label: Text(
-                'Messagerie du groupe',
-                style: GoogleFonts.dmSans(
-                    fontSize: 14, fontWeight: FontWeight.w600),
-              ),
-              style: OutlinedButton.styleFrom(
-                foregroundColor: AppTheme.navyIcon(context),
-                side: BorderSide(color: AppTheme.navy.withValues(alpha: 0.3)),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-                padding: const EdgeInsets.symmetric(vertical: 10),
-              ),
             ),
           ),
         ],
       ),
-    );
-  }
-}
-
-/// First display character for uploader initial (empty -> "?").
-String _photoUploaderInitial(String userName) {
-  final t = userName.trim();
-  if (t.isEmpty) return '?';
-  return t[0].toUpperCase();
-}
-
-/// Single photo tile in the past-event horizontal gallery.
-class _PastEventPhotoGalleryCard extends StatelessWidget {
-  const _PastEventPhotoGalleryCard({
-    required this.photo,
-    required this.index,
-    required this.total,
-    required this.allPhotos,
-  });
-
-  final EventPhoto photo;
-  final int index;
-  final int total;
-  final List<EventPhoto> allPhotos;
-
-  static const double _cardWidth = 220;
-  static const double _cardHeight = 160;
-  static const double _radius = 12;
-  static const double _uploaderCircleSize = 22;
-
-  @override
-  Widget build(BuildContext context) {
-    final countLabel = '${index + 1} / $total';
-    final initial = _photoUploaderInitial(photo.userName);
-
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push<void>(
-          MaterialPageRoute<void>(
-            builder: (_) => PhotoGalleryViewer(
-              photos: allPhotos,
-              initialIndex: index,
-            ),
-          ),
-        );
-      },
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(_radius),
-        child: SizedBox(
-          width: _cardWidth,
-          height: _cardHeight,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Image.network(
-                photo.photoUrl,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => ColoredBox(
-                  color: AppTheme.slateGrey.withValues(alpha: 0.25),
-                  child: Icon(
-                    Icons.broken_image_outlined,
-                    size: 40,
-                    color: AppTheme.secondaryText(context),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        AppTheme.navy.withValues(alpha: 0.82),
-                      ],
-                    ),
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.fromLTRB(12, 28, 12, 12),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          width: _uploaderCircleSize,
-                          height: _uploaderCircleSize,
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                            color: AppTheme.navy,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Text(
-                            initial,
-                            style: GoogleFonts.dmSans(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                              height: 1,
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                'Photo de ${photo.userName}',
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                countLabel,
-                                style: GoogleFonts.dmSans(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white.withValues(alpha: 0.85),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
   }
 }
 
-/// Placeholder when there are no run photos yet.
-class _PastEventPhotoPlaceholderCard extends StatelessWidget {
-  const _PastEventPhotoPlaceholderCard({required this.onTap});
-
-  final VoidCallback onTap;
-
-  static const double _cardWidth = 220;
-  static const double _cardHeight = 160;
-  static const double _radius = 12;
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(_radius),
-        child: Ink(
-          width: _cardWidth,
-          height: _cardHeight,
-          decoration: BoxDecoration(
-            color: AppTheme.teal.withValues(alpha: 0.08),
-            borderRadius: BorderRadius.circular(_radius),
-            border: Border.all(
-              color: AppTheme.teal.withValues(alpha: 0.35),
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.photo_camera_outlined,
-                size: 40,
-                color: AppTheme.teal,
-              ),
-              const SizedBox(height: 10),
-              Text(
-                'Ajouter des photos',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.dmSans(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.textColor(context),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}

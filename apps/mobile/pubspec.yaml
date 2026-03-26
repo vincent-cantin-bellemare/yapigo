@@ -1,7 +1,7 @@
 name: rundate
 description: "Run Date - Dating app pour coureurs"
 publish_to: 'none'
-version: 3.1.3+63  # 2026-03-25 23:00
+version: 3.1.4+64  # 2026-03-26 11:23
 
 environment:
   sdk: ^3.11.3

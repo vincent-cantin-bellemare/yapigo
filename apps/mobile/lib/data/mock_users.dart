@@ -4,15 +4,15 @@ import 'package:rundate/models/user.dart';
 /// Logged-in user for demos and local state.
 final User currentUser = User(
   id: 'u0',
-  firstName: 'Sophie',
-  lastName: 'Tremblay',
+  firstName: 'Vincent',
+  lastName: 'Lavoie',
   phone: '+15145550010',
-  gender: 'Femme',
+  gender: 'Homme',
   sexualOrientation: 'Hétérosexuel(le)',
   age: 34,
   city: 'Montréal',
   neighborhood: 'Le Plateau-Mont-Royal',
-  photoUrl: 'https://picsum.photos/seed/SophieTremblay/200/200',
+  photoUrl: 'https://randomuser.me/api/portraits/men/32.jpg',
   bio:
       'Dimanche matin : rando sur le Mont-Royal, puis yoga léger pour dénouer. '
       'La semaine, j\'aime un 5-8 km tranquille pour jaser. Fan de brunch post-effort — Run Date, c\'est mon excuse pour rencontrer du monde actif sans me prendre au sérieux.',
@@ -24,12 +24,12 @@ final User currentUser = User(
   lastActivityDate: DateTime(2026, 3, 22),
   lastSeenDate: DateTime(2026, 3, 23),
   averageRating: 4.8,
-  totalActivities: 12,
+  totalActivities: 5,
   totalKm: 78.5,
   photoGallery: [
-    'https://picsum.photos/seed/SophieTremblay_1/400/400',
-    'https://picsum.photos/seed/SophieTremblay_2/400/400',
-    'https://picsum.photos/seed/SophieTremblay_3/400/400',
+    'https://randomuser.me/api/portraits/men/33.jpg',
+    'https://randomuser.me/api/portraits/men/34.jpg',
+    'https://randomuser.me/api/portraits/men/35.jpg',
   ],
   activities: const [
     UserActivity(category: EventCategory.running, level: IntensityLevel.moderate),
@@ -45,7 +45,7 @@ final User currentUser = User(
   connections: 24,
   stravaConnected: true,
   stravaAthleteId: 84201537,
-  stravaDisplayName: 'Sophie Tremblay',
+  stravaDisplayName: 'Vincent Lavoie',
   stravaYtdKm: 312.4,
   stravaYtdRuns: 58,
   stravaAvgPaceSeconds: 345,
@@ -62,7 +62,7 @@ final User _u1 = User(
   age: 42,
   city: 'Montréal',
   neighborhood: 'Rosemont',
-  photoUrl: 'https://picsum.photos/seed/MarcGagnon/200/200',
+  photoUrl: 'https://randomuser.me/api/portraits/men/45.jpg',
   bio:
       'Mon médecin m\'a dit que le café seul, ça comptait pas comme cardio — ça fait huit ans que j\'écoute.\n\n'
       'Le samedi c\'est souvent vélo de route ou rando : parc Maisonneuve, Mont-Royal quand j\'ai la patate. '
@@ -79,13 +79,13 @@ final User _u1 = User(
   lastActivityDate: DateTime(2026, 3, 20),
   lastSeenDate: DateTime(2026, 3, 23),
   averageRating: 4.6,
-  totalActivities: 48,
+  totalActivities: 12,
   totalKm: 612.0,
   photoGallery: [
-    'https://picsum.photos/seed/MarcGagnon_1/400/400',
-    'https://picsum.photos/seed/MarcGagnon_2/400/400',
-    'https://picsum.photos/seed/MarcGagnon_3/400/400',
-    'https://picsum.photos/seed/MarcGagnon_4/400/400',
+    'https://randomuser.me/api/portraits/men/46.jpg',
+    'https://randomuser.me/api/portraits/men/47.jpg',
+    'https://randomuser.me/api/portraits/men/48.jpg',
+    'https://randomuser.me/api/portraits/men/49.jpg',
   ],
   activities: const [
     UserActivity(category: EventCategory.running, level: IntensityLevel.intense),
@@ -119,7 +119,7 @@ final User _u2 = User(
   age: 31,
   city: 'Montréal',
   neighborhood: 'Villeray',
-  photoUrl: 'https://picsum.photos/seed/JulieRoy/200/200',
+  photoUrl: 'https://randomuser.me/api/portraits/women/44.jpg',
   bio:
       'Nouvelle à Montréal — je veux découvrir la ville en bougeant : petites courses, yoga communautaire, rando le week-end. '
       'Niveau chill mais motivée ; si tu connais un bon cours pas intimidant, envoie-moi ça!',
@@ -133,8 +133,8 @@ final User _u2 = User(
   totalActivities: 3,
   totalKm: 12.4,
   photoGallery: [
-    'https://picsum.photos/seed/JulieRoy_1/400/400',
-    'https://picsum.photos/seed/JulieRoy_2/400/400',
+    'https://randomuser.me/api/portraits/women/45.jpg',
+    'https://randomuser.me/api/portraits/women/46.jpg',
   ],
   activities: const [
     UserActivity(category: EventCategory.running, level: IntensityLevel.chill),
@@ -160,7 +160,7 @@ final User _u3 = User(
   age: 36,
   city: 'Montréal',
   neighborhood: 'Mile-End',
-  photoUrl: 'https://picsum.photos/seed/AlexBelanger/200/200',
+  photoUrl: 'https://randomuser.me/api/portraits/men/22.jpg',
   bio:
       'J\'anime des sorties course et vélo sur Run Date : rythme soutenu, mais j\'recule si tu sens que t\'as besoin d\'air. '
       'J\'aime aussi les séances HIIT en gang — le fun, c\'est que tout le monde finisse avec le sourire.',
@@ -171,12 +171,12 @@ final User _u3 = User(
   lastActivityDate: DateTime(2026, 3, 23),
   lastSeenDate: DateTime(2026, 3, 23),
   averageRating: 4.9,
-  totalActivities: 27,
+  totalActivities: 9,
   totalKm: 298.0,
   photoGallery: [
-    'https://picsum.photos/seed/AlexBelanger_1/400/400',
-    'https://picsum.photos/seed/AlexBelanger_2/400/400',
-    'https://picsum.photos/seed/AlexBelanger_3/400/400',
+    'https://randomuser.me/api/portraits/men/23.jpg',
+    'https://randomuser.me/api/portraits/men/24.jpg',
+    'https://randomuser.me/api/portraits/men/25.jpg',
   ],
   activities: const [
     UserActivity(category: EventCategory.running, level: IntensityLevel.intense),
@@ -209,7 +209,7 @@ final User _u4 = User(
   age: 28,
   city: 'Montréal',
   neighborhood: 'Verdun',
-  photoUrl: 'https://picsum.photos/seed/SamirKhadir/200/200',
+  photoUrl: 'https://randomuser.me/api/portraits/men/55.jpg',
   bio:
       'Post-bureau, je décompresse en courant doux, en marchant le long du fleuve ou en faisant quelques longueurs. '
       'Playlist pop québ, zéro jugement — l\'important, c\'est que tu te sentes bien après.',
@@ -220,12 +220,12 @@ final User _u4 = User(
   lastActivityDate: DateTime(2026, 3, 19),
   lastSeenDate: DateTime(2026, 3, 21),
   averageRating: 4.4,
-  totalActivities: 14,
+  totalActivities: 6,
   totalKm: 88.2,
   photoGallery: [
-    'https://picsum.photos/seed/SamirKhadir_1/400/400',
-    'https://picsum.photos/seed/SamirKhadir_2/400/400',
-    'https://picsum.photos/seed/SamirKhadir_3/400/400',
+    'https://randomuser.me/api/portraits/men/56.jpg',
+    'https://randomuser.me/api/portraits/men/57.jpg',
+    'https://randomuser.me/api/portraits/men/58.jpg',
   ],
   activities: const [
     UserActivity(category: EventCategory.running, level: IntensityLevel.relax),
@@ -258,7 +258,7 @@ final User _u5 = User(
   age: 45,
   city: 'Montréal',
   neighborhood: 'Petite-Patrie',
-  photoUrl: 'https://picsum.photos/seed/EmilieFortin/200/200',
+  photoUrl: 'https://randomuser.me/api/portraits/women/68.jpg',
   bio:
       'Maman qui bouge tôt : 6h, café dans l\'sac, puis école. Entre deux, course modérée, yoga rapide ou p\'tit tour en vélo avec les kids le week-end. '
       'Quand j\'ai dormi assez, j\'ose même une sortie kayak sur le calme plat.',
@@ -269,13 +269,13 @@ final User _u5 = User(
   lastActivityDate: DateTime(2026, 3, 22),
   lastSeenDate: DateTime(2026, 3, 23),
   averageRating: 4.7,
-  totalActivities: 35,
+  totalActivities: 10,
   totalKm: 245.5,
   photoGallery: [
-    'https://picsum.photos/seed/EmilieFortin_1/400/400',
-    'https://picsum.photos/seed/EmilieFortin_2/400/400',
-    'https://picsum.photos/seed/EmilieFortin_3/400/400',
-    'https://picsum.photos/seed/EmilieFortin_4/400/400',
+    'https://randomuser.me/api/portraits/women/69.jpg',
+    'https://randomuser.me/api/portraits/women/70.jpg',
+    'https://randomuser.me/api/portraits/women/71.jpg',
+    'https://randomuser.me/api/portraits/women/72.jpg',
   ],
   activities: const [
     UserActivity(category: EventCategory.running, level: IntensityLevel.moderate),
@@ -309,7 +309,7 @@ final User _u6 = User(
   age: 38,
   city: 'Montréal',
   neighborhood: 'Griffintown',
-  photoUrl: 'https://picsum.photos/seed/ThomasPicard/200/200',
+  photoUrl: 'https://randomuser.me/api/portraits/men/75.jpg',
   bio:
       'Je fais le tour du canal à pied, à vélo ou en patin quand l\'humeur y est. Apporte une joke plate, j\'apporte le rythme.\n\n'
       'J\'ai commencé à courir il y a 5 ans, après une rupture qui m\'a laissé avec du temps libre. '
@@ -328,11 +328,11 @@ final User _u6 = User(
   lastActivityDate: DateTime(2026, 3, 21),
   lastSeenDate: DateTime(2026, 3, 23),
   averageRating: 4.5,
-  totalActivities: 22,
+  totalActivities: 8,
   totalKm: 176.0,
   photoGallery: [
-    'https://picsum.photos/seed/ThomasPicard_1/400/400',
-    'https://picsum.photos/seed/ThomasPicard_2/400/400',
+    'https://randomuser.me/api/portraits/men/76.jpg',
+    'https://randomuser.me/api/portraits/men/77.jpg',
   ],
   activities: const [
     UserActivity(category: EventCategory.running, level: IntensityLevel.moderate),
@@ -366,7 +366,7 @@ final User _u7 = User(
   age: 48,
   city: 'Montréal',
   neighborhood: 'Hochelaga-Maisonneuve',
-  photoUrl: 'https://picsum.photos/seed/MarieClaudeDenis/200/200',
+  photoUrl: 'https://randomuser.me/api/portraits/women/52.jpg',
   bio:
       'Je préfère jaser que sprinter — mais j\'arrive en avance au point de rencontre pour accueillir le monde. '
       'Yoga doux, rando picnic, patin tranquille : tant qu\'on est ensemble dehors, je suis contente.',
@@ -377,12 +377,12 @@ final User _u7 = User(
   lastActivityDate: DateTime(2026, 3, 16),
   lastSeenDate: DateTime(2026, 3, 20),
   averageRating: 4.9,
-  totalActivities: 11,
+  totalActivities: 4,
   totalKm: 62.0,
   photoGallery: [
-    'https://picsum.photos/seed/MarieClaudeDenis_1/400/400',
-    'https://picsum.photos/seed/MarieClaudeDenis_2/400/400',
-    'https://picsum.photos/seed/MarieClaudeDenis_3/400/400',
+    'https://randomuser.me/api/portraits/women/53.jpg',
+    'https://randomuser.me/api/portraits/women/54.jpg',
+    'https://randomuser.me/api/portraits/women/55.jpg',
   ],
   activities: const [
     UserActivity(category: EventCategory.running, level: IntensityLevel.chill),
@@ -409,7 +409,7 @@ final User _u8 = User(
   age: 29,
   city: 'Montréal',
   neighborhood: 'Saint-Henri',
-  photoUrl: 'https://picsum.photos/seed/JordanMeunier/200/200',
+  photoUrl: 'https://randomuser.me/api/portraits/women/31.jpg',
   bio:
       'Ultra social dans le sens longue distance : gros vélo, rando avec dénivelé, ski de fond — je veux du kilométrage, pas du stress. '
       'Suis-moi sur le plat ou en montée, mais préviens-moi si t\'as besoin d\'un rythme plus cool.',
@@ -420,13 +420,13 @@ final User _u8 = User(
   lastActivityDate: DateTime(2026, 3, 15),
   lastSeenDate: DateTime(2026, 3, 19),
   averageRating: 4.3,
-  totalActivities: 41,
+  totalActivities: 11,
   totalKm: 520.0,
   photoGallery: [
-    'https://picsum.photos/seed/JordanMeunier_1/400/400',
-    'https://picsum.photos/seed/JordanMeunier_2/400/400',
-    'https://picsum.photos/seed/JordanMeunier_3/400/400',
-    'https://picsum.photos/seed/JordanMeunier_4/400/400',
+    'https://randomuser.me/api/portraits/women/32.jpg',
+    'https://randomuser.me/api/portraits/women/33.jpg',
+    'https://randomuser.me/api/portraits/women/34.jpg',
+    'https://randomuser.me/api/portraits/women/35.jpg',
   ],
   activities: const [
     UserActivity(category: EventCategory.running, level: IntensityLevel.intense),
