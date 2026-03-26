@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:rundate/data/mock_users.dart';
 import 'package:rundate/models/user.dart';
+import 'package:rundate/screens/profile/billing_screen.dart';
 import 'package:rundate/screens/profile/connections_screen.dart';
 import 'package:rundate/screens/profile/edit_profile_screen.dart';
 import 'package:rundate/screens/profile/help_legal_screen.dart';
@@ -213,7 +214,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             icon: Icons.receipt_long_outlined,
             title: 'Factures & paiements',
             iconColor: AppTheme.navyIcon(context),
-            onTap: () {},
+            onTap: () => _push(const BillingScreen()),
           ),
           const Divider(height: 1, indent: 16, endIndent: 16),
           _ProfileMenuTile(

@@ -29,14 +29,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _OnboardingPage(
       icon: Icons.groups,
       assetPath: 'assets/onboarding/onboarding_group.png',
-      title: 'Cours avec quelqu\'un de nouveau',
+      title: 'Cours avec des nouvelles personnes',
       subtitle:
-          'On te jumelle avec des coureurs à ton rythme — pour voir si ça clique en vrai.',
+          'Pas de jumelage — on court tous ensemble, chacun à son rythme.\nOn se retrouve tous au même point à l\'arrivée!',
     ),
     _OnboardingPage(
       icon: Icons.local_cafe,
       assetPath: 'assets/onboarding/onboarding_apero.png',
-      title: 'L\'Apéro Smoothie',
+      title: 'L\'Apéro Ravito',
       subtitle:
           'Après la course, on se retrouve dans un café pour mieux se connaître.\nC\'est là que la magie opère!',
     ),

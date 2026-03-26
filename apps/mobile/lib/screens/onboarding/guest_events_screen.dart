@@ -6,7 +6,7 @@ import 'package:rundate/screens/auth/signup_wizard_screen.dart';
 import 'package:rundate/theme/app_theme.dart';
 import 'package:rundate/widgets/app_logo.dart';
 import 'package:rundate/widgets/demo_banner.dart';
-import 'package:rundate/widgets/pace_label_icon.dart';
+
 
 String _formatGuestEventDate(DateTime dt) {
   const days = [
@@ -84,6 +84,35 @@ class GuestEventsScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
+          Container(
+            margin: const EdgeInsets.fromLTRB(20, 8, 20, 4),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: AppTheme.ocean.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.info_outline_rounded,
+                  size: 18,
+                  color: AppTheme.ocean,
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    'Connecte-toi pour voir tous les détails des événements.',
+                    style: GoogleFonts.dmSans(
+                      fontSize: 13,
+                      color: AppTheme.ocean,
+                      fontWeight: FontWeight.w500,
+                      height: 1.3,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Expanded(
             child: ListView.separated(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
@@ -129,41 +158,6 @@ class GuestEventsScreen extends StatelessWidget {
                           color: AppTheme.secondaryText(context),
                           height: 1.35,
                         ),
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          intensityLevelIcon(e.intensityLevel),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              e.intensityLevel.label,
-                              style: GoogleFonts.dmSans(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                color: AppTheme.textColor(context),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Text(
-                            e.distanceLabel.emoji,
-                            style: const TextStyle(fontSize: 18),
-                          ),
-                          const SizedBox(width: 6),
-                          Text(
-                            e.distanceLabel.label,
-                            style: GoogleFonts.dmSans(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: AppTheme.textColor(context),
-                            ),
-                          ),
-                        ],
                       ),
                       const SizedBox(height: 10),
                       Row(
