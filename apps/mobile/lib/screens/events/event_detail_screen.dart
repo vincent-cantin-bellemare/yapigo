@@ -1017,8 +1017,6 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                   if (!e.isPast && e.isRegistered) ...[
                     const SizedBox(height: 16),
                     _MyGroupCard(event: e),
-                    const SizedBox(height: 16),
-                    _IceBreakersCard(event: e),
                   ],
 
                   // How it works
@@ -1754,90 +1752,6 @@ class _CountdownSeparator extends StatelessWidget {
   }
 }
 
-class _IceBreakersCard extends StatelessWidget {
-  const _IceBreakersCard({required this.event});
-
-  final KaiEvent event;
-
-  static const _iceBreakers = [
-    ('💬', 'Quel est ton endroit préféré pour bouger à Montréal?'),
-    ('🎯', 'Quel est ton objectif sportif en ce moment?'),
-    ('🎵', 'Tu t\'entraînes avec de la musique ou en silence?'),
-    ('☕', 'Café ou smoothie après l\'activité?'),
-    ('🏔️', 'Intérieur ou extérieur, t\'es team quoi?'),
-    ('🌅', 'Sportif du matin ou de fin de journée?'),
-    ('🍕', 'Ton plaisir coupable post-entraînement?'),
-    ('✈️', 'Si tu pouvais pratiquer ton sport n\'importe où dans le monde, ce serait où?'),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    final selected = List.of(_iceBreakers)..shuffle();
-    final topics = selected.take(3).toList();
-
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: AppTheme.cardColor(context),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppTheme.teal.withValues(alpha: 0.3),
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(Icons.chat_bubble_outline_rounded,
-                  size: 20, color: AppTheme.teal),
-              const SizedBox(width: 8),
-              Text(
-                'Sujets de conversation',
-                style: GoogleFonts.nunito(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                  color: AppTheme.textColor(context),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'Brise la glace pendant l\'activité!',
-            style: GoogleFonts.dmSans(
-              fontSize: 14,
-              color: AppTheme.secondaryText(context),
-            ),
-          ),
-          const SizedBox(height: 14),
-          for (final (emoji, question) in topics)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(emoji, style: const TextStyle(fontSize: 18)),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(
-                      question,
-                      style: GoogleFonts.dmSans(
-                        fontSize: 14,
-                        color: AppTheme.textColor(context),
-                        height: 1.35,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
 class _RateEventCard extends StatefulWidget {
   const _RateEventCard({required this.event});
   final KaiEvent event;
@@ -2037,18 +1951,25 @@ class _RateMembersCardState extends State<_RateMembersCard> {
               padding: const EdgeInsets.only(bottom: 12),
               child: Row(
                 children: [
-                  UserAvatar(name: u.firstName, photoUrl: u.photoUrl, size: 40, showRing: false),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      u.firstName,
-                      style: GoogleFonts.dmSans(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.textColor(context),
-                      ),
+                  GestureDetector(
+                    onTap: () => UserProfileSheet.show(context, u),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        UserAvatar(name: u.firstName, photoUrl: u.photoUrl, size: 40, showRing: false),
+                        const SizedBox(width: 12),
+                        Text(
+                          u.firstName,
+                          style: GoogleFonts.dmSans(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.textColor(context),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  const Spacer(),
                   GestureDetector(
                     onTap: _submitted ? null : () => setState(() => _votes[u.id] = true),
                     child: Container(

@@ -21,7 +21,6 @@ import 'package:rundate/screens/profile/user_profile_sheet.dart';
 import 'package:rundate/theme/app_theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:rundate/widgets/photo_gallery_viewer.dart';
-import 'package:rundate/widgets/pace_label_icon.dart';
 import 'package:rundate/widgets/user_avatar.dart';
 import 'package:rundate/widgets/skeletons/shimmer_block.dart';
 
@@ -77,6 +76,17 @@ enum HomeRegistrationStatus {
   registeredWaiting,
   matched,
   pastDate,
+}
+
+String _formatOrganizerNames(List<User> organizers) {
+  if (organizers.isEmpty) return '';
+  if (organizers.length == 1) return organizers.first.firstName;
+  if (organizers.length == 2) {
+    return '${organizers[0].firstName} et ${organizers[1].firstName}';
+  }
+  final extra = organizers.length - 2;
+  return '${organizers[0].firstName}, ${organizers[1].firstName} '
+      'et $extra autre${extra > 1 ? 's' : ''}';
 }
 
 // ---------------------------------------------------------------------------
@@ -2646,33 +2656,53 @@ class _EnhancedEventCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 6),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        intensityLevelIcon(event.intensityLevel),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            event.intensitySummary,
-                            style: GoogleFonts.dmSans(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: AppTheme.textColor(context),
+                    Builder(
+                      builder: (context) {
+                        final orgUsers = event.organizerIds
+                            .map((id) => mockUsers.cast<User?>().firstWhere(
+                                  (u) => u!.id == id,
+                                  orElse: () => null,
+                                ))
+                            .whereType<User>()
+                            .toList();
+                        if (orgUsers.isEmpty) return const SizedBox.shrink();
+                        final names = _formatOrganizerNames(orgUsers);
+                        return Row(
+                          children: [
+                            SizedBox(
+                              width: orgUsers.length > 1 ? 32.0 : 20.0,
+                              height: 20,
+                              child: Stack(
+                                clipBehavior: Clip.none,
+                                children: [
+                                  for (var i = 0; i < orgUsers.length.clamp(0, 2); i++)
+                                    Positioned(
+                                      left: i * 12.0,
+                                      child: UserAvatar(
+                                        name: orgUsers[i].firstName,
+                                        photoUrl: orgUsers[i].photoUrl,
+                                        size: 20,
+                                        showRing: false,
+                                      ),
+                                    ),
+                                ],
+                              ),
                             ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Text(
-                      event.distanceSummary,
-                      style: GoogleFonts.dmSans(
-                        fontSize: 14,
-                        color: AppTheme.secondaryText(context),
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+                            const SizedBox(width: 6),
+                            Expanded(
+                              child: Text(
+                                'Organisé par $names',
+                                style: GoogleFonts.dmSans(
+                                  fontSize: 13,
+                                  color: AppTheme.secondaryText(context),
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                     const Spacer(),
                     Row(

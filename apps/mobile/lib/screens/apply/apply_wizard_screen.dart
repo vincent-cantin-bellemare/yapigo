@@ -6,6 +6,7 @@ import 'package:rundate/data/mock_users.dart';
 import 'package:rundate/models/kai_event.dart';
 import 'package:rundate/models/user.dart';
 import 'package:rundate/screens/profile/user_profile_sheet.dart';
+import 'package:rundate/screens/events/event_detail_screen.dart';
 import 'package:rundate/screens/home/main_shell.dart';
 import 'package:rundate/theme/app_theme.dart';
 import 'package:rundate/widgets/pace_label_icon.dart';
@@ -993,8 +994,7 @@ class _PostRegistrationInviteScreenState
             ),
             const SizedBox(height: 12),
             Text(
-              'Le processus de formation de groupe se fera très prochainement. '
-              'Tu recevras une notification dès que ton groupe sera prêt!',
+              'Tout est prêt, on t\'attend! Prépare tes espadrilles et ton plus beau sourire. 😊',
               textAlign: TextAlign.center,
               style: GoogleFonts.dmSans(
                 fontSize: 14,
@@ -1005,34 +1005,71 @@ class _PostRegistrationInviteScreenState
           ],
         ),
         actions: [
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(ctx).pop();
-                Navigator.of(context).pushAndRemoveUntil<void>(
-                  MaterialPageRoute<void>(
-                    builder: (_) => const MainShell(initialTabIndex: 0),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(ctx).pop();
+                    Navigator.of(context).pushAndRemoveUntil<void>(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const MainShell(initialTabIndex: 0),
+                      ),
+                      (_) => false,
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.ocean,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
                   ),
-                  (_) => false,
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.ocean,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(14),
+                  child: Text(
+                    'Retour à l\'accueil',
+                    style: GoogleFonts.nunito(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
               ),
-              child: Text(
-                'Retour à l\'accueil',
-                style: GoogleFonts.nunito(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
+              if (widget.event != null) ...[
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                      Navigator.of(context).pushAndRemoveUntil<void>(
+                        MaterialPageRoute<void>(
+                          builder: (_) => EventDetailScreen(event: widget.event!),
+                        ),
+                        (_) => false,
+                      );
+                    },
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: AppTheme.ocean,
+                      side: BorderSide(color: AppTheme.ocean),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                    child: Text(
+                      'Voir la fiche de l\'événement',
+                      style: GoogleFonts.nunito(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              ],
+            ],
           ),
         ],
       ),

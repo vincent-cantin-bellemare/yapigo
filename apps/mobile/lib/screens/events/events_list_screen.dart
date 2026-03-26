@@ -16,6 +16,17 @@ import 'package:rundate/widgets/user_avatar.dart';
 import 'package:rundate/widgets/pace_label_icon.dart' show intensityLevelIcon;
 import 'package:rundate/widgets/weather_badge.dart';
 
+String _formatOrganizerNames(List<User> organizers) {
+  if (organizers.isEmpty) return '';
+  if (organizers.length == 1) return organizers.first.firstName;
+  if (organizers.length == 2) {
+    return '${organizers[0].firstName} et ${organizers[1].firstName}';
+  }
+  final extra = organizers.length - 2;
+  return '${organizers[0].firstName}, ${organizers[1].firstName} '
+      'et $extra autre${extra > 1 ? 's' : ''}';
+}
+
 String _frenchDate(DateTime dt) {
   const days = [
     '', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche',
@@ -1158,7 +1169,7 @@ class _SuggestLocationBlock extends StatelessWidget {
           const Text('🗺️', style: TextStyle(fontSize: 32)),
           const SizedBox(height: 12),
           Text(
-            'Tu ne trouves pas ton bonheur?',
+            'Tu as un endroit magique à proposer?',
             textAlign: TextAlign.center,
             style: GoogleFonts.nunito(
               fontSize: 18,
@@ -1383,27 +1394,48 @@ class _EventCard extends StatelessWidget {
               const SizedBox(height: 8),
               Builder(
                 builder: (context) {
-                  final orgUser = event.organizerIds.isNotEmpty
-                      ? mockUsers.cast<User?>().firstWhere(
-                            (u) => u!.id == event.organizerIds.first,
+                  final orgUsers = event.organizerIds
+                      .map((id) => mockUsers.cast<User?>().firstWhere(
+                            (u) => u!.id == id,
                             orElse: () => null,
-                          )
-                      : null;
-                  if (orgUser == null) return const SizedBox.shrink();
+                          ))
+                      .whereType<User>()
+                      .toList();
+                  if (orgUsers.isEmpty) return const SizedBox.shrink();
+                  final names = _formatOrganizerNames(orgUsers);
                   return Row(
                     children: [
-                      UserAvatar(
-                        name: orgUser.firstName,
-                        photoUrl: orgUser.photoUrl,
-                        size: 22,
-                        showRing: false,
+                      SizedBox(
+                        width: orgUsers.length > 1
+                            ? 22.0 + (orgUsers.length - 1).clamp(0, 1) * 12.0
+                            : 22.0,
+                        height: 22,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            for (var i = 0; i < orgUsers.length.clamp(0, 2); i++)
+                              Positioned(
+                                left: i * 12.0,
+                                child: UserAvatar(
+                                  name: orgUsers[i].firstName,
+                                  photoUrl: orgUsers[i].photoUrl,
+                                  size: 22,
+                                  showRing: false,
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
                       const SizedBox(width: 6),
-                      Text(
-                        'Organisé par ${orgUser.firstName}',
-                        style: GoogleFonts.dmSans(
-                          fontSize: 13,
-                          color: AppTheme.secondaryText(context),
+                      Expanded(
+                        child: Text(
+                          'Organisé par $names',
+                          style: GoogleFonts.dmSans(
+                            fontSize: 13,
+                            color: AppTheme.secondaryText(context),
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
@@ -1700,27 +1732,48 @@ class _PastEventCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Builder(
                   builder: (context) {
-                    final orgUser = event.organizerIds.isNotEmpty
-                        ? mockUsers.cast<User?>().firstWhere(
-                              (u) => u!.id == event.organizerIds.first,
+                    final orgUsers = event.organizerIds
+                        .map((id) => mockUsers.cast<User?>().firstWhere(
+                              (u) => u!.id == id,
                               orElse: () => null,
-                            )
-                        : null;
-                    if (orgUser == null) return const SizedBox.shrink();
+                            ))
+                        .whereType<User>()
+                        .toList();
+                    if (orgUsers.isEmpty) return const SizedBox.shrink();
+                    final names = _formatOrganizerNames(orgUsers);
                     return Row(
                       children: [
-                        UserAvatar(
-                          name: orgUser.firstName,
-                          photoUrl: orgUser.photoUrl,
-                          size: 22,
-                          showRing: false,
+                        SizedBox(
+                          width: orgUsers.length > 1
+                              ? 22.0 + (orgUsers.length - 1).clamp(0, 1) * 12.0
+                              : 22.0,
+                          height: 22,
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              for (var i = 0; i < orgUsers.length.clamp(0, 2); i++)
+                                Positioned(
+                                  left: i * 12.0,
+                                  child: UserAvatar(
+                                    name: orgUsers[i].firstName,
+                                    photoUrl: orgUsers[i].photoUrl,
+                                    size: 22,
+                                    showRing: false,
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
                         const SizedBox(width: 6),
-                        Text(
-                          'Organisé par ${orgUser.firstName}',
-                          style: GoogleFonts.dmSans(
-                            fontSize: 13,
-                            color: AppTheme.secondaryText(context),
+                        Expanded(
+                          child: Text(
+                            'Organisé par $names',
+                            style: GoogleFonts.dmSans(
+                              fontSize: 13,
+                              color: AppTheme.secondaryText(context),
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
