@@ -9,6 +9,7 @@ import 'package:rundate/screens/onboarding/onboarding_screen.dart';
 import 'package:rundate/screens/splash/splash_screen.dart';
 import 'package:rundate/utils/app_locale.dart';
 import 'package:rundate/widgets/demo_banner.dart';
+import 'package:rundate/widgets/web_shell.dart';
 import 'package:rundate/screens/home/main_shell.dart';
 
 void main() async {
@@ -25,10 +26,12 @@ void main() async {
       return true;
     };
 
-    await SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    if (!kIsWeb) {
+      await SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    }
 
     runApp(const KaiakApp());
   }, (error, stack) {
@@ -62,10 +65,11 @@ class KaiakApp extends StatelessWidget {
               ],
               home: const SplashScreen(),
               builder: (context, child) {
-                return GestureDetector(
+                final wrapped = GestureDetector(
                   onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
                   child: child,
                 );
+                return WebShell(child: wrapped);
               },
             );
           },

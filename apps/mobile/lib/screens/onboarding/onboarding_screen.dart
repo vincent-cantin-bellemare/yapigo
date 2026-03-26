@@ -168,7 +168,10 @@ class _OnboardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    final screenHeight = MediaQuery.of(context).size.height;
+    final imageSize = (screenHeight * 0.25).clamp(100.0, 220.0);
+
+    return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 40),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -178,8 +181,8 @@ class _OnboardingPage extends StatelessWidget {
             child: assetPath != null
                 ? Image.asset(
                     assetPath!,
-                    width: 220,
-                    height: 220,
+                    width: imageSize,
+                    height: imageSize,
                     fit: BoxFit.cover,
                     errorBuilder: (_, __, ___) => Container(
                       width: 120,

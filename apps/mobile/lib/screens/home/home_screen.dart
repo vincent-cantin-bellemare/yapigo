@@ -280,7 +280,7 @@ class _HomeSkeletonLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShimmerBlock(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -331,7 +331,7 @@ class _HomeSkeletonLoader extends StatelessWidget {
           ],
         ),
       ),
-    );
+    );  
   }
 }
 
