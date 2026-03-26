@@ -146,7 +146,7 @@ final User _u2 = User(
     'Ne pas me perdre au parc la première fois',
     'Essayer le patin au bassin bon Dieu',
   ],
-  isOrganizer: false,
+  isOrganizer: true,
   connections: 5,
 );
 
@@ -288,7 +288,7 @@ final User _u5 = User(
     'Rencontrer d\'autres parents actifs sur Run Date',
     'Faire une rando famille au Mont-Saint-Bruno',
   ],
-  isOrganizer: false,
+  isOrganizer: true,
   connections: 31,
   stravaConnected: true,
   stravaAthleteId: 42910385,
@@ -345,7 +345,7 @@ final User _u6 = User(
     'Organiser une sortie canal + apéro',
     'Essayer une session entraînement mixte en groupe',
   ],
-  isOrganizer: false,
+  isOrganizer: true,
   connections: 19,
   stravaConnected: true,
   stravaAthleteId: 58293741,

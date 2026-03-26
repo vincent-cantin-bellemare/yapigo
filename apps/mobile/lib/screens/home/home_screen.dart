@@ -14,6 +14,7 @@ import 'package:rundate/models/kai_event.dart';
 import 'package:rundate/models/user.dart';
 import 'package:rundate/screens/events/event_detail_screen.dart';
 import 'package:rundate/screens/events/events_list_screen.dart';
+import 'package:rundate/screens/organizers/organizers_list_screen.dart';
 import 'package:rundate/screens/events/rate_event_screen.dart';
 import 'package:rundate/screens/home/main_shell.dart';
 import 'package:rundate/screens/profile/contact_form_screen.dart';
@@ -235,6 +236,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 events: popular,
                 theme: theme,
               ),
+            ),
+
+            // Section 5b — Organizers
+            SliverToBoxAdapter(
+              child: _OrganizersSection(theme: theme),
             ),
 
             // Section 6 — Community Photos Preview
@@ -2991,6 +2997,161 @@ class _BottomCta extends StatelessWidget {
         .animate()
         .fadeIn(duration: 500.ms, delay: 1400.ms)
         .slideY(begin: 0.1, end: 0, duration: 500.ms, delay: 1400.ms);
+  }
+}
+
+// ===========================================================================
+// Section 5b — Organizers
+// ===========================================================================
+
+class _OrganizersSection extends StatelessWidget {
+  const _OrganizersSection({required this.theme});
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    final organizers = mockUsers.where((u) => u.isOrganizer).toList();
+    if (organizers.isEmpty) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 32),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Nos organisateurs',
+                    style: theme.textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => const OrganizersListScreen(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Voir tous',
+                    style: GoogleFonts.dmSans(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.teal,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 170,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              itemCount: organizers.length,
+              separatorBuilder: (_, _) => const SizedBox(width: 14),
+              itemBuilder: (context, i) {
+                return _OrganizerHomeCard(
+                  organizer: organizers[i],
+                  theme: theme,
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OrganizerHomeCard extends StatelessWidget {
+  const _OrganizerHomeCard({
+    required this.organizer,
+    required this.theme,
+  });
+  final User organizer;
+  final ThemeData theme;
+
+  @override
+  Widget build(BuildContext context) {
+    final eventCount = mockEvents
+        .where((e) => e.organizerIds.contains(organizer.id))
+        .length;
+
+    return GestureDetector(
+      onTap: () => Navigator.of(context).push<void>(
+        MaterialPageRoute<void>(
+          builder: (_) => OrganizersListScreen(
+            initialOrganizerId: organizer.id,
+          ),
+        ),
+      ),
+      child: Container(
+        width: 140,
+        padding: const EdgeInsets.all(14),
+        decoration: BoxDecoration(
+          color: AppTheme.cardColor(context),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: AppTheme.teal.withValues(alpha: 0.2),
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            UserAvatar(
+              name: organizer.firstName,
+              photoUrl: organizer.photoUrl,
+              size: 52,
+              showRing: false,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              organizer.firstName,
+              style: GoogleFonts.nunito(
+                fontSize: 15,
+                fontWeight: FontWeight.w800,
+                color: AppTheme.textColor(context),
+              ),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 4),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+              decoration: BoxDecoration(
+                color: AppTheme.teal.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                'Organisateur',
+                style: GoogleFonts.dmSans(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w700,
+                  color: AppTheme.teal,
+                ),
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              '$eventCount événement${eventCount > 1 ? 's' : ''}',
+              style: GoogleFonts.dmSans(
+                fontSize: 12,
+                color: AppTheme.secondaryText(context),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

@@ -4,7 +4,7 @@ import 'package:rundate/data/mock_users.dart';
 final mockConversations = <Conversation>[
   Conversation(
     id: 'c1',
-    groupName: 'Vélo Lachine #3',
+    groupName: '🏃 Course · Lachine',
     members: [mockUsers[0], mockUsers[1], mockUsers[2], mockUsers[5], mockUsers[6]],
     matchId: 'm1',
     messages: [
@@ -73,7 +73,7 @@ final mockConversations = <Conversation>[
   ),
   Conversation(
     id: 'c2',
-    groupName: 'Rando Mont-Royal #5',
+    groupName: '🥾 Rando · Mont-Royal',
     members: [mockUsers[3], mockUsers[4], mockUsers[7]],
     matchId: 'm2',
     messages: [

@@ -28,6 +28,7 @@ import 'package:rundate/widgets/photo_gallery_viewer.dart';
 import 'package:rundate/widgets/pace_label_icon.dart' show intensityLevelIcon;
 import 'package:rundate/widgets/distance_label_icon.dart';
 import 'package:rundate/widgets/user_avatar.dart';
+import 'package:rundate/widgets/tip_organizer_sheet.dart';
 import 'package:rundate/widgets/weather_badge.dart';
 
 String _frenchWeekday(int weekday) {
@@ -2044,188 +2045,60 @@ class _RateMembersCardState extends State<_RateMembersCard> {
   }
 }
 
-class _TipOrganizerCard extends StatefulWidget {
+class _TipOrganizerCard extends StatelessWidget {
   const _TipOrganizerCard({required this.event});
   final KaiEvent event;
 
   @override
-  State<_TipOrganizerCard> createState() => _TipOrganizerCardState();
-}
-
-class _TipOrganizerCardState extends State<_TipOrganizerCard> {
-  int? _selectedAmount;
-  bool _submitted = false;
-
-  static const _amounts = [2, 5, 10];
-
-  @override
   Widget build(BuildContext context) {
     final organizers = mockUsers
-        .where((u) => widget.event.organizerIds.contains(u.id))
+        .where((u) => event.organizerIds.contains(u.id))
         .toList();
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: AppTheme.warning.withValues(alpha: 0.06),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppTheme.warning.withValues(alpha: 0.25)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const Text('🎁', style: TextStyle(fontSize: 22)),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  'Remercie ton organisateur!',
-                  style: GoogleFonts.nunito(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w800,
-                    color: AppTheme.textColor(context),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'Un petit tip pour dire merci',
-            style: GoogleFonts.dmSans(
-              fontSize: 14,
-              color: AppTheme.secondaryText(context),
-            ),
-          ),
-          const SizedBox(height: 14),
-          Wrap(
-            spacing: 10,
-            runSpacing: 8,
-            children: organizers.map((o) {
-              return Column(
-                mainAxisSize: MainAxisSize.min,
+    return GestureDetector(
+      onTap: () => TipOrganizerSheet.show(context, organizers),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          color: AppTheme.warning.withValues(alpha: 0.06),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: AppTheme.warning.withValues(alpha: 0.25)),
+        ),
+        child: Row(
+          children: [
+            const Text('🎁', style: TextStyle(fontSize: 22)),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  UserAvatar(name: o.firstName, photoUrl: o.photoUrl, size: 40, showRing: false),
-                  const SizedBox(height: 4),
                   Text(
-                    o.firstName,
-                    style: GoogleFonts.dmSans(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
+                    'Remercie ton organisateur!',
+                    style: GoogleFonts.nunito(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w800,
                       color: AppTheme.textColor(context),
                     ),
                   ),
+                  const SizedBox(height: 2),
+                  Text(
+                    'Envoie un petit tip pour dire merci',
+                    style: GoogleFonts.dmSans(
+                      fontSize: 14,
+                      color: AppTheme.secondaryText(context),
+                    ),
+                  ),
                 ],
-              );
-            }).toList(),
-          ),
-          const SizedBox(height: 16),
-          Row(
-            children: [
-              ..._amounts.map((amount) {
-                final selected = _selectedAmount == amount;
-                return Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    child: GestureDetector(
-                      onTap: _submitted ? null : () => setState(() => _selectedAmount = amount),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        decoration: BoxDecoration(
-                          color: selected
-                              ? AppTheme.warning.withValues(alpha: 0.15)
-                              : AppTheme.cardColor(context),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: selected
-                                ? AppTheme.warning
-                                : AppTheme.slateGrey.withValues(alpha: 0.25),
-                            width: selected ? 2 : 1,
-                          ),
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          '$amount \$',
-                          style: GoogleFonts.nunito(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w800,
-                            color: selected ? AppTheme.warning : AppTheme.textColor(context),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: GestureDetector(
-                    onTap: _submitted ? null : () => setState(() => _selectedAmount = -1),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      decoration: BoxDecoration(
-                        color: _selectedAmount == -1
-                            ? AppTheme.warning.withValues(alpha: 0.15)
-                            : AppTheme.cardColor(context),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: _selectedAmount == -1
-                              ? AppTheme.warning
-                              : AppTheme.slateGrey.withValues(alpha: 0.25),
-                          width: _selectedAmount == -1 ? 2 : 1,
-                        ),
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        'Autre',
-                        style: GoogleFonts.dmSans(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                          color: _selectedAmount == -1 ? AppTheme.warning : AppTheme.textColor(context),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 14),
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton.icon(
-              onPressed: _submitted || _selectedAmount == null
-                  ? null
-                  : () {
-                      HapticFeedback.mediumImpact();
-                      setState(() => _submitted = true);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Merci pour ta générosité! 🎉', style: GoogleFonts.dmSans()),
-                          behavior: SnackBarBehavior.floating,
-                        ),
-                      );
-                    },
-              icon: _submitted
-                  ? const Icon(Icons.check_rounded, size: 20)
-                  : const Text('💝', style: TextStyle(fontSize: 16)),
-              label: Text(_submitted ? 'Tip envoyé!' : 'Envoyer un tip'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppTheme.warning,
-                foregroundColor: Colors.white,
-                disabledBackgroundColor: AppTheme.slateGrey.withValues(alpha: 0.25),
-                disabledForegroundColor: Colors.white70,
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                elevation: 0,
-                textStyle: GoogleFonts.nunito(fontSize: 15, fontWeight: FontWeight.w700),
               ),
             ),
-          ),
-        ],
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 16,
+              color: AppTheme.warning,
+            ),
+          ],
+        ),
       ),
     );
   }
