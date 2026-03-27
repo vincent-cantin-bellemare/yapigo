@@ -36,14 +36,14 @@ const CLIPS = [
     id: "clip4",
     file: "01-intro/videos/clip4.mp4",
     placeholderColor: "#1A1A30",
-    caption: "",
+    caption: "Pas besoin de swiper\npour le deviner.",
     captionStart: 15,
   },
   {
     id: "clip5",
     file: "01-intro/videos/clip5.mp4",
     placeholderColor: "#2A1A10",
-    caption: "",
+    caption: "Et si t'as aimé courir\navec quelqu'un...",
     captionStart: 15,
   },
 ] as const;
