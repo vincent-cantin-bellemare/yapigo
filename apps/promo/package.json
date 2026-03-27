@@ -1,0 +1,23 @@
+{
+  "name": "rundate-promo",
+  "version": "1.0.0",
+  "description": "Run Date promotional videos — Remotion compositions",
+  "scripts": {
+    "studio": "npx remotion studio src/Root.tsx",
+    "render": "npx remotion render src/Root.tsx RunDateIntro out/rundate-intro.mp4",
+    "gen:images": "npx tsx scripts/gen-images.ts",
+    "gen:videos": "npx tsx scripts/gen-videos.ts",
+    "gen:voiceover": "npx tsx scripts/gen-voiceover.ts"
+  },
+  "dependencies": {
+    "@fal-ai/client": "^1.2.0",
+    "@remotion/cli": "^4.0.0",
+    "dotenv": "^16.4.0",
+    "remotion": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  }
+}

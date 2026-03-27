@@ -34,6 +34,15 @@ apps/web/node_modules/
 apps/web/out/
 apps/web/.env*.local
 
+# ---- Remotion Promo (apps/promo) ----
+apps/promo/node_modules/
+apps/promo/out/
+apps/promo/.env
+apps/promo/package-lock.json
+# Large generated binary assets (videos + audio) — regenerate via scripts
+apps/promo/public/01-intro/videos/
+apps/promo/public/01-intro/audio/
+
 # ---- Django (backend) ----
 backend/__pycache__/
 backend/**/__pycache__/
