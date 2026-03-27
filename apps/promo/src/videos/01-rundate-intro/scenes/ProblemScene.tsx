@@ -8,18 +8,18 @@ import {
 import { colors, gradients } from "../../../../design-system/colors";
 import { fonts, fontSizes } from "../../../../design-system/typography";
 
-// Timing constants (frames at 30fps) — compressed to 6s (180 frames)
+// Timing constants (frames at 30fps) — compressed to 4s (120 frames)
 const PHONE_SLIDE_IN = 0;
-const SHOW_PROFILE = 8;
-const SWIPE_RIGHT = 25;
-const MATCH_FLASH = 40;
-const CHAT_VIEW = 55;
-const MSG1_APPEAR = 62;
-const MSG2_APPEAR = 78;
-const READ_RECEIPT = 92;
-const TYPING_IN = 106;
-const TYPING_OUT = 126;
-const PUNCHLINE = 140;
+const SHOW_PROFILE = 5;
+const SWIPE_RIGHT = 14;
+const MATCH_FLASH = 24;
+const CHAT_VIEW = 34;
+const MSG1_APPEAR = 40;
+const MSG2_APPEAR = 50;
+const READ_RECEIPT = 60;
+const TYPING_IN = 68;
+const TYPING_OUT = 82;
+const PUNCHLINE = 88;
 
 // Fake avatar colors
 const AVATAR_GRADIENT = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
@@ -219,10 +219,9 @@ export const ProblemScene: React.FC = () => {
   const profileVisible = frame < MATCH_FLASH;
   const chatVisible = frame >= CHAT_VIEW;
 
-  // Match flash
-  // Gap = 20 frames → use ±6 to stay strictly monotonic
+  // Match flash — gap is 10 frames, use ±3 to stay strictly monotonic
   const matchOpacity = frame >= MATCH_FLASH && frame < CHAT_VIEW
-    ? interpolate(frame, [MATCH_FLASH, MATCH_FLASH + 6, CHAT_VIEW - 6, CHAT_VIEW], [0, 1, 1, 0], { extrapolateRight: "clamp" })
+    ? interpolate(frame, [MATCH_FLASH, MATCH_FLASH + 3, CHAT_VIEW - 3, CHAT_VIEW], [0, 1, 1, 0], { extrapolateRight: "clamp" })
     : 0;
 
   // Chat states
@@ -231,7 +230,7 @@ export const ProblemScene: React.FC = () => {
   const showRead = frame >= READ_RECEIPT;
   const showTyping = frame >= TYPING_IN && frame < TYPING_OUT;
   const typingOpacity = frame >= TYPING_IN
-    ? interpolate(frame, [TYPING_IN, TYPING_IN + 8, TYPING_OUT - 8, TYPING_OUT], [0, 1, 1, 0], { extrapolateRight: "clamp" })
+    ? interpolate(frame, [TYPING_IN, TYPING_IN + 4, TYPING_OUT - 4, TYPING_OUT], [0, 1, 1, 0], { extrapolateRight: "clamp" })
     : 0;
 
   // Punchline

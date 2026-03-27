@@ -150,9 +150,9 @@ export const CtaScene: React.FC = () => {
     >
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&family=DM+Sans:wght@300;400&display=swap');`}</style>
 
-      {/* Logo */}
+      {/* Logo — display large so H.264 preserves text sharpness */}
       <div style={{ opacity: logoOpacity, transform: `scale(${logoScale})`, marginBottom: 48 }}>
-        <Img src={staticFile("logos/rundate_white.png")} style={{ width: 560, objectFit: "contain" }} />
+        <Img src={staticFile("logos/rundate_white.png")} style={{ width: 920, objectFit: "contain" }} />
       </div>
 
       {/* Tagline — word by word */}

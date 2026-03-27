@@ -12,39 +12,39 @@ import {
 } from "./scenes/TransitionScene";
 
 // ─── Timing at 30fps ──────────────────────────────────────────────────────────
-// Act 1   — Chat mockup (fast)    :  0s–6s       →  180 frames
-// AppCard — "Tu t'inscris"        :  6s–8s       →   60 frames
-// Trans 1 — Ripple (lieu proche)  :  8s–10s      →   60 frames
-// Clip 1  — Groupe au parc        : 10s–12s      →   60 frames
-// Trans 2 — Duo GPS routes        : 12s–14.5s    →   75 frames
-// Clip 2  — Course canal          : 14.5s–16.5s  →   60 frames
-// Trans 3 — Pace bar 5-10km       : 16.5s–19s    →   75 frames
+// Act 1   — Chat mockup (fast)    :  0s–4s       →  120 frames  (compressed)
+// AppCard — "Tu t'inscris"        :  4s–6.5s     →   75 frames
+// Trans 1 — Ripple (lieu proche)  :  6.5s–9s     →   75 frames
+// Clip 1  — Groupe au parc        :  9s–11s      →   60 frames
+// Trans 2 — Duo GPS routes        : 11s–14s      →   90 frames
+// Clip 2  — Course canal          : 14s–16s      →   60 frames
+// Trans 3 — Pace bar 5-10km       : 16s–19s      →   90 frames
 // Clip 3  — Rires                 : 19s–21s      →   60 frames
-// Trans 4 — Steam (café)          : 21s–23s      →   60 frames
-// Clip 4  — Café terrasse         : 23s–25s      →   60 frames (clipIndex 4)
-// Trans 5 — EKG (connexion)       : 25s–27s      →   60 frames
-// Clip 5  — Post-course           : 27s–29s      →   60 frames (clipIndex 3)
-// CTA     — Logo + tagline        : 29s–35.5s    →  195 frames
+// Trans 4 — Steam (café)          : 21s–24.5s    →  105 frames  (extended)
+// Clip 4  — Café terrasse         : 24.5s–26.5s  →   60 frames (clipIndex 4)
+// Trans 5 — EKG (connexion)       : 26.5s–29s    →   75 frames
+// Clip 5  — Post-course           : 29s–31s      →   60 frames (clipIndex 3)
+// CTA     — Logo + tagline        : 31s–37.5s    →  195 frames
 //
-// Total: 180+60+60+60+75+60+75+60+60+60+60+60+195 = 1065 frames = 35.5s
+// Total: 120+75+75+60+90+60+90+60+105+60+75+60+195 = 1125 frames = 37.5s
 
 const T = {
-  act1:    { start: 0,   dur: 180 },
-  appcard: { start: 180, dur: 60  },
-  trans1:  { start: 240, dur: 60  },
-  clip1:   { start: 300, dur: 60  },
-  trans2:  { start: 360, dur: 75  },
-  clip2:   { start: 435, dur: 60  },
-  trans3:  { start: 495, dur: 75  },
+  act1:    { start: 0,   dur: 120 },
+  appcard: { start: 120, dur: 75  },
+  trans1:  { start: 195, dur: 75  },
+  clip1:   { start: 270, dur: 60  },
+  trans2:  { start: 330, dur: 90  },
+  clip2:   { start: 420, dur: 60  },
+  trans3:  { start: 480, dur: 90  },
   clip3:   { start: 570, dur: 60  },
-  trans4:  { start: 630, dur: 60  },
-  clip4:   { start: 690, dur: 60  },
-  trans5:  { start: 750, dur: 60  },
-  clip5:   { start: 810, dur: 60  },
-  cta:     { start: 870, dur: 195 },
+  trans4:  { start: 630, dur: 105 },
+  clip4:   { start: 735, dur: 60  },
+  trans5:  { start: 795, dur: 75  },
+  clip5:   { start: 870, dur: 60  },
+  cta:     { start: 930, dur: 195 },
 } as const;
 
-export const TOTAL_FRAMES = T.cta.start + T.cta.dur; // 1065 = 35.5s
+export const TOTAL_FRAMES = T.cta.start + T.cta.dur; // 1125 = 37.5s
 
 export const RunDateIntro = () => {
   return (
@@ -81,7 +81,7 @@ export const RunDateIntro = () => {
       </Sequence>
 
       <Sequence from={T.trans3.start} durationInFrames={T.trans3.dur}>
-        <TransitionPaceBar number="5–10 km" label="ou plus pour les plus motivés" />
+        <TransitionPaceBar number="5–10 km" label="une heure environ" />
       </Sequence>
 
       <Sequence from={T.clip3.start} durationInFrames={T.clip3.dur}>
@@ -90,7 +90,7 @@ export const RunDateIntro = () => {
 
       <Sequence from={T.trans4.start} durationInFrames={T.trans4.dur}>
         <TransitionSteam
-          text="Et si t'as aimé courir..."
+          text="Rendez-vous au café du coin."
           subtitle="Choisis ton drink préféré."
         />
       </Sequence>
@@ -101,8 +101,7 @@ export const RunDateIntro = () => {
 
       <Sequence from={T.trans5.start} durationInFrames={T.trans5.dur}>
         <TransitionEKG
-          text="Connecte avec le groupe."
-          subtitle="Retrouve-les sur l'application."
+          text="Retrouve ton team sur l'application."
         />
       </Sequence>
 
