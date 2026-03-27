@@ -61,7 +61,8 @@ export const RunDateIntro = () => {
 
       <Sequence from={T.trans1.start} durationInFrames={T.trans1.dur}>
         <TransitionRipple
-          text="Vous vous rejoignez dans un endroit proche."
+          text="Un parc près de chez toi."
+          subtitle="Un groupe t'attend."
         />
       </Sequence>
 
@@ -71,8 +72,8 @@ export const RunDateIntro = () => {
 
       <Sequence from={T.trans2.start} durationInFrames={T.trans2.dur}>
         <TransitionDuoRun
-          text="Vous partez ensemble."
-          subtitle="Trajet adapté au groupe."
+          text="Vous partez courir."
+          subtitle="Le trajet s'adapte au groupe."
         />
       </Sequence>
 
@@ -81,7 +82,7 @@ export const RunDateIntro = () => {
       </Sequence>
 
       <Sequence from={T.trans3.start} durationInFrames={T.trans3.dur}>
-        <TransitionPaceBar number="5–10 km" label="une heure environ" />
+        <TransitionPaceBar number="5–10 km" label="une heure ensemble" />
       </Sequence>
 
       <Sequence from={T.clip3.start} durationInFrames={T.clip3.dur}>
@@ -90,8 +91,8 @@ export const RunDateIntro = () => {
 
       <Sequence from={T.trans4.start} durationInFrames={T.trans4.dur}>
         <TransitionSteam
-          text="Rendez-vous au café du coin."
-          subtitle="Choisis ton drink préféré."
+          text="La course est finie."
+          subtitle="La conversation commence."
         />
       </Sequence>
 
@@ -101,7 +102,7 @@ export const RunDateIntro = () => {
 
       <Sequence from={T.trans5.start} durationInFrames={T.trans5.dur}>
         <TransitionEKG
-          text=""
+          text="Le feeling est là ?"
         />
       </Sequence>
 

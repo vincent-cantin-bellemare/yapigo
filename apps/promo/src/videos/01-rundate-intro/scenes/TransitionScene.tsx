@@ -434,7 +434,7 @@ export const TransitionAppCard: React.FC = () => {
         lineHeight: 1.2,
         padding: "0 80px",
       }}>
-        Tu t'inscris sur l'app.
+        Inscris-toi. Choisis ta sortie.
       </div>
 
       <div style={{

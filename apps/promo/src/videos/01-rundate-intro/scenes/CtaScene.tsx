@@ -109,8 +109,8 @@ export const CtaScene: React.FC = () => {
   const logoOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
   const logoScale = interpolate(logoProgress, [0, 1], [0.88, 1]);
 
-  // URL fade in at the end
-  const urlOpacity = interpolate(frame, [100, 120], [0, 1], {
+  // URL + icon fade in
+  const urlOpacity = interpolate(frame, [95, 115], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -121,20 +121,8 @@ export const CtaScene: React.FC = () => {
   const LINE1_START = 35;
   const LINE2_START = 65;
 
-  // App reconnect section
-  const APP_LINE1 = ["Retrouvez-vous", "sur", "l'app."];
-  const APP_START = 95;
-
-  const appSectionOpacity = interpolate(frame, [APP_START - 5, APP_START + 5], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
-  // Divider line animation
-  const dividerWidth = interpolate(frame - APP_START, [0, 20], [0, 300], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  // Domain line
+  const DOMAIN_START = 95;
 
   return (
     <AbsoluteFill
@@ -152,7 +140,7 @@ export const CtaScene: React.FC = () => {
 
       {/* Logo — display large so H.264 preserves text sharpness */}
       <div style={{ opacity: logoOpacity, transform: `scale(${logoScale})`, marginBottom: 48 }}>
-        <Img src={staticFile("logos/rundate_white.png")} style={{ width: 920, objectFit: "contain" }} />
+        <Img src={staticFile("logos/rundate_white_clean.png")} style={{ width: 960, objectFit: "contain" }} />
       </div>
 
       {/* Tagline — word by word */}
@@ -163,34 +151,25 @@ export const CtaScene: React.FC = () => {
           fontSize={fontSizes.h3} fontWeight={400} color={"rgba(255,255,255,0.85)"} />
       </div>
 
-      {/* Divider */}
+      {/* URL + App icon */}
       <div style={{
-        width: dividerWidth,
-        height: 1,
-        backgroundColor: "rgba(255,255,255,0.3)",
-        marginTop: 36,
-        marginBottom: 28,
-      }} />
-
-      {/* App reconnect section */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, opacity: appSectionOpacity }}>
-        {/* App icon — iOS style */}
-        <AppIcon frame={frame} startFrame={APP_START - 10} />
-        <AnimatedWords words={APP_LINE1} startFrame={APP_START} stagger={4}
-          fontSize={fontSizes.h3} fontWeight={700} color={colors.teal} />
-      </div>
-
-      {/* URL */}
-      <div style={{
-        marginTop: 40,
-        fontFamily: fonts.body,
-        fontSize: fontSizes.caption,
-        fontWeight: 300,
-        color: "rgba(255,255,255,0.5)",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 16,
+        marginTop: 48,
         opacity: urlOpacity,
-        letterSpacing: "3px",
       }}>
-        rundate.app
+        <AppIcon frame={frame} startFrame={DOMAIN_START - 10} />
+        <div style={{
+          fontFamily: fonts.body,
+          fontSize: fontSizes.caption,
+          fontWeight: 300,
+          color: "rgba(255,255,255,0.55)",
+          letterSpacing: "3px",
+        }}>
+          rundate.app
+        </div>
       </div>
     </AbsoluteFill>
   );

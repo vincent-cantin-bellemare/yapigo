@@ -1,0 +1,79 @@
+{
+  "scenes": [
+    {
+      "id": "01_problem",
+      "description": "Écran texte d'ouverture (fond sombre)",
+      "label": "Applications de rencontre.",
+      "headline": "Perte de temps...",
+      "subline": "Et si on faisait autrement ?"
+    },
+    {
+      "id": "02_appcard",
+      "description": "Transition avec icône Run Date (fond gradient teal)",
+      "text": "Inscris-toi. Choisis ta sortie.",
+      "subtext": "Run Date"
+    },
+    {
+      "id": "03_trans_ripple",
+      "description": "Transition GPS pin + ondes (fond noir)",
+      "text": "Un parc près de chez toi.",
+      "subtitle": "Un groupe t'attend."
+    },
+    {
+      "id": "04_clip1",
+      "description": "Vidéo clip1.mp4 — groupe au parc",
+      "caption": ""
+    },
+    {
+      "id": "05_trans_duorun",
+      "description": "Transition 2 tracés GPS (fond noir)",
+      "text": "Vous partez courir.",
+      "subtitle": "Le trajet s'adapte au groupe."
+    },
+    {
+      "id": "06_clip2",
+      "description": "Vidéo clip2.mp4 — course canal",
+      "caption": ""
+    },
+    {
+      "id": "07_trans_pacebar",
+      "description": "Transition gros chiffre + barre de progression (fond noir)",
+      "number": "5–10 km",
+      "label": "une heure ensemble"
+    },
+    {
+      "id": "08_clip3",
+      "description": "Vidéo clip3.mp4 — rires en courant",
+      "caption": ""
+    },
+    {
+      "id": "09_trans_steam",
+      "description": "Transition tasse café + vapeur (fond noir)",
+      "text": "La course est finie.",
+      "subtitle": "La conversation commence."
+    },
+    {
+      "id": "10_clip4",
+      "description": "Vidéo clip4.mp4 — café terrasse",
+      "caption": ""
+    },
+    {
+      "id": "11_trans_ekg",
+      "description": "Transition tracé cardiaque (fond noir)",
+      "text": "Le feeling est là ?",
+      "subtitle": ""
+    },
+    {
+      "id": "12_clip5",
+      "description": "Vidéo clip5.mp4 — post-course",
+      "caption": ""
+    },
+    {
+      "id": "13_cta",
+      "description": "Écran final avec logo Run Date (fond gradient teal)",
+      "tagline_line1": "Fais le premier pas.",
+      "tagline_line2": "Le deuxième, vous le ferez ensemble.",
+      "url": "rundate.app"
+    }
+  ]
+}

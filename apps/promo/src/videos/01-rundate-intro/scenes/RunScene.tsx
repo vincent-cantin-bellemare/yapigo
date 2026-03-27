@@ -15,14 +15,14 @@ const CLIPS = [
     id: "clip1",
     file: "01-intro/videos/clip1.mp4",
     placeholderColor: "#1A3020",
-    caption: "Tu t'inscris à une sortie.",
+    caption: "",
     captionStart: 20,
   },
   {
     id: "clip2",
     file: "01-intro/videos/clip2.mp4",
     placeholderColor: "#0D2030",
-    caption: "Vous partez ensemble.",
+    caption: "",
     captionStart: 15,
   },
   {
@@ -36,14 +36,14 @@ const CLIPS = [
     id: "clip4",
     file: "01-intro/videos/clip4.mp4",
     placeholderColor: "#1A1A30",
-    caption: "Pas besoin de swiper\npour le deviner.",
+    caption: "",
     captionStart: 15,
   },
   {
     id: "clip5",
     file: "01-intro/videos/clip5.mp4",
     placeholderColor: "#2A1A10",
-    caption: "Et si t'as aimé courir\navec quelqu'un...",
+    caption: "",
     captionStart: 15,
   },
 ] as const;

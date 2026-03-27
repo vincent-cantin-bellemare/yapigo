@@ -72,7 +72,7 @@ export const ProblemScene: React.FC = () => {
             transform: `translateY(${labelY}px)`,
           }}
         >
-          Application de dating.
+          Applications de rencontre.
         </div>
 
         {/* Headline */}
@@ -103,7 +103,7 @@ export const ProblemScene: React.FC = () => {
             transform: `translateY(${subY}px)`,
           }}
         >
-          Tu cherches une alternative ?
+          Et si on faisait autrement ?
         </div>
       </AbsoluteFill>
     </AbsoluteFill>
