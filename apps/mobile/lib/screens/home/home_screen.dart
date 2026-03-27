@@ -3,6 +3,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:video_player/video_player.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -20,7 +21,6 @@ import 'package:rundate/screens/home/main_shell.dart';
 import 'package:rundate/screens/profile/contact_form_screen.dart';
 import 'package:rundate/screens/profile/user_profile_sheet.dart';
 import 'package:rundate/theme/app_theme.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:rundate/widgets/photo_gallery_viewer.dart';
 import 'package:rundate/widgets/user_avatar.dart';
 import 'package:rundate/widgets/skeletons/shimmer_block.dart';
@@ -2359,15 +2359,12 @@ class _PromoVideoCard extends StatelessWidget {
   const _PromoVideoCard({required this.theme});
   final ThemeData theme;
 
-  static const _videoId = '8-0Zm4cV5ro';
-  static const _youtubeUrl = 'https://www.youtube.com/watch?v=$_videoId';
-  static const _thumbnailUrl = 'https://img.youtube.com/vi/$_videoId/hqdefault.jpg';
-
-  Future<void> _openVideo() async {
-    final uri = Uri.parse(_youtubeUrl);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    }
+  void _openFullScreen(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => const _PromoVideoFullScreen(),
+      ),
+    );
   }
 
   @override
@@ -2376,14 +2373,14 @@ class _PromoVideoCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Inspiration course',
+          'Découvre Run Date',
           style: theme.textTheme.titleLarge?.copyWith(
             fontWeight: FontWeight.w800,
           ),
         ),
         const SizedBox(height: 6),
         Text(
-          'Pourquoi bouger change ta vie — regarde cette vidéo motivante!',
+          'Fais le premier pas. Le deuxième, vous le ferez ensemble.',
           style: GoogleFonts.dmSans(
             fontSize: 14,
             color: AppTheme.secondaryText(context),
@@ -2391,7 +2388,7 @@ class _PromoVideoCard extends StatelessWidget {
         ),
         const SizedBox(height: 14),
         GestureDetector(
-          onTap: _openVideo,
+          onTap: () => _openFullScreen(context),
           child: Container(
             width: double.infinity,
             height: 200,
@@ -2409,69 +2406,62 @@ class _PromoVideoCard extends StatelessWidget {
             child: Stack(
               fit: StackFit.expand,
               children: [
-                Image.network(
-                  _thumbnailUrl,
-                  fit: BoxFit.cover,
-                  errorBuilder: (_, _, _) => Container(
-                    color: AppTheme.navy,
-                    child: const Center(
-                      child: Icon(Icons.play_circle_fill, color: Colors.white, size: 56),
-                    ),
-                  ),
-                ),
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                       colors: [
-                        Colors.black.withValues(alpha: 0.1),
-                        Colors.black.withValues(alpha: 0.5),
+                        Color(0xFF00D4AA),
+                        Color(0xFF00BCD4),
+                        Color(0xFF0097A7),
+                        Color(0xFF1B2A4A),
                       ],
                     ),
                   ),
                 ),
                 Center(
-                  child: Container(
-                    width: 64,
-                    height: 64,
-                    decoration: BoxDecoration(
-                      color: AppTheme.ocean.withValues(alpha: 0.95),
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppTheme.ocean.withValues(alpha: 0.4),
-                          blurRadius: 20,
-                          spreadRadius: 2,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 64,
+                        height: 64,
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.2),
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.white.withValues(alpha: 0.5), width: 2),
                         ),
-                      ],
-                    ),
-                    child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 36),
+                        child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 36),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        'Regarder la vidéo',
+                        style: GoogleFonts.dmSans(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Positioned(
                   bottom: 12,
-                  left: 14,
+                  right: 14,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.6),
+                      color: Colors.black.withValues(alpha: 0.4),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.play_circle_outline, color: Colors.white, size: 14),
-                        const SizedBox(width: 5),
-                        Text(
-                          'Regarder sur YouTube',
-                          style: GoogleFonts.dmSans(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      '0:38',
+                      style: GoogleFonts.dmSans(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -3503,6 +3493,126 @@ class _ThemeToggleCard extends StatelessWidget {
                 ),
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Full-screen promo video player
+// ---------------------------------------------------------------------------
+
+class _PromoVideoFullScreen extends StatefulWidget {
+  const _PromoVideoFullScreen();
+
+  @override
+  State<_PromoVideoFullScreen> createState() => _PromoVideoFullScreenState();
+}
+
+class _PromoVideoFullScreenState extends State<_PromoVideoFullScreen> {
+  late final VideoPlayerController _controller;
+  bool _showControls = true;
+  Timer? _hideTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset('assets/video/promo_intro.mp4')
+      ..initialize().then((_) {
+        if (mounted) {
+          setState(() {});
+          _controller.play();
+          _startHideTimer();
+        }
+      });
+    _controller.addListener(() {
+      if (_controller.value.position >= _controller.value.duration &&
+          _controller.value.duration > Duration.zero) {
+        if (mounted) Navigator.of(context).pop();
+      }
+    });
+  }
+
+  void _startHideTimer() {
+    _hideTimer?.cancel();
+    _hideTimer = Timer(const Duration(seconds: 3), () {
+      if (mounted) setState(() => _showControls = false);
+    });
+  }
+
+  void _toggleControls() {
+    setState(() => _showControls = !_showControls);
+    if (_showControls) _startHideTimer();
+  }
+
+  @override
+  void dispose() {
+    _hideTimer?.cancel();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: GestureDetector(
+        onTap: _toggleControls,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            if (_controller.value.isInitialized)
+              Center(
+                child: AspectRatio(
+                  aspectRatio: _controller.value.aspectRatio,
+                  child: VideoPlayer(_controller),
+                ),
+              )
+            else
+              const Center(
+                child: CircularProgressIndicator(color: Color(0xFF00D4AA)),
+              ),
+
+            if (_showControls) ...[
+              SafeArea(
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(Icons.close, color: Colors.white, size: 28),
+                      style: IconButton.styleFrom(
+                        backgroundColor: Colors.black.withValues(alpha: 0.4),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              if (_controller.value.isInitialized)
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                      child: VideoProgressIndicator(
+                        _controller,
+                        allowScrubbing: true,
+                        colors: const VideoProgressColors(
+                          playedColor: Color(0xFF00D4AA),
+                          bufferedColor: Colors.white24,
+                          backgroundColor: Colors.white12,
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
           ],
         ),
       ),
