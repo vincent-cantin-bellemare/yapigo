@@ -1,8 +1,8 @@
 import { Composition, registerRoot } from "remotion";
 import { RunDateIntro } from "./videos/01-rundate-intro/RunDateIntro";
 
-// 37.5 seconds × 30fps = 1125 frames
-const DURATION_FRAMES = 1125;
+// 38 seconds × 30fps = 1140 frames
+const DURATION_FRAMES = 1140;
 const FPS = 30;
 const WIDTH = 1080;
 const HEIGHT = 1920;
