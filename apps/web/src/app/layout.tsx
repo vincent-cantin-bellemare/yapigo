@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Nunito, DM_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { AuthProvider } from "@/lib/auth-context";
+import { DemoToggle } from "@/components/demo-toggle";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -39,7 +41,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <AuthProvider>
+            <DemoToggle />
+            {children}
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
