@@ -313,18 +313,21 @@ export default function ProfilePage() {
           <MenuItem
             Icon={ShieldCheck}
             label="Vérifier mon compte"
+            href="/profile/verify"
             iconClass={currentUser.isVerified ? "" : "text-teal-500"}
           />
           <MenuItem
             Icon={Share2}
             label="Inviter un ami"
+            href="/profile/invite"
             iconClass="text-primary"
           />
-          <MenuItem Icon={Receipt} label="Factures & paiements" />
+          <MenuItem Icon={Receipt} label="Factures & paiements" href="/profile/billing" />
           <div className="mx-4 h-px bg-border" />
           <MenuItem
             Icon={Activity}
             label="Strava"
+            href="/profile/connections"
             iconClass="text-[#FC4C02]"
             badge={
               currentUser.stravaConnected ? (
@@ -335,7 +338,7 @@ export default function ProfilePage() {
             }
           />
           <div className="mx-4 h-px bg-border" />
-          <MenuItem Icon={HelpCircle} label="Aide & infos légales" />
+          <MenuItem Icon={HelpCircle} label="Aide & infos légales" href="/profile/help" />
           <MenuItem
             Icon={Globe}
             label="Langue : Français"

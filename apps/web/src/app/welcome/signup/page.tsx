@@ -569,37 +569,13 @@ export default function SignupWizardPage() {
         )}
 
         {currentStep === "city" && (
-          <StepLayout title="Tu habites où?">
-            <div className="flex flex-wrap gap-2">
-              {quickCities.map((c) => (
-                <button
-                  key={c}
-                  onClick={() => {
-                    setCity(c);
-                    autoAdvance();
-                  }}
-                  className={cn(
-                    "flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-semibold",
-                    city === c
-                      ? "border-primary bg-primary/12 text-primary"
-                      : "border-border bg-card",
-                  )}
-                >
-                  <MapPin className="h-3.5 w-3.5" />
-                  {c}
-                  {city === c && <Check className="h-3.5 w-3.5" />}
-                </button>
-              ))}
-            </div>
-            {city && (
-              <div className="mt-4 flex items-center gap-2.5 rounded-xl border border-teal-500/30 bg-teal-500/10 px-3.5 py-2.5">
-                <Check className="h-4 w-4 text-teal-500" />
-                <span className="text-sm font-semibold text-teal-600">
-                  Des événements sont organisés dans ta ville!
-                </span>
-              </div>
-            )}
-          </StepLayout>
+          <CityStep
+            city={city}
+            onSelect={(c) => {
+              setCity(c);
+              autoAdvance();
+            }}
+          />
         )}
 
         {currentStep === "neighborhood" && (
@@ -956,6 +932,116 @@ export default function SignupWizardPage() {
         )}
       </div>
     </div>
+  );
+}
+
+function CityStep({
+  city,
+  onSelect,
+}: {
+  city: string | null;
+  onSelect: (c: string) => void;
+}) {
+  const [search, setSearch] = useState("");
+
+  const filtered = search.trim()
+    ? allCities.filter(
+        (c) =>
+          !quickCities.includes(c.name) &&
+          normalizeSearch(c.name).includes(normalizeSearch(search)),
+      )
+    : allCities.filter((c) => !quickCities.includes(c.name));
+
+  return (
+    <StepLayout title="Tu habites où?">
+      {/* Quick-pick cities */}
+      <div className="flex flex-wrap gap-2">
+        {quickCities.map((c) => (
+          <button
+            key={c}
+            onClick={() => onSelect(c)}
+            className={cn(
+              "flex items-center gap-2 rounded-full border px-3 py-2 text-sm font-semibold",
+              city === c
+                ? "border-primary bg-primary/12 text-primary"
+                : "border-border bg-card",
+            )}
+          >
+            <MapPin className="h-3.5 w-3.5" />
+            {c}
+            {city === c && <Check className="h-3.5 w-3.5" />}
+          </button>
+        ))}
+      </div>
+
+      {city && (
+        <div className="mt-3 flex items-center gap-2.5 rounded-xl border border-teal-500/30 bg-teal-500/10 px-3.5 py-2.5">
+          <Check className="h-4 w-4 text-teal-500" />
+          <span className="text-sm font-semibold text-teal-600">
+            Des événements sont organisés dans ta ville!
+          </span>
+        </div>
+      )}
+
+      {/* Search + all cities */}
+      <div className="mt-5 flex items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2.5">
+        <SearchIcon className="h-4 w-4 text-muted-foreground" />
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Recherche ta ville..."
+          className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground/60"
+        />
+        {search && (
+          <button onClick={() => setSearch("")}>
+            <X className="h-4 w-4 text-muted-foreground" />
+          </button>
+        )}
+      </div>
+
+      <div className="mt-2 flex-1 space-y-0.5 overflow-y-auto">
+        {filtered.map((c) => {
+          const sel = city === c.name;
+          return (
+            <button
+              key={c.name}
+              onClick={() => onSelect(c.name)}
+              className={cn(
+                "flex w-full items-center gap-3 rounded-xl px-3.5 py-3 text-left transition-colors",
+                sel
+                  ? "bg-primary/8"
+                  : "hover:bg-muted/60",
+              )}
+            >
+              <MapPin
+                className={cn(
+                  "h-4 w-4 shrink-0",
+                  sel ? "text-primary" : "text-muted-foreground",
+                )}
+              />
+              <div className="min-w-0 flex-1">
+                <p
+                  className={cn(
+                    "text-sm",
+                    sel ? "font-semibold text-primary" : "",
+                  )}
+                >
+                  {c.name}
+                </p>
+                <p className="text-xs text-muted-foreground">{c.region}</p>
+              </div>
+              {sel && <Check className="h-4 w-4 shrink-0 text-primary" />}
+            </button>
+          );
+        })}
+        {filtered.length === 0 && search && (
+          <p className="py-6 text-center text-sm text-muted-foreground">
+            Aucune ville trouvée pour &ldquo;{search}&rdquo;
+          </p>
+        )}
+      </div>
+    </StepLayout>
   );
 }
 
