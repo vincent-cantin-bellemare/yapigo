@@ -18,9 +18,26 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Run Date",
+  title: {
+    default: "Run Date — Cours, rencontre, connecte",
+    template: "%s | Run Date",
+  },
   description:
-    "Rencontre des gens en allant courir ensemble. Dating app pour coureurs.",
+    "Rencontre des gens en allant courir ensemble. L'app de dating pour les coureurs à Montréal.",
+  openGraph: {
+    type: "website",
+    locale: "fr_CA",
+    siteName: "Run Date",
+    title: "Run Date — Cours, rencontre, connecte",
+    description:
+      "Inscris-toi à un Run Date et rencontre des gens qui partagent ta passion pour la course à pied.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Run Date — Cours, rencontre, connecte",
+    description:
+      "Inscris-toi à un Run Date et rencontre des gens qui partagent ta passion pour la course à pied.",
+  },
 };
 
 export default function RootLayout({
@@ -42,7 +59,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <div className="relative mx-auto flex min-h-screen w-full max-w-md flex-col bg-background shadow-xl">
+            <div className="relative mx-auto flex min-h-screen w-full max-w-md flex-col bg-background shadow-xl md:max-w-none md:shadow-none">
               <DemoToggle />
               {children}
             </div>

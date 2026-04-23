@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
-  ArrowLeft,
   Camera,
   CalendarCheck,
   CheckCircle,
 } from "lucide-react";
+import { AppBar } from "@/components/shared/app-bar";
 
 const slots = [
   "Lundi 10h00 - 10h15",
@@ -30,15 +29,8 @@ export default function VerifyPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-32">
-      <div className="flex items-center gap-3 px-5 pt-6 pb-4">
-        <Link href="/profile" className="text-foreground">
-          <ArrowLeft className="h-5 w-5" />
-        </Link>
-        <h1 className="font-heading text-lg font-bold">
-          Vérifier mon compte
-        </h1>
-      </div>
+    <div className="min-h-screen bg-background">
+      <AppBar title="Vérifier mon compte" backHref="/profile" />
 
       <div className="mx-auto max-w-lg px-5">
         {state === "verified" && (

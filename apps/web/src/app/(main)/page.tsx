@@ -171,7 +171,7 @@ export default function HomePage() {
   return (
     <div className="space-y-0">
       {/* ── Hero Banner ── */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-cyan via-ocean to-[#00838F] px-6 pb-8 pt-10 text-white">
+      <section className="relative overflow-hidden bg-gradient-to-b from-cyan via-ocean to-deep-teal px-6 pb-8 pt-10 text-white">
         <div className="absolute -right-8 -top-10 h-40 w-40 rounded-full border-[24px] border-white/[0.08]" />
         <div className="absolute right-12 top-20 h-2 w-2 rounded-full bg-white/25" />
         <div className="absolute -bottom-5 -left-5 h-28 w-28 rounded-full bg-gradient-radial from-white/[0.06] to-transparent" />
@@ -542,7 +542,7 @@ export default function HomePage() {
             {popularEvents.map((event, i) => {
               const gradients = [
                 "from-ocean to-cyan",
-                "from-navy to-[#3B5998]",
+                "from-navy to-navy-blue",
                 "from-teal to-teal",
                 "from-amber-500 to-amber-400",
               ];
@@ -590,7 +590,7 @@ export default function HomePage() {
                 Nos organisateurs
               </h2>
               <Link
-                href="/members"
+                href="/organizers"
                 className="text-sm font-semibold text-teal hover:underline"
               >
                 Voir tous
@@ -690,7 +690,7 @@ export default function HomePage() {
         </Card>
 
         {/* ── Become Organizer Card ── */}
-        <section className="overflow-hidden rounded-2xl bg-gradient-to-br from-navy to-[#163A5C] border border-teal/25 p-5 text-white">
+        <section className="overflow-hidden rounded-2xl bg-gradient-to-br from-navy to-navy-blue border border-teal/25 p-5 text-white">
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-teal/15">
             <Shield className="h-6 w-6 text-teal" />
           </div>

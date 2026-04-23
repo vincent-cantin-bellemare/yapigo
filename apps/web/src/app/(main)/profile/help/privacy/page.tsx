@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { AppBar } from "@/components/shared/app-bar";
 
 const sections = [
   {
@@ -44,15 +43,8 @@ const sections = [
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-background pb-32">
-      <div className="flex items-center gap-3 px-5 pt-6 pb-4">
-        <Link href="/profile/help" className="text-foreground">
-          <ArrowLeft className="h-5 w-5" />
-        </Link>
-        <h1 className="font-heading text-lg font-bold">
-          Politique de confidentialité
-        </h1>
-      </div>
+    <div className="min-h-screen bg-background">
+      <AppBar title="Politique de confidentialité" backHref="/profile/help" />
 
       <div className="mx-auto max-w-lg px-5">
         <div className="space-y-6">

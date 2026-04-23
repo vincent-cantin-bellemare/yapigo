@@ -26,6 +26,7 @@ import {
   Coffee,
   Share2,
   MessageSquare,
+  Star,
 } from "lucide-react";
 
 interface Props {
@@ -244,29 +245,45 @@ export default async function EventDetailPage({ params }: Props) {
         </Card>
 
         {/* Action buttons */}
-        {!isPast && (
+        {isPast ? (
+          <div className="sticky bottom-20 flex gap-3 rounded-xl border border-border bg-card p-4 shadow-lg">
+            <Link
+              href={`/events/${event.id}/rate`}
+              className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-bold text-white hover:bg-primary/90"
+            >
+              <Star className="h-4 w-4" />
+              Évaluer cette activité
+            </Link>
+          </div>
+        ) : (
           <div className="sticky bottom-20 flex gap-3 rounded-xl border border-border bg-card p-4 shadow-lg">
             {isRegistered ? (
               <>
-                <Button className="flex-1" variant="outline">
-                  <MessageSquare className="mr-2 h-4 w-4" />
-                  Chat de groupe
+                <Link
+                  href={`/events/${event.id}/waiting`}
+                  className="inline-flex flex-1 items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-bold text-white hover:bg-primary/90"
+                >
+                  <Clock className="h-4 w-4" />
+                  Salle d&apos;attente
+                </Link>
+                <Button variant="outline" size="icon" aria-label="Chat de groupe">
+                  <MessageSquare className="h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="icon">
+                <Button variant="outline" size="icon" aria-label="Partager">
                   <Share2 className="h-4 w-4" />
                 </Button>
               </>
             ) : (
               <>
                 <Link
-                  href={`/events/${event.id}/apply`}
+                  href={event.price ? `/events/${event.id}/payment` : `/events/${event.id}/apply`}
                   className="inline-flex flex-1 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-primary/90"
                 >
                   {event.price
                     ? `S'inscrire · ${getPriceLabel(event)}`
                     : "S'inscrire gratuitement"}
                 </Link>
-                <Button variant="outline" size="icon">
+                <Button variant="outline" size="icon" aria-label="Partager">
                   <Share2 className="h-4 w-4" />
                 </Button>
               </>

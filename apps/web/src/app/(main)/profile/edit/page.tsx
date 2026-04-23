@@ -1,12 +1,10 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { currentUser } from "@/lib/data";
 import { cn } from "@/lib/utils";
 import {
-  ArrowLeft,
   User,
   Settings,
   Bell,
@@ -24,6 +22,7 @@ import {
   Check,
   Info,
 } from "lucide-react";
+import { AppBar } from "@/components/shared/app-bar";
 
 const genders = ["Homme", "Femme", "Non-binaire"];
 const orientations = [
@@ -143,14 +142,8 @@ export default function EditProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-32">
-      {/* Header */}
-      <div className="flex items-center gap-3 px-5 pt-6 pb-4">
-        <Link href="/profile" className="text-foreground">
-          <ArrowLeft className="h-5 w-5" />
-        </Link>
-        <h1 className="font-heading text-lg font-bold">Mon profil</h1>
-      </div>
+    <div className="min-h-screen bg-background">
+      <AppBar title="Mon profil" backHref="/profile" />
 
       <div className="mx-auto max-w-lg space-y-9 px-6">
         {/* ═══ SECTION: Profil ═══ */}

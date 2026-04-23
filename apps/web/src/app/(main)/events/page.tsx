@@ -45,15 +45,16 @@ export default function EventsPage() {
             placeholder="Rechercher un quartier..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            aria-label="Rechercher un quartier"
             className="w-full rounded-xl bg-white/15 py-2.5 pl-10 pr-10 text-sm text-white placeholder:text-white/50 backdrop-blur-sm focus:bg-white/20 focus:outline-none"
           />
-          <button className="absolute right-3 top-1/2 -translate-y-1/2">
+          <button className="absolute right-3 top-1/2 -translate-y-1/2" aria-label="Filtres">
             <SlidersHorizontal className="h-4 w-4 text-white/60" />
           </button>
         </div>
       </header>
 
-      <div className="mx-auto max-w-2xl px-4 py-4">
+      <div className="mx-auto max-w-4xl px-4 py-4">
         <Tabs
           value={activeTab}
           onValueChange={(v) => setActiveTab(v as Tab)}
@@ -79,7 +80,7 @@ export default function EventsPage() {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value={activeTab} className="mt-4 space-y-3">
+          <TabsContent value={activeTab} className="mt-4">
             {filtered.length === 0 ? (
               <div className="py-12 text-center text-muted-foreground">
                 <p className="text-lg">Aucune activité trouvée</p>
@@ -88,9 +89,11 @@ export default function EventsPage() {
                 </p>
               </div>
             ) : (
-              filtered.map((event) => (
-                <EventCard key={event.id} event={event} />
-              ))
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                {filtered.map((event) => (
+                  <EventCard key={event.id} event={event} />
+                ))}
+              </div>
             )}
           </TabsContent>
         </Tabs>

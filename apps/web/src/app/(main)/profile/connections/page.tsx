@@ -1,22 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { ArrowLeft, Award } from "lucide-react";
+import { AppBar } from "@/components/shared/app-bar";
+import { Award } from "lucide-react";
 
 export default function ConnectionsPage() {
   const [stravaConnected, setStravaConnected] = useState(false);
   const [isOrganizer] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background pb-32">
-      <div className="flex items-center gap-3 px-5 pt-6 pb-4">
-        <Link href="/profile" className="text-foreground">
-          <ArrowLeft className="h-5 w-5" />
-        </Link>
-        <h1 className="font-heading text-lg font-bold">Mes connexions</h1>
-      </div>
+    <div className="min-h-screen bg-background">
+      <AppBar title="Mes connexions" backHref="/profile" />
 
       <div className="mx-auto max-w-lg space-y-5 px-5">
         {/* Strava */}

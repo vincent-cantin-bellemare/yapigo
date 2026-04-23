@@ -197,7 +197,7 @@ function MessagesTab({
   }
 
   return (
-    <div className="pb-32">
+    <div>
       {/* Banner */}
       <div className="mx-4 mt-2 rounded-[14px] border border-teal-500/20 bg-gradient-to-r from-teal-500/10 to-teal-500/5 p-4">
         <div className="flex items-center gap-3">
@@ -380,7 +380,7 @@ function NotificationsTab({
   }
 
   return (
-    <div className="space-y-3 px-4 pb-32 pt-3">
+      <div className="space-y-3 px-4 pt-3">
       {items.map((notif) => (
         <NotificationCard
           key={notif.id}
@@ -600,7 +600,7 @@ function ConnectionsTab({
             subtitle="Participe à des activités pour rencontrer du monde!"
           />
         ) : (
-          <div className="space-y-3 px-4 pb-32 pt-4">
+          <div className="space-y-3 px-4 pt-4">
             {received.map((req) => (
               <ReceivedRequestCard
                 key={req.id}

@@ -39,6 +39,7 @@ export function BottomNav() {
             <Link
               key={item.href}
               href={item.href}
+              aria-label={item.label}
               className={cn(
                 "relative flex flex-col items-center gap-0.5 px-3 py-1.5 transition-colors",
                 active
@@ -49,7 +50,7 @@ export function BottomNav() {
               <span className="relative">
                 <Icon
                   className={cn(
-                    "h-6 w-6 transition-transform",
+                    "h-5 w-5 transition-transform",
                     active && "scale-110",
                   )}
                   strokeWidth={active ? 2.5 : 2}
@@ -63,9 +64,14 @@ export function BottomNav() {
                   </Badge>
                 )}
               </span>
-              {active && (
-                <span className="mt-0.5 h-1 w-1 rounded-full bg-primary" />
-              )}
+              <span
+                className={cn(
+                  "text-[10px] leading-tight",
+                  active ? "font-bold" : "font-medium",
+                )}
+              >
+                {item.label}
+              </span>
             </Link>
           );
         })}

@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { AppBar } from "@/components/shared/app-bar";
 import {
-  ArrowLeft,
   HelpCircle,
   MessageSquare,
   FileText,
@@ -41,13 +41,8 @@ const links = [
 
 export default function HelpPage() {
   return (
-    <div className="min-h-screen bg-background pb-32">
-      <div className="flex items-center gap-3 px-5 pt-6 pb-4">
-        <Link href="/profile" className="text-foreground">
-          <ArrowLeft className="h-5 w-5" />
-        </Link>
-        <h1 className="font-heading text-lg font-bold">Aide & infos</h1>
-      </div>
+    <div className="min-h-screen bg-background">
+      <AppBar title="Aide & infos" backHref="/profile" />
 
       <div className="mx-auto max-w-lg px-5">
         <div className="overflow-hidden rounded-2xl border border-border">

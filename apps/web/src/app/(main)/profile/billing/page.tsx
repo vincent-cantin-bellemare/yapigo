@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { AppBar } from "@/components/shared/app-bar";
 import {
-  ArrowLeft,
   CreditCard,
   ExternalLink,
 } from "lucide-react";
@@ -37,15 +36,8 @@ const statusStyles = {
 
 export default function BillingPage() {
   return (
-    <div className="min-h-screen bg-background pb-32">
-      <div className="flex items-center gap-3 px-5 pt-6 pb-4">
-        <Link href="/profile" className="text-foreground">
-          <ArrowLeft className="h-5 w-5" />
-        </Link>
-        <h1 className="font-heading text-lg font-bold">
-          Factures & paiements
-        </h1>
-      </div>
+    <div className="min-h-screen bg-background">
+      <AppBar title="Factures & paiements" backHref="/profile" />
 
       <div className="mx-auto max-w-lg space-y-6 px-5">
         {/* Payment method */}
@@ -54,7 +46,7 @@ export default function BillingPage() {
             Moyen de paiement
           </h2>
 
-          <div className="mt-3 overflow-hidden rounded-2xl bg-gradient-to-br from-teal-500 to-[#0f2027] p-5 text-white shadow-lg">
+          <div className="mt-3 overflow-hidden rounded-2xl bg-gradient-to-br from-teal-500 to-navy p-5 text-white shadow-lg">
             <div className="flex items-start justify-between">
               <CreditCard className="h-8 w-8 opacity-80" />
               <span className="rounded-md bg-white/20 px-2 py-0.5 text-xs font-bold backdrop-blur-sm">

@@ -91,7 +91,7 @@ export default function ProfilePage() {
   const [bioExpanded, setBioExpanded] = useState(false);
 
   return (
-    <div className="min-h-screen bg-background pb-32">
+    <div className="min-h-screen bg-background">
       <div className="mx-auto max-w-lg px-5 pt-6">
         {/* ── Profile Header (centered) ── */}
         <div className="flex flex-col items-center">

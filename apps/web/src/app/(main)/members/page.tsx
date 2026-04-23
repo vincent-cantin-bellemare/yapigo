@@ -143,6 +143,7 @@ export default function MembersPage() {
           <input
             type="text"
             placeholder="Rechercher un membre..."
+            aria-label="Rechercher un membre"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full rounded-[14px] border-none bg-card py-3 pl-10 pr-10 text-[15px] placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/30"
@@ -299,7 +300,7 @@ export default function MembersPage() {
 
       {/* Members list */}
       {filtered.length > 0 ? (
-        <div className="px-5 pb-32">
+        <div className="px-5">
           {filtered.map((user, i) => (
             <div key={user.id}>
               {i > 0 && <div className="mx-1 h-px bg-border/50" />}

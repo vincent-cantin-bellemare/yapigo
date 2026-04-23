@@ -5,7 +5,7 @@ import Link from "next/link";
 import { mockEvents, mockUsers, currentUser } from "@/lib/data";
 import { UserAvatar } from "@/components/shared/user-avatar";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Home, ArrowRight, Send } from "lucide-react";
+import { CheckCircle, Home, ArrowRight, Send, Clock } from "lucide-react";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -76,9 +76,18 @@ export default function ConfirmedPage({ params }: Props) {
 
       {/* Action buttons */}
       <div className="mt-10 flex w-full max-w-md flex-col gap-3">
+        {event && (
+          <Link
+            href={`/events/${id}/waiting`}
+            className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-primary/90"
+          >
+            <Clock className="h-4 w-4" />
+            Salle d&apos;attente
+          </Link>
+        )}
         <Link
           href="/"
-          className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-3 text-sm font-bold text-primary-foreground hover:bg-primary/90"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-border px-6 py-3 text-sm font-bold hover:bg-accent"
         >
           <Home className="h-4 w-4" />
           Retour à l&apos;accueil
