@@ -5,11 +5,12 @@ interface UserAvatarProps {
   photoUrl?: string | null;
   firstName: string;
   lastName?: string;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
   className?: string;
 }
 
 const sizeClasses = {
+  xs: "h-5.5 w-5.5 text-[9px]",
   sm: "h-8 w-8 text-xs",
   md: "h-10 w-10 text-sm",
   lg: "h-14 w-14 text-base",

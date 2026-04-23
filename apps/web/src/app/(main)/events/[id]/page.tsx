@@ -258,11 +258,14 @@ export default async function EventDetailPage({ params }: Props) {
               </>
             ) : (
               <>
-                <Button className="flex-1 bg-primary text-white">
+                <Link
+                  href={`/events/${event.id}/apply`}
+                  className="inline-flex flex-1 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-primary/90"
+                >
                   {event.price
                     ? `S'inscrire · ${getPriceLabel(event)}`
                     : "S'inscrire gratuitement"}
-                </Button>
+                </Link>
                 <Button variant="outline" size="icon">
                   <Share2 className="h-4 w-4" />
                 </Button>
