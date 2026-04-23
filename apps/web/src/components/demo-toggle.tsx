@@ -9,7 +9,7 @@ export function DemoToggle() {
   return (
     <button
       onClick={toggle}
-      className="fixed right-4 top-4 z-[100] flex items-center gap-2 rounded-full border border-border bg-card/95 px-3 py-1.5 shadow-lg backdrop-blur-sm transition-all hover:shadow-xl"
+      className="absolute right-3 top-3 z-[100] flex items-center gap-2 rounded-full border border-border bg-card/95 px-3 py-1.5 shadow-lg backdrop-blur-sm transition-all hover:shadow-xl"
     >
       <span className="rounded bg-amber-500 px-1.5 py-0.5 text-[10px] font-extrabold tracking-wider text-white">
         DEMO

@@ -34,7 +34,7 @@ export default function RootLayout({
       className={`${nunito.variable} ${dmSans.variable} h-full`}
       suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col antialiased">
+      <body className="min-h-full flex flex-col antialiased bg-muted/30">
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -42,8 +42,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <DemoToggle />
-            {children}
+            <div className="relative mx-auto flex min-h-screen w-full max-w-md flex-col bg-background shadow-xl">
+              <DemoToggle />
+              {children}
+            </div>
           </AuthProvider>
         </ThemeProvider>
       </body>

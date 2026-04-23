@@ -123,12 +123,12 @@ export default function GuestEventsPage() {
             Déjà un compte?{" "}
             <span className="text-primary">Se connecter</span>
           </button>
-          <button
-            onClick={login}
+          <Link
+            href="/welcome/signup"
             className="mt-2 flex w-full items-center justify-center rounded-xl bg-primary py-4 text-base font-bold text-primary-foreground"
           >
             Créer mon compte
-          </button>
+          </Link>
         </div>
       </div>
     </div>

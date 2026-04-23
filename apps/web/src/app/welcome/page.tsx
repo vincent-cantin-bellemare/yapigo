@@ -68,20 +68,20 @@ export default function WelcomePage() {
   return (
     <div className="flex min-h-screen flex-col bg-background">
       {/* Header */}
-      <div className="flex items-center px-5 pt-8">
+      <div className="flex items-center px-5 pt-6 pb-2">
         <div className="w-14" />
         <div className="flex-1 flex justify-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logo_rundate.png"
             alt="Run Date"
-            className="h-8 object-contain dark:hidden"
+            className="h-14 object-contain dark:hidden"
           />
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/logo_rundate_white.png"
             alt="Run Date"
-            className="hidden h-8 object-contain dark:block"
+            className="hidden h-14 object-contain dark:block"
           />
         </div>
         <Link
@@ -93,7 +93,7 @@ export default function WelcomePage() {
       </div>
 
       {/* Carousel */}
-      <div className="flex flex-1 flex-col justify-center">
+      <div className="flex flex-1 flex-col justify-center overflow-hidden">
         <div
           ref={scrollRef}
           className="flex snap-x snap-mandatory overflow-x-auto scrollbar-none"
@@ -104,7 +104,6 @@ export default function WelcomePage() {
               key={i}
               className="flex w-full shrink-0 snap-center flex-col items-center px-10"
             >
-              {/* Illustration */}
               <div
                 className={cn(
                   "flex h-44 w-44 items-center justify-center rounded-3xl bg-gradient-to-br",
@@ -123,9 +122,12 @@ export default function WelcomePage() {
             </div>
           ))}
         </div>
+      </div>
 
+      {/* Bottom section: dots + buttons + demo */}
+      <div className="mx-auto w-full max-w-lg px-6 pb-6 pt-4 space-y-4">
         {/* Dots */}
-        <div className="mt-8 flex items-center justify-center gap-3">
+        <div className="flex items-center justify-center gap-3">
           {pages.map((_, i) => (
             <div
               key={i}
@@ -138,25 +140,23 @@ export default function WelcomePage() {
             />
           ))}
         </div>
-      </div>
 
-      {/* Buttons */}
-      <div className="mx-auto w-full max-w-lg px-6 pb-8">
+        {/* Buttons */}
         {isLast ? (
-          <>
+          <div className="space-y-2">
             <Link
               href="/welcome/events"
               className="flex w-full items-center justify-center rounded-xl bg-primary py-4 text-base font-bold text-primary-foreground"
             >
               Découvrir les événements
             </Link>
-            <button
-              onClick={login}
-              className="mt-2 flex w-full items-center justify-center rounded-xl border border-primary py-4 text-base font-bold text-primary"
+            <Link
+              href="/welcome/signup"
+              className="flex w-full items-center justify-center rounded-xl border border-primary py-4 text-base font-bold text-primary"
             >
               Créer mon compte
-            </button>
-          </>
+            </Link>
+          </div>
         ) : (
           <button
             onClick={goNext}
@@ -167,7 +167,7 @@ export default function WelcomePage() {
         )}
 
         {/* Demo toggle row */}
-        <div className="mt-4 flex items-center justify-center gap-2 rounded-full bg-muted/60 px-4 py-2">
+        <div className="flex items-center justify-center gap-2 rounded-full bg-muted/60 px-4 py-2">
           <span className="rounded bg-amber-500 px-1.5 py-0.5 text-[10px] font-extrabold tracking-wider text-white">
             DEMO
           </span>
